@@ -30,10 +30,14 @@ def person(name):
 ########### models ########### 
 ### database model ###
 
-class Person(GraphObject):
+class Content(GraphObject):				# group Person and Institution
+	pass
+
+class Person(Content):
     __primarykey__ = "name"
 	
     name = Property()
+    in_scholar_names = Property()
 	
     mentored = RelatedTo("Person")
     mentored_by = RelatedFrom("Person")
@@ -48,7 +52,7 @@ class Person(GraphObject):
     def __lt__(self, other):
         return self.name < other.name
 
-class Institution(GraphObject):
+class Institution(Content):
 	__primarykey__ = "name"
 	
 	name = Property()
@@ -72,11 +76,14 @@ class User(GraphObject)
 	username = Property()
 	joined = Property()
 	last_access = Property()
-	blocked = Property()
+	active = Property()
 	
 	contributed = RelatedTo("UpdateLog")
-	
-class UpdateLog(GraphObject)
+
+class Provenance(GraphObject)			# group UpdateLog and DataSource
+	pass	
+
+class UpdateLog(Provenance)
 	__primarykey__ = "id"
 	
 	id = Property()
@@ -85,16 +92,18 @@ class UpdateLog(GraphObject)
 	
 	previous = relatedTo("UpdateLog", "LAST_UPDATE")
 	next = relatedFrom("UpdateLog", "LAST_UPDATE")
-	based_on = relatedTo("DataSource")
+	based_on = relatedTo("Provenance", "BASED_ON")
 	
+	affected_nodes = relatedFrom("Content", "LAST_UPDATE")
 	
-class DataSource(GraphObject)
+class DataSource(Provenance)
 	__primarykey__ = "id"
 	
 	id = Property()
 	description = Property()
+	uri = Property()
 	
-	based_on = relatedFrom("UpdateLog")
+	source_for = relatedFrom("UpdateLog", "BASED_ON")
 
 class Tag(GraphObject)
 	__primarykey__ = "name"
@@ -103,12 +112,15 @@ class Tag(GraphObject)
 	description = Property()
 	
 	see_also = Related("Tag")
-	tagged = RelatedFrom("Person")
+	tagged = RelatedFrom("Content")
 	
 
 ### forms ###
 class SearchForm(Form):
 	name = StringField('name')
+
+
+	
 	
 	
 ########### utility functions ########### 
