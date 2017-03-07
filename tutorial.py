@@ -11,6 +11,9 @@ app = Flask(__name__)
 Bootstrap(app)
 app.config['SECRET_KEY'] = 'ithinkiwassupposedtosaysomething'
 
+graph = Graph(password=getenv("NEO4J_PASSWORD"))
+watch("neo4j.bolt")
+
 @app.route('/', methods=['GET','POST'])
 def home():
 	if request.method == 'POST':
@@ -18,8 +21,14 @@ def home():
 			return render_template(url_for(person), name=searchform.name)
 	if request.method == 'GET':
 		searchform = SearchForm()
-		return render_template('home.html', form=searchform)		
-		
+		return render_template('home.html', form=searchform)
+
+@app.route('/browse/people')
+def get_person_list():
+	people = Person.select(graph).order_by("_.name")
+
+	return render_template('people.html', people=people)
+	
 @app.route('/person/<string:name>')
 def person(name):
 	name_split = name.replace('-', ' ')
@@ -38,38 +47,38 @@ class Person(Content):
 	
 	name = Property()
 	in_scholar_names = Property()
-	
+# 	
 	mentored = RelatedTo("Person")
-	mentored_by = RelatedFrom("Person")
-	worked_alongside = Related("Person")
+	mentored_by = RelatedFrom("Person", "MENTORED")
+	worked_alongside = Related("Person", "WORKED_ALONGSIDE")
 	studied_at = RelatedTo("Institution")
 	worked_at = RelatedTo("Institution")
 	tagged = RelatedTo("Tag")
 	member_of = RelatedTo("Institution")
 	
 	last_update = RelatedTo("UpdateLog")
-	
-	def __lt__(self, other):
-		return self.name < other.name
-
+# 	
+# 	def __lt__(self, other):
+# 		return self.name < other.name
+# 
 class Institution(Content):
 	__primarykey__ = "name"
-	
+# 	
 	name = Property()
 	location = Property()
 	type = Property()
 	carnegie_class = Property()
-	
+# 	
 	students = RelatedFrom("Person", "STUDIED_AT")
 	employees = RelatedFrom("Person", "WORKED_AT")
 	members = RelatedFrom("Person", "MEMBER_OF")
 	
 	last_update = RelatedTo("UpdateLog")
-	
-	def __lt__(self, other):
-		return self.name < other.name
-
-
+# 	
+# 	def __lt__(self, other):
+# 		return self.name < other.name
+# 
+# 
 class User(GraphObject):
 	__primarykey__ = "username"
 	
@@ -82,7 +91,7 @@ class User(GraphObject):
 
 class Provenance(GraphObject):			# group UpdateLog and DataSource
 	pass	
-
+# 
 class UpdateLog(Provenance):
 	__primarykey__ = "id"
 	
@@ -95,6 +104,7 @@ class UpdateLog(Provenance):
 	based_on = RelatedTo("Provenance", "BASED_ON")
 	
 	affected_nodes = RelatedFrom("Content", "LAST_UPDATE")
+	contributed_by = RelatedFrom("User", "CONTRIBUTED")
 	
 class DataSource(Provenance):
 	__primarykey__ = "id"
@@ -113,12 +123,12 @@ class Tag(GraphObject):
 	
 	see_also = Related("Tag")
 	tagged = RelatedFrom("Content")
-	
-
-### forms ###
-class SearchForm(Form):
-	name = StringField('name')
-
+# 
+# 
+# ### forms ###
+# class SearchForm(Form):
+# 	name = StringField('name')
+# 
 
 ########### utility functions ########### 
 # A way to make names uppercase from URL strings, 
