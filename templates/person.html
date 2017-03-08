@@ -1,0 +1,57 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+{{name}} is in the WST
+{% endblock %}
+
+{% block content %}
+<h1>{{ person.name }} {% if person.in_scholar_names %}<a href="kairos.technorhetoric.net/praxis/tiki-index.php?page=ScholarNames"><span class="glyphicon glyphicon-volume-up" alt="Click for Pronunciation on Kairos ScholarNames"></span>{% endif %}</h1>
+
+
+<h2>Has studied at...</h2>
+<ul>
+{% for item in person.studied_at %}
+	<li><a href="/institution/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+<h2>Has studied at...</h2>
+<ul>
+{% for item in person.worked_at %}
+	<li><a href="/institution/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+<h2>Has mentored...</h2>
+<ul>
+{% for item in person.mentored %}
+	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+<h2>Has been mentored by...</h2>
+<ul>
+{% for item in person.mentored_by %}
+	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+<h2>Has worked alongside...</h2>
+<ul>
+{% for item in person.worked_alongside %}
+	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+
+{% endblock %}

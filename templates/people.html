@@ -1,3 +1,10 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+People in the WST
+{% endblock %}
+
+{% block content %}
 <h1>People</h1>
 	<ul>
 	{% for person in people %}
@@ -6,4 +13,4 @@
 		<li>No people in the database yet, I'm afraid...</li>
 	{% endfor %}	
 	</ul>
-
+{% endblock %}

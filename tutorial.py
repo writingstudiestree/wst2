@@ -30,10 +30,24 @@ def get_person_list():
 	return render_template('people.html', people=people)
 	
 @app.route('/person/<string:name>')
-def person(name):
+def get_person(name):
 	name_split = name.replace('-', ' ')
 	name_joined = title_except(name_split)
-	return '<h2>This is the page for ' + name_joined + '</h2>'
+	
+	person = Person.select(graph, name_split).first()
+	
+	return render_template("person.html", person=person, name=name_joined)
+
+@app.route('/institution/<string:name>')
+def get_institution(name):
+	name_split = name.replace('-', ' ')
+	name_joined = title_except(name_split)
+	
+	institution = Institution.select(graph, name_split).first()
+	
+	return render_template("institution.html", institution=institution, name=name_joined)
+
+
 
 
 ########### models ########### 
@@ -57,10 +71,10 @@ class Person(Content):
 	member_of = RelatedTo("Institution")
 	
 	last_update = RelatedTo("UpdateLog")
-# 	
-# 	def __lt__(self, other):
-# 		return self.name < other.name
-# 
+	
+	def __lt__(self, other):
+		return self.name.split()[-1] < other.name.split()[-1]
+
 class Institution(Content):
 	__primarykey__ = "name"
 # 	
@@ -74,11 +88,12 @@ class Institution(Content):
 	members = RelatedFrom("Person", "MEMBER_OF")
 	
 	last_update = RelatedTo("UpdateLog")
-# 	
-# 	def __lt__(self, other):
-# 		return self.name < other.name
-# 
-# 
+	
+	def __lt__(self, other):
+		return self.name < other.name
+
+
+
 class User(GraphObject):
 	__primarykey__ = "username"
 	
