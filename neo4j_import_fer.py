@@ -78,13 +78,14 @@ def main():
 			continue
 	
 # 		# 3. Merge the (ds:DataSource) into the database
-# 	
-# 		ds = Node('DataSource')
+		ds = Node('DataSource')
 # 			parse Source of Information column as a list, trimming whitespace
-# 		ds['uri'] = list(map(str.strip, row['data_source'].split(',')))
-# 		ds['description'] = 'Found by searching publicly accessible websites'
-# 		graph.merge(ds)
-# 		
+		ds['uri'] = list(map(str.strip, row['data_source'].split(',')))
+		graph.merge(ds)
+		ds['description'] = 'Found by searching publicly accessible websites'
+		ds.push()
+
+		
 # 		# 4. Create an (ul:UpdateLog); we'll fill in more info later
 # 		ul = Node('UpdateLog', id=uuid.uuid4().hex)
 # 		graph.merge(ul)
