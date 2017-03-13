@@ -1,5 +1,11 @@
 {% extends "bootstrap/base.html" %}
 {% from "_formhelpers.html" import render_field %}
+
+{% block head %}
+<link href="static/css/bootstrap.min.css" rel="stylesheet">
+{{ super() }}
+{% endblock %}
+
 {% block title %}
 WST Home
 {% endblock %}
@@ -15,14 +21,14 @@ WST Home
 The WST is an online, crowdsourced database of academic genealogies within writing studies; in other words, it is an interactive archive for recording and mapping scholarly relationships in Composition and Rhetoric and adjacent disciplines. 
 
 Get searching!
-<div class="
+
 <form method="POST" action="/">
 	{{ form.csrf_token }}
 	{{ render_field(form.name) }}
 	<input type="submit" value="Show this person's page">
 </form>
 
-</div>
+</div> <!-- end right column -->
 </div> <!-- end row -->
 </div> <!-- end container -->
 
