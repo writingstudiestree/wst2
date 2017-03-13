@@ -27,7 +27,7 @@ def home():
 
 @app.route('/browse/people')
 def get_person_list():
-	people = Person.select(graph).order_by('_.name')
+	people = Person.select(graph)
 
 	return render_template('people.html', people=people)
 
