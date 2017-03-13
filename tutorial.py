@@ -176,7 +176,7 @@ class SearchForm(Form):
 # from http://stackoverflow.com/questions/3728655/titlecasing-a-string-with-exceptions
 import re 
 def title_except(s):
-	exceptions = ['of', 'the', 'at']
+	exceptions = ['of', 'the', 'at', 'in', 'for']
 	word_list = re.split(' ', s)	   # re.split behaves as expected
 	final = [word_list[0].capitalize()]
 	for word in word_list[1:]:
