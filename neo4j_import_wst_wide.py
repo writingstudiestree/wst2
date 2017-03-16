@@ -149,7 +149,7 @@ def load_nodes(graph, start_clean=0):
 
 # Load relations
 def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_alongside=1, do_this_took_place_at=0):
-	filename = os.path.join(fileroot, db_name + '_relations_wide2.csv')
+	filename = os.path.join(fileroot, db_name + '_relations_wide.csv')
 	with open(filename, mode='r', newline=None, encoding='latin1') as f:
 		reader = csv.DictReader(f)
 		data = list(reader)[1:]
