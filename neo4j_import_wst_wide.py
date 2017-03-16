@@ -205,14 +205,14 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	if do_worked_at:
 		for line in worked_at:
 			# if we have both start and end positions, split into two relations
-			if line['start_position'] and line['end_position']:
+			if len(line['start_position']) > 0 and len(line['end_position']) > 0:
 				line_copy = line
 				line['title'] = line['start_position']
 				line_copy['title'] = line['end_position']
-				del line_copy['start_date']
-				del line_copy['start_position']
-				del line['end_date']
-				del line['end_position']
+				line_copy['start_date'] = ''
+				line_copy['start_position'] = ''
+				line['end_date'] = ''
+				line['end_position'] = ''
 				worked_at.append(line_copy)
 			
 			# escape 'other' field (free text area) if it exists
