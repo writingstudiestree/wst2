@@ -25,14 +25,15 @@ def main():
 	watch('neo4j.bolt')
 	
 	# Do the hard work
-	load_from_wst_dump(graph, start_clean=1)
+# 	load_nodes(graph, start_clean=0)
+	load_rels(graph, do_worked_at=1, do_mentored=0, do_worked_alongside=0, do_studied_at=0)
 	
 	# Close connection
 # 	graph.close()
 
 
 # Define the hard work
-def load_from_wst_dump(graph, start_clean=0):
+def load_nodes(graph, start_clean=0):
 	if(start_clean):
 		graph.run('MATCH (n) DETACH DELETE n')
 		graph.run('CREATE CONSTRAINT ON (p:Person) ASSERT p.name IS UNIQUE;')
@@ -127,10 +128,12 @@ def load_from_wst_dump(graph, start_clean=0):
 	# check that it worked
 	school_count = graph.run('match (p:Institution) return count(p) as school_count').next()
 	print(school_count)
-	
-	# Load relations
-	FILE = os.path.join(fileroot, db_name + '_relations_wide.csv')
-	with open(FILE, mode='r', newline=None, encoding='latin1') as f:
+
+
+# Load relations
+def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_alongside=1, do_this_took_place_at=0):
+	filename = os.path.join(fileroot, db_name + '_relations_wide2.csv')
+	with open(filename, mode='r', newline=None, encoding='latin1') as f:
 		reader = csv.DictReader(f)
 		data = list(reader)[1:]
 	
@@ -148,117 +151,65 @@ def load_from_wst_dump(graph, start_clean=0):
 			worked_alongside.append(row)
 		elif row['relation_type'] == 'this_took_place_at':
 			took_place_at.append(row)
-		
+	
+	# Brace for manual entry
+	manual_entry = []
+	
 	# Mentoring relations
-	for line in mentored:
-		query = '''
-		MATCH (s:Person), (t:Person)
-		WHERE %s IN s.nid AND %s in t.nid
-		WITH s, t
-		MERGE (s)-[:MENTORED {subtype: "%s", 
-								start_date: "%s", 
-								end_date: "%s", 
-								created_on: "%s", 
-								created_by: "%s",
-								updated_on: "%s",
-								updated_by: "%s",
-								body: "%s",
-								rid: "%s"}]->(t)
-		''' 
-		if line['other']:
-			body = str.strip(line['other'])
-			body = str.replace(body, '\"', '\"\"')
-		else:
-			body = ''
+	if do_mentored:
+		for line in mentored:
+			query = '''
+			MATCH (s:Person), (t:Person)
+			WHERE %s IN s.nid AND %s in t.nid
+			WITH s, t
+			MERGE (s)-[:MENTORED {subtype: "%s", 
+									start_date: "%s", 
+									end_date: "%s", 
+									created_on: "%s", 
+									created_by: "%s",
+									updated_on: "%s",
+									updated_by: "%s",
+									body: "%s",
+									rid: "%s"}]->(t)
+			''' 
+			if line['other']:
+				body = str.strip(line['other'])
+				body = str.replace(body, '"', '""')
+			else:
+				body = ''
 			
-		mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'])
-		mixins = tuple(map(str.strip, mixins))
-		graph.run(query % mixins)
+			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'])
+			mixins = tuple(map(str.strip, mixins))
+			graph.run(query % mixins)
 	
 	# Employment relations
-	for line in worked_at:
-		# if we have both start and end positions, split into two relations
-		if line['start_position'] and line['end_position']:
-			line_copy = line
-			line['title'] = line['start_position']
-			line_copy['title'] = line['end_position']
-			line_copy['start_date'] = ''
-			line['end_date'] = ''
-			worked_at.append(line_copy)
-
-		query = '''
-		MATCH (s:Person), (t:Institution)
-		WHERE %s IN s.nid AND %s in t.nid
-		WITH s, t
-		MERGE (s)-[:WORKED_AT {subtype: "%s", 
-							start_date: "%s", 
-							end_date: "%s", 
-							created_on: "%s", 
-							created_by: "%s",
-							updated_on: "%s",
-							updated_by: "%s",
-							body: "%s",
-							rid: "%s",
-							title: "%s"
-							}]->(t)
-		''' 
-		# escape 'other' field (free text area) if it exists
-		if line['other']:
-			body = str.strip(line['other'])
-			body = str.replace(body, '\"', '\"\"')
-		else:
-			body = ''
-
-		# get title of position
-		if 'title' in line.keys():
-			title = line['title']
-		elif line['start_position']:
-			title = line['start_position']
-		elif line['end_position']:
-			title = line['end_position']
-		else:
-			title = ''
-
-		mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], title)
-		mixins = tuple(map(str.strip, mixins))
-# 		print(query % mixins)
-		graph.run(query % mixins)
-	
-	# Studying relations
-	for line in studied_at:
-		query = '''
-		MATCH (s:Person), (t:Institution)
-		WHERE %s IN s.nid AND %s in t.nid
-		WITH s, t
-		MERGE (s)-[:STUDIED_AT {subtype: "%s", 
-								start_date: "%s", 
-								graduation_year: "%s", 
-								created_on: "%s", 
-								created_by: "%s",
-								updated_on: "%s",
-								updated_by: "%s",
-								body: "%s",
-								rid: "%s",
-								department: "%s",
-								toward_degree: "%s"}]->(t)
-		''' 
-		if line['other']:
-			body = str.strip(line['other'])
-			body = str.replace(body, '\"', '\"\"')
-		else:
-			body = ''
+	if do_worked_at:
+		for line in worked_at:
+			# if we have both start and end positions, split into two relations
+			if line['start_position'] and line['end_position']:
+				line_copy = line
+				line['title'] = line['start_position']
+				line_copy['title'] = line['end_position']
+				line_copy['start_date'] = ''
+				line['end_date'] = ''
+				worked_at.append(line_copy)
 			
-		mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['department'], line['degree'])
-		mixins = tuple(map(str.strip, mixins))
-		graph.run(query % mixins)
-		
-	# Collaboration relations
-	for line in worked_alongside:
-		query = '''
-		MATCH (s:Person), (t:Person)
-		WHERE %s IN s.nid AND %s in t.nid
-		WITH s, t
-		MERGE (s)-[:WORKED_ALONGSIDE {subtype: "%s", 
+			# escape 'other' field (free text area) if it exists
+			if len(line['other']) > 40:
+				manual_entry.append(line)
+				continue 
+			elif line['other']:
+				body = str.strip(line['other'])
+				body = str.replace(body, '"', '""')
+			else:
+				body = ''
+			
+			
+			query = '''
+			MATCH (s:Person), (t:Institution)
+			WHERE %s IN s.nid AND %s in t.nid
+			WITH s, t
+			MERGE (s)-[:WORKED_AT {subtype: "%s", 
 								start_date: "%s", 
 								end_date: "%s", 
 								created_on: "%s", 
@@ -267,18 +218,86 @@ def load_from_wst_dump(graph, start_clean=0):
 								updated_by: "%s",
 								body: "%s",
 								rid: "%s",
-								crid: "%s"}]->(t)
-		''' 
-		if line['other']:
-			body = str.strip(line['other'])
-			body = str.replace(body, '\"', '\"\"')
-		else:
-			body = ''
+								title: "%s"
+								}]->(t)
+			''' 
 			
-		mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['crid'])
-		mixins = tuple(map(str.strip, mixins))
-		graph.run(query % mixins)
+			# get title of position
+			if 'title' in line.keys():
+				title = line['title']
+			elif line['start_position']:
+				title = line['start_position']
+			elif line['end_position']:
+				title = line['end_position']
+			else:
+				title = ''
+			
+			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], title)
+			mixins = tuple(map(str.strip, mixins))
+	# 		print(query % mixins)
+			graph.run(query % mixins)
 	
+	# Studying relations
+	if do_studied_at:
+		for line in studied_at:
+			query = '''
+			MATCH (s:Person), (t:Institution)
+			WHERE %s IN s.nid AND %s in t.nid
+			WITH s, t
+			MERGE (s)-[:STUDIED_AT {subtype: "%s", 
+									start_date: "%s", 
+									graduation_year: "%s", 
+									created_on: "%s", 
+									created_by: "%s",
+									updated_on: "%s",
+									updated_by: "%s",
+									body: "%s",
+									rid: "%s",
+									department: "%s",
+									toward_degree: "%s"}]->(t)
+			''' 
+			if line['other']:
+				body = str.strip(line['other'])
+				body = str.replace(body, '"', '""')
+			else:
+				body = ''
+			
+			
+			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['department'], line['degree'])
+			mixins = tuple(map(str.strip, mixins))
+			graph.run(query % mixins)
+		
+	# Collaboration relations
+	if do_worked_alongside:
+		for line in worked_alongside:
+			query = '''
+			MATCH (s:Person), (t:Person)
+			WHERE %s IN s.nid AND %s in t.nid
+			WITH s, t
+			MERGE (s)-[:WORKED_ALONGSIDE {subtype: "%s", 
+									start_date: "%s", 
+									end_date: "%s", 
+									created_on: "%s", 
+									created_by: "%s",
+									updated_on: "%s",
+									updated_by: "%s",
+									body: "%s",
+									rid: "%s",
+									crid: "%s"}]->(t)
+			''' 
+			if line['other']:
+				body = str.strip(line['other'])
+				body = str.replace(body, '"', '""')
+			else:
+				body = ''
+			
+			
+			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['crid'])
+			mixins = tuple(map(str.strip, mixins))
+			graph.run(query % mixins)
+
+	if do_this_took_place_at:
+		pass	
 	
 	# TO DO (maybe): 
 	# add_label("Content") to all Person and Institution nodes?
