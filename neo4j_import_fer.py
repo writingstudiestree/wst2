@@ -37,17 +37,25 @@
 
 
 # Load libraries
-from py2neo import Graph, watch, Node, Relationship
+from py2neo import Graph, authenticate, watch, Node, Relationship
 from os import getenv
 import csv
 import uuid
+import datetime
 
 
 def main():
-# 1. Connect to the neo4j database
+	# Connect to the neo4j database
 	graph = Graph(password=getenv('NEO4J_PASSWORD'))
 	watch('neo4j.bolt')
+	
+	# Do the hard work
+	import_fer(graph)
+	
+	
 
+# Define the hard work
+def import_fer(graph):
 # 2. Use Python to read in the data, simplifying the header
 	FILE = 'fer_data.csv'
 	simple_headers = ('name_found_via','first_name','last_name','phd_school','phd_department','phd_year','data_source','data_source_file','added_by','worked_at','title','role','start','end','entered_on','needs_attention','confirmed','confirmed_by','confirmed_on')
@@ -84,7 +92,7 @@ def main():
 		graph.merge(ds)
 		ds['description'] = 'Found by searching publicly accessible websites'
 		ds.push()
-
+		
 		
 # 		# 4. Create an (ul:UpdateLog); we'll fill in more info later
 # 		ul = Node('UpdateLog', id=uuid.uuid4().hex)
@@ -128,8 +136,8 @@ def main():
 # 			Match first with the unique name, then update
 		i1 = Node('Institution', name=phd_school)
 		graph.merge(i1)
-		i1['type']='school'
-		i1.push()
+# 		i1['type']='school'		# we don't need an extra hit to the database;
+# 		i1.push()				# just find all studied_at relations later
 		
 #		8. Merge the studied_at relation
 # 			- include department and year		
