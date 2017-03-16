@@ -33,7 +33,7 @@ def main():
 
 
 # Define the hard work
-def load_nodes(graph, start_clean=0):
+def load_nodes(graph, start_clean=0, do_people=1, do_schools=1):
 	if(start_clean):
 		graph.run('MATCH (n) DETACH DELETE n')
 		graph.run('CREATE CONSTRAINT ON (p:Person) ASSERT p.name IS UNIQUE;')
@@ -83,69 +83,71 @@ def load_nodes(graph, start_clean=0):
 	
 	# Load people
 	# TO DO: Make this import more efficient: list fields we want, write a function to copy from sourcefile to node iff the field is not empty, map the function onto the field list
-	for person in people:
-		p = Node("Person", name = person['title'])
-		graph.merge(p)
+	if do_people:
+		for person in people:
+			p = Node("Person", name = person['title'])
+			graph.merge(p)
 		
-		## try not to overwrite nid with duplicate
-# 		if p['nid'] and person['nid'] not in p['nid']:
-# 			p['nid'].append(int(person['nid']))
-# 		else:
-# 			p['nid'] = []
-# 			p['nid'].append(int(person['nid']))
-		p['nid'] = int(person['nid'])
-		p['body'] = person['body']
-		p['summary'] = person['summary']
-		p['created_by'] = int(person['created_by'])
-		p['created_on'] = int(person['created'])
-		p['updated_by'] = int(person['updated_by'])
-		p['updated_on'] = int(person['updated'])
-		p['refs'] = []
-		p['refs'].append(person['refs'])
-		p.push()
+			## try not to overwrite nid with duplicate
+	# 		if p['nid'] and person['nid'] not in p['nid']:
+	# 			p['nid'].append(int(person['nid']))
+	# 		else:
+	# 			p['nid'] = []
+	# 			p['nid'].append(int(person['nid']))
+			p['nid'] = int(person['nid'])
+			p['body'] = person['body']
+			p['summary'] = person['summary']
+			p['created_by'] = int(person['created_by'])
+			p['created_on'] = int(person['created'])
+			p['updated_by'] = int(person['updated_by'])
+			p['updated_on'] = int(person['updated'])
+			p['refs'] = []
+			p['refs'].append(person['refs'])
+			p.push()
 	
-		# Link this node to the UpdateLog
-		rel = Relationship(p, "LAST_UPDATE", ul)
-		graph.merge(rel)
+			# Link this node to the UpdateLog
+			rel = Relationship(p, "LAST_UPDATE", ul)
+			graph.merge(rel)
 	
-	# check that it worked
-	person_count = graph.run('match (p:Person) return count(p) as person_count').next()
-	print(person_count)
+		# check that it worked
+		person_count = graph.run('match (p:Person) return count(p) as person_count').next()
+		print(person_count)
 	
 	# Load institutions
-	for school in schools:
-		i = Node("Institution", name = school['title'])
-		graph.merge(i)
+	if do_schools:
+		for school in schools:
+			i = Node("Institution", name = school['title'])
+			graph.merge(i)
 		
-#		# try not to overwrite nid with duplicate
-# 		if i['nid'] and school['nid'] not in i['nid']:
-# 			i['nid'].append(int(school['nid']))
-# 		else:
-# 			i['nid'] = []
-# 			i['nid'].append(int(school['nid']))
-#			i['nid'].append(school['nid'])
+	#		# try not to overwrite nid with duplicate
+	# 		if i['nid'] and school['nid'] not in i['nid']:
+	# 			i['nid'].append(int(school['nid']))
+	# 		else:
+	# 			i['nid'] = []
+	# 			i['nid'].append(int(school['nid']))
+	#			i['nid'].append(school['nid'])
 		
-		i['nid'] = int(school['nid'])
-		i['city'] = school['city']
-		i['state'] = school['state']
-		i['country'] = school['country']
-		i['body'] = school['body']
-		i['summary'] = school['summary']
-		i['created_by'] = int(school['created_by'])
-		i['created_on'] = int(school['created'])
-		i['updated_by'] = int(school['updated_by'])
-		i['updated_on'] = int(school['updated'])
-		i['refs'] = []
-		i['refs'].append(school['refs'])
-		i.push()
+			i['nid'] = int(school['nid'])
+			i['city'] = school['city']
+			i['state'] = school['state']
+			i['country'] = school['country']
+			i['body'] = school['body']
+			i['summary'] = school['summary']
+			i['created_by'] = int(school['created_by'])
+			i['created_on'] = int(school['created'])
+			i['updated_by'] = int(school['updated_by'])
+			i['updated_on'] = int(school['updated'])
+			i['refs'] = []
+			i['refs'].append(school['refs'])
+			i.push()
 		
-		# Link this node to the UpdateLog
-		rel = Relationship(i, "LAST_UPDATE", ul)
-		graph.merge(rel)
+			# Link this node to the UpdateLog
+			rel = Relationship(i, "LAST_UPDATE", ul)
+			graph.merge(rel)
 		
-	# check that it worked
-	school_count = graph.run('match (p:Institution) return count(p) as school_count').next()
-	print(school_count)
+		# check that it worked
+		school_count = graph.run('match (p:Institution) return count(p) as school_count').next()
+		print(school_count)
 
 
 # Load relations
