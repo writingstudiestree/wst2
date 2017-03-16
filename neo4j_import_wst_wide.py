@@ -87,19 +87,19 @@ def load_nodes(graph, start_clean=0):
 		p = Node("Person", name = person['title'])
 		graph.merge(p)
 		
-		# try not to overwrite nid with duplicate
-		if p['nid'] and person['nid'] not in p['nid']:
-			p['nid'].append(person['nid'])
-		else:
-			p['nid'] = []
-			p['nid'].append(person['nid'])
-		
+		## try not to overwrite nid with duplicate
+# 		if p['nid'] and person['nid'] not in p['nid']:
+# 			p['nid'].append(int(person['nid']))
+# 		else:
+# 			p['nid'] = []
+# 			p['nid'].append(int(person['nid']))
+		p['nid'] = int(person['nid'])
 		p['body'] = person['body']
 		p['summary'] = person['summary']
-		p['created_by'] = person['created_by']
-		p['created_on'] = person['created']
-		p['updated_by'] = person['updated_by']
-		p['updated_on'] = person['updated']
+		p['created_by'] = int(person['created_by'])
+		p['created_on'] = int(person['created'])
+		p['updated_by'] = int(person['updated_by'])
+		p['updated_on'] = int(person['updated'])
 		p['refs'] = []
 		p['refs'].append(person['refs'])
 		p.push()
@@ -117,23 +117,24 @@ def load_nodes(graph, start_clean=0):
 		i = Node("Institution", name = school['title'])
 		graph.merge(i)
 		
-		# try not to overwrite nid with duplicate
-		if i['nid'] and school['nid'] not in i['nid']:
-			i['nid'].append(school['nid'])
-		else:
-			i['nid'] = []
-			i['nid'].append(school['nid'])
+#		# try not to overwrite nid with duplicate
+# 		if i['nid'] and school['nid'] not in i['nid']:
+# 			i['nid'].append(int(school['nid']))
+# 		else:
+# 			i['nid'] = []
+# 			i['nid'].append(int(school['nid']))
+#			i['nid'].append(school['nid'])
 		
-		i['nid'].append(school['nid'])
+		i['nid'] = int(school['nid'])
 		i['city'] = school['city']
 		i['state'] = school['state']
 		i['country'] = school['country']
 		i['body'] = school['body']
 		i['summary'] = school['summary']
-		i['created_by'] = school['created_by']
-		i['created_on'] = school['created']
-		i['updated_by'] = school['updated_by']
-		i['updated_on'] = school['updated']
+		i['created_by'] = int(school['created_by'])
+		i['created_on'] = int(school['created'])
+		i['updated_by'] = int(school['updated_by'])
+		i['updated_on'] = int(school['updated'])
 		i['refs'] = []
 		i['refs'].append(school['refs'])
 		
@@ -175,18 +176,16 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	if do_mentored:
 		for line in mentored:
 			query = '''
-			MATCH (s:Person), (t:Person)
-			WHERE %s IN s.nid AND %s in t.nid
-			WITH s, t
-			MERGE (s)-[:MENTORED {subtype: "%s", 
-									start_date: "%s", 
-									end_date: "%s", 
-									created_on: "%s", 
-									created_by: "%s",
-									updated_on: "%s",
-									updated_by: "%s",
-									body: "%s",
-									rid: "%s"}]->(t)
+			MERGE (s:Person {nid: %s})-[r:MENTORED]->(t:Person {nid: %s})
+			SET r.subtype = "%s", 
+				r.start_date = "%s", 
+				r.end_date = "%s", 
+				r.created_on = "%s", 
+				r.created_by = "%s",
+				r.updated_on = "%s",
+				r.updated_by = "%s",
+				r.body = "%s",
+				r.rid = "%s"
 			''' 
 			if line['other']:
 				body = str.strip(line['other'])
@@ -194,8 +193,8 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 			else:
 				body = ''
 			
-			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'])
-			mixins = tuple(map(str.strip, mixins))
+			mixins = (int(line['source']), int(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'])
+# 			mixins = tuple(map(str.strip, mixins))
 			graph.run(query % mixins)
 	
 	# Employment relations
@@ -206,8 +205,10 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 				line_copy = line
 				line['title'] = line['start_position']
 				line_copy['title'] = line['end_position']
-				line_copy['start_date'] = ''
-				line['end_date'] = ''
+				del line_copy['start_date']
+				del line_copy['start_position']
+				del line['end_date']
+				del line['end_position']
 				worked_at.append(line_copy)
 			
 			# escape 'other' field (free text area) if it exists
@@ -222,20 +223,17 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 			
 			
 			query = '''
-			MATCH (s:Person), (t:Institution)
-			WHERE %s IN s.nid AND %s in t.nid
-			WITH s, t
-			MERGE (s)-[:WORKED_AT {subtype: "%s", 
-								start_date: "%s", 
-								end_date: "%s", 
-								created_on: "%s", 
-								created_by: "%s",
-								updated_on: "%s",
-								updated_by: "%s",
-								body: "%s",
-								rid: "%s",
-								title: "%s"
-								}]->(t)
+			MERGE (s:Person {nid: %s})-[r:WORKED_AT]->(t:Institution {nid: %s})
+			SET r.subtype = "%s", 
+				r.start_date = "%s", 
+				r.end_date = "%s", 
+				r.created_on = "%s", 
+				r.created_by = "%s",
+				r.updated_on = "%s",
+				r.updated_by = "%s",
+				r.body = "%s",
+				r.rid = "%s",
+				r.title = "%s"
 			''' 
 			
 			# get title of position
@@ -248,8 +246,8 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 			else:
 				title = ''
 			
-			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], title)
-			mixins = tuple(map(str.strip, mixins))
+			mixins = (int(line['source']), int(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], title)
+# 			mixins = tuple(map(str.strip, mixins))
 	# 		print(query % mixins)
 			graph.run(query % mixins)
 	
@@ -257,49 +255,45 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	if do_studied_at:
 		for line in studied_at:
 			query = '''
-			MATCH (s:Person), (t:Institution)
-			WHERE %s IN s.nid AND %s in t.nid
-			WITH s, t
-			MERGE (s)-[:STUDIED_AT {subtype: "%s", 
-									start_date: "%s", 
-									graduation_year: "%s", 
-									created_on: "%s", 
-									created_by: "%s",
-									updated_on: "%s",
-									updated_by: "%s",
-									body: "%s",
-									rid: "%s",
-									department: "%s",
-									toward_degree: "%s"}]->(t)
+			MERGE (s:Person {nid: %s})-[r:STUDIED_AT]-> (t:Institution {nid: %s})
+			SET r.subtype = "%s", 
+				r.start_date = "%s", 
+				r.graduation_year = "%s", 
+				r.created_on = "%s", 
+				r.created_by = "%s",
+				r.updated_on = "%s",
+				r.updated_by = "%s",
+				r.body = "%s",
+				r.rid = "%s",
+				r.department = "%s",
+				r.toward_degree = "%s"
 			''' 
 			if line['other']:
 				body = str.strip(line['other'])
 				body = str.replace(body, '"', '""')
 			else:
 				body = ''
-			
-			
-			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['department'], line['degree'])
-			mixins = tuple(map(str.strip, mixins))
+
+
+			mixins = (int(line['source']), int(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['department'], line['degree'])
+			# 			mixins = tuple(map(str.strip, mixins))
 			graph.run(query % mixins)
 		
 	# Collaboration relations
 	if do_worked_alongside:
 		for line in worked_alongside:
 			query = '''
-			MATCH (s:Person), (t:Person)
-			WHERE %s IN s.nid AND %s in t.nid
-			WITH s, t
-			MERGE (s)-[:WORKED_ALONGSIDE {subtype: "%s", 
-									start_date: "%s", 
-									end_date: "%s", 
-									created_on: "%s", 
-									created_by: "%s",
-									updated_on: "%s",
-									updated_by: "%s",
-									body: "%s",
-									rid: "%s",
-									crid: "%s"}]->(t)
+			MERGE (s:Person {nid: %s})-[r:WORKED_ALONGSIDE]->(t:Person {nid: %s})
+			SET r.subtype = "%s", 
+				r.start_date = "%s", 
+				r.end_date = "%s", 
+				r.created_on = "%s", 
+				r.created_by = "%s",
+				r.updated_on = "%s",
+				r.updated_by = "%s",
+				r.body = "%s",
+				r.rid = "%s",
+				r.crid = "%s"
 			''' 
 			if line['other']:
 				body = str.strip(line['other'])
@@ -308,8 +302,8 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 				body = ''
 			
 			
-			mixins = (str(line['source']), str(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['crid'])
-			mixins = tuple(map(str.strip, mixins))
+			mixins = (int(line['source']), int(line['target']), line['relation_subtype'], line['start_date'], line['end_date'], line['created'], line['created_by'], line['updated'], line['updated_by'], body, line['rid'], line['crid'])
+# 			mixins = tuple(map(str.strip, mixins))
 			graph.run(query % mixins)
 
 	if do_this_took_place_at:
