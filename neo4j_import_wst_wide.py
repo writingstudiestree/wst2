@@ -137,6 +137,7 @@ def load_nodes(graph, start_clean=0):
 		i['updated_on'] = int(school['updated'])
 		i['refs'] = []
 		i['refs'].append(school['refs'])
+		i.push()
 		
 		# Link this node to the UpdateLog
 		rel = Relationship(i, "LAST_UPDATE", ul)
