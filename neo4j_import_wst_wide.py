@@ -44,8 +44,9 @@ def load_nodes(graph, start_clean=0):
 
 # Use Python to read in the node data, 
 # hopefully fixing weird encoding and escaping errors in the process
-	FILE = os.path.join(fileroot, db_name + '_nodes_wide.csv')
-	with open(FILE, mode='r', newline=None, encoding='latin1') as f:
+	filename = os.path.join(fileroot, db_name + '_nodes_wide.csv')
+	
+	with open(filename, mode='r', newline=None, encoding='latin1') as f:
 		reader = csv.DictReader(f)
 		data = list(reader)[1:]
 
@@ -63,7 +64,7 @@ def load_nodes(graph, start_clean=0):
 	now = datetime.datetime.now().isoformat()
 	ul.timestamp = now
 	ul.query = "Can't record all queries from CSV import. CSV filename = %s"
-	ul.query = ul.query % cypher_escape(FILE)
+	ul.query = ul.query % cypher_escape(filename)
 	ul.push()
 	
 	# Create a DataSource that's just "crowdsourced into the WST by date"
@@ -83,8 +84,14 @@ def load_nodes(graph, start_clean=0):
 	for person in people:
 		p = Node("Person", name = person['title'])
 		graph.merge(p)
-		p['nid'] = []
-		p['nid'].append(person['nid'])
+		
+		# try not to overwrite nid with duplicate
+		if p['nid'] and person['nid'] not in p['nid']:
+			p['nid'].append(person['nid'])
+		else:
+			p['nid'] = []
+			p['nid'].append(person['nid'])
+		
 		p['body'] = person['body']
 		p['summary'] = person['summary']
 		p['created_by'] = person['created_by']
@@ -98,16 +105,23 @@ def load_nodes(graph, start_clean=0):
 		# Link this node to the UpdateLog
 		rel = Relationship(p, "LAST_UPDATE", ul)
 		graph.merge(rel)
-
+	
 	# check that it worked
 	person_count = graph.run('match (p:Person) return count(p) as person_count').next()
 	print(person_count)
-
+	
 	# Load institutions
 	for school in schools:
 		i = Node("Institution", name = school['title'])
 		graph.merge(i)
-		i['nid'] = []
+		
+		# try not to overwrite nid with duplicate
+		if i['nid'] and school['nid'] not in i['nid']:
+			i['nid'].append(school['nid'])
+		else:
+			i['nid'] = []
+			i['nid'].append(school['nid'])
+		
 		i['nid'].append(school['nid'])
 		i['city'] = school['city']
 		i['state'] = school['state']
@@ -120,7 +134,7 @@ def load_nodes(graph, start_clean=0):
 		i['updated_on'] = school['updated']
 		i['refs'] = []
 		i['refs'].append(school['refs'])
-
+		
 		# Link this node to the UpdateLog
 		rel = Relationship(i, "LAST_UPDATE", ul)
 		graph.merge(rel)
@@ -303,11 +317,16 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	# add_label("Content") to all Person and Institution nodes?
 	
 	# TO DO: Load Users
-# 	FILE = os.path.join(fileroot, db_name + '_users.csv')
-# 	with open(FILE, mode='r', newline=None, encoding='latin1') as f:
+# 	filename = os.path.join(fileroot, db_name + '_users.csv')
+# 	with open(filename, mode='r', newline=None, encoding='latin1') as f:
 # 		reader = csv.DictReader(f)
 # 		data = list(reader)[1:]
 	
+	# TO DO: Make this save to csv instead of printing
+	if len(manual_entry):
+		print('The following rows need to be handled manually:')
+		for row in manual_entry:
+			print(row)
 	
 
 	# TO DO: Query (n:Content['created_by']) and (u:User['uid'])
