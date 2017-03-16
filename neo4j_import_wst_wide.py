@@ -41,6 +41,8 @@ def load_nodes(graph, start_clean=0):
 		graph.run('CREATE CONSTRAINT ON (ds:DataSource) ASSERT ds.uri IS UNIQUE;')
 		graph.run('CREATE CONSTRAINT ON (ul:DataSource) ASSERT ul.id IS UNIQUE;')
 		graph.run('CREATE CONSTRAINT ON (u:User) ASSERT u.id IS UNIQUE;')
+		graph.run('CREATE INDEX ON :Person(nid)')
+		graph.run('CREATE INDEX ON :Institution(nid)')
 
 # Use Python to read in the node data, 
 # hopefully fixing weird encoding and escaping errors in the process
