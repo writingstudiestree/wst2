@@ -25,8 +25,8 @@ def main():
 	watch('neo4j.bolt')
 	
 	# Do the hard work
-# 	load_nodes(graph, start_clean=0)
-	load_rels(graph, do_worked_at=1, do_mentored=0, do_worked_alongside=0, do_studied_at=0)
+	load_nodes(graph, start_clean=1)
+	load_rels(graph, do_worked_at=1, do_mentored=1, do_worked_alongside=1, do_studied_at=1)
 	
 	# Close connection
 # 	graph.close()
