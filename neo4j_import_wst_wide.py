@@ -41,8 +41,8 @@ def load_nodes(graph, start_clean=0, do_people=1, do_schools=1):
 		graph.run('CREATE CONSTRAINT ON (ds:DataSource) ASSERT ds.uri IS UNIQUE;')
 		graph.run('CREATE CONSTRAINT ON (ul:DataSource) ASSERT ul.id IS UNIQUE;')
 		graph.run('CREATE CONSTRAINT ON (u:User) ASSERT u.id IS UNIQUE;')
-		graph.run('CREATE INDEX ON :Person(nid)')
-		graph.run('CREATE INDEX ON :Institution(nid)')
+		graph.run('CREATE CONSTRAINT ON (p:Person) ASSERT p.nid IS UNIQUE')
+		graph.run('CREATE CONSTRAINT ON (i:Institution) ASSERT i.nid IS UNIQUE')
 
 # Use Python to read in the node data, 
 # hopefully fixing weird encoding and escaping errors in the process
@@ -179,7 +179,8 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	if do_mentored:
 		for line in mentored:
 			query = '''
-			MERGE (s:Person {nid: %s})-[r:MENTORED]->(t:Person {nid: %s})
+			MATCH (s:Person {nid: %s}),(t:Person {nid: %s}) 
+			MERGE (s)-[r:MENTORED]->(t)
 			SET r.subtype = "%s", 
 				r.start_date = "%s", 
 				r.end_date = "%s", 
@@ -226,7 +227,9 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 			
 			
 			query = '''
-			MERGE (s:Person {nid: %s})-[r:WORKED_AT]->(t:Institution {nid: %s})
+			MATCH (s:Person {nid: %s}), (t:Institution {nid: %s})
+			with s, t
+			MERGE (s)-[r:WORKED_AT]->(t)
 			SET r.subtype = "%s", 
 				r.start_date = "%s", 
 				r.end_date = "%s", 
@@ -258,7 +261,8 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	if do_studied_at:
 		for line in studied_at:
 			query = '''
-			MERGE (s:Person {nid: %s})-[r:STUDIED_AT]-> (t:Institution {nid: %s})
+			MATCH (s:Person {nid: %s}), (t:Institution {nid: %s}) 
+			MERGE (s)-[r:STUDIED_AT]->(t)
 			SET r.subtype = "%s", 
 				r.start_date = "%s", 
 				r.graduation_year = "%s", 
@@ -286,7 +290,8 @@ def load_rels(graph, do_mentored=1, do_worked_at=1, do_studied_at=1, do_worked_a
 	if do_worked_alongside:
 		for line in worked_alongside:
 			query = '''
-			MERGE (s:Person {nid: %s})-[r:WORKED_ALONGSIDE]->(t:Person {nid: %s})
+			MATCH (s:Person {nid: %s}), (t:Person {nid: %s})
+			MERGE (s)-[r:WORKED_ALONGSIDE]->(t)
 			SET r.subtype = "%s", 
 				r.start_date = "%s", 
 				r.end_date = "%s", 
