@@ -10,7 +10,7 @@
 
 <h2>Has studied at...</h2>
 <ul>
-{% for item in person.studied_at %}
+{% for item in person.studied_at|sort %}
 	<li><a href="/institution/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
@@ -19,7 +19,7 @@
 
 <h2>Has worked at...</h2>
 <ul>
-{% for item in person.worked_at %}
+{% for item in person.worked_at|sort %}
 	<li><a href="/institution/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
@@ -28,7 +28,7 @@
 
 <h2>Has mentored...</h2>
 <ul>
-{% for item in person.mentored %}
+{% for item in person.mentored|sort %}
 	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
@@ -37,7 +37,7 @@
 
 <h2>Has been mentored by...</h2>
 <ul>
-{% for item in person.mentored_by %}
+{% for item in person.mentored_by|sort %}
 	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
@@ -46,12 +46,20 @@
 
 <h2>Has worked alongside...</h2>
 <ul>
-{% for item in person.worked_alongside %}
+{% for item in person.worked_alongside|sort %}
 	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
 {% endfor %}	
 </ul>
 
+<!--
+<h2>Shares a mentor with...</h2>
+<ul>
+{% for item in person.siblings|sort %}
+	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
+</ul>
+{% endfor %}
+-->
 
 {% endblock %}
