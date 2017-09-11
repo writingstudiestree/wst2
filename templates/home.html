@@ -1,0 +1,36 @@
+{% extends "bootstrap/base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block head %}
+<link href="static/css/bootstrap.min.css" rel="stylesheet">
+{{ super() }}
+{% endblock %}
+
+{% block title %}
+WST Home
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<h1>Welcome to the Writing Studies Tree!</h1>
+<div class="container">
+<div class="row">
+<div class="col-sm-3"> <!-- left column -->
+<img src="static/img/WST_Logo_Green_200x200_72dpi.jpg" alt="WST network logo" class="img-responsive center-block">
+</div> <!-- end left column -->
+<div class="col-sm-8"> <!-- right column -->
+The WST is an online, crowdsourced database of academic genealogies within writing studies; in other words, it is an interactive archive for recording and mapping scholarly relationships in Composition and Rhetoric and adjacent disciplines. 
+
+Get searching!
+
+<form method="POST" action="/">
+	{{ form.csrf_token }}
+	{{ render_field(form.name) }}
+	<input type="submit" value="Show this person's page">
+</form>
+
+</div> <!-- end right column -->
+</div> <!-- end row -->
+</div> <!-- end container -->
+
+{% endblock %}
