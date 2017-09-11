@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+People in the WST
+{% endblock %}
+
+{% block main %}
+<h1>People</h1>
+	<ul>
+	{% for person in people %}
+		<li><a href="/person/{{ person.name }}">{{ person.name }}</a></li>
+	{% else %}
+		<li>No people in the database yet, I'm afraid...</li>
+	{% endfor %}	
+	</ul>
+{% endblock %}
