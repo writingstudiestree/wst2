@@ -15,15 +15,27 @@ graph = Graph(password=getenv('NEO4J_PASSWORD'))
 watch('neo4j.bolt')
 
 ########### pages ########### 
-@app.route('/', methods=['GET','POST'])
+# @app.route('/', methods=['GET','POST'])
+# def home():
+# 	if request.method == 'POST':
+# 		searchname = request.form['name']
+# # 		return('The current name is ' + searchname)
+# 		return render_template(url_for('get_person'), name=searchname)
+# 	if request.method == 'GET':
+# 		searchform = SearchForm()
+# 		return render_template('home.html', form=searchform)
+
+@app.route('/')
 def home():
-	if request.method == 'POST':
-		searchname = request.form['name']
-# 		return('The current name is ' + searchname)
-		return render_template(url_for('get_person'), name=searchname)
-	if request.method == 'GET':
-		searchform = SearchForm()
-		return render_template('home.html', form=searchform)
+	return render_template('layout.html')
+
+@app.route('/search')
+def search_page():
+	return render_template('search.html')
+
+@app.route('/about')
+def about_page():
+	return render_template('about.html')
 
 @app.route('/browse/people')
 def get_person_list():
@@ -40,6 +52,8 @@ def get_institution_list():
 	
 @app.route('/person/<string:name>')
 def get_person(name):
+# 	TO DO: use urllib.parse.quote_plus or cypher_escape to make name safe, translating back and forth between url and the database (in person.html)
+# 	TO DO: put name_split in backticks before searching 
 	name_split = name.replace('-', ' ')
 	name_joined = title_except(name_split)
 	
@@ -57,6 +71,44 @@ def get_institution(name):
 	
 	return render_template('institution.html', institution=institution, name=name_joined)
 
+@app.route('/export-node-table')
+def export_nodes():
+	query = '''
+	'''
+	pass
+
+# @app.route('add/person/<string:name>', method=['GET','POST'])
+# def add_person(name):
+# 	if request.method == 'POST':
+# 		prev_update = UpdateLog.select(graph)[-1]
+# 		
+# 		update = UpdateLog()
+# 		update.id = prev_update.id + 1
+# # 		update.timestamp = 
+# 
+# 		person = Person()
+# 		person.name = request.form['name']
+# 		person.body = request.form['body']
+# 		person.last_update = update
+# 		person.push(graph)
+# 		
+# 		
+# 		flash('Person added!')
+# 		return redirect(url_for('add_person'), name=name)
+
+# @app.route('/csv-upload', method=['GET','POST'])
+# def load_csv():
+# 	pass
+
+########### actions ########### 
+# TO DO
+# - import from CSV
+# - add person
+# - edit person (use flask_admin?)
+# - add institution
+# - edit institution (use flask_admin?)
+# - add relationship
+# - edit relationship
 
 ########### models ########### 
 
@@ -80,6 +132,9 @@ class Person(Content):
 	
 	last_update = RelatedTo('UpdateLog')
 	
+	# TO DO: define functions to get the relation attributes for the 
+	# relations above, since I can't figure out where py2neo does that
+	
 	def __lt__(self, other):
 		return self.name.split()[-1] < other.name.split()[-1]
 
@@ -97,6 +152,13 @@ class Institution(Content):
 	
 	last_update = RelatedTo('UpdateLog')
 	
+	def alumni_worked_at(self):
+		query = '''
+		match (i:Institution)<-[:STUDIED_AT]-(p:Person)-[:WORKED_AT]->(j:Institution) where i.name contains "%s" return distinct j.name as name
+		''' % self.name
+		awa = graph.run(query)
+		return(awa)
+	
 	def __lt__(self, other):
 		return self.name < other.name
 
@@ -109,6 +171,9 @@ class User(GraphObject):
 	active = Property()
 	
 	contributed = RelatedTo('UpdateLog')
+	
+	# TO DO: define functions here for adding nodes, relationships,
+	# so we can call them in the view routes above
 
 class Provenance(GraphObject):			# group UpdateLog and DataSource
 	pass	
@@ -169,6 +234,10 @@ class WorkedAt(Relationship):
 ########### forms ###########
 class SearchForm(Form):
 	name = StringField('name')
+
+class PersonForm(Form):
+	name = StringField('Name: ')
+	body = StringField('Any other text to add? ')
 
 
 ########### utility functions ########### 

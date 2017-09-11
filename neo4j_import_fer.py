@@ -52,12 +52,17 @@ def main():
 	# Do the hard work
 	import_fer(graph)
 	
+	# Set up queries to make it easier to count real relationship content 
+	#	i.e. not just UpdateLogs and DataSources
+	# match (p:Person) set p:Content
+	# match (p:Institution) set p:Content
+	# match (n:Content)-[r]->(m:Content) return count(r)
 	
 
 # Define the hard work
 def import_fer(graph):
 # 2. Use Python to read in the data, simplifying the header
-	FILE = 'fer_data.csv'
+	FILE = 'fer_data_20170315.csv'
 	simple_headers = ('name_found_via','first_name','last_name','phd_school','phd_department','phd_year','data_source','data_source_file','added_by','worked_at','title','role','start','end','entered_on','needs_attention','confirmed','confirmed_by','confirmed_on')
 	with open(FILE, mode='r', newline=None, encoding='latin1') as f:
 		reader = csv.DictReader(f, fieldnames=simple_headers)
@@ -84,33 +89,33 @@ def import_fer(graph):
 		# If the row is flagged for exclusion, skip to the next one
 		if row['confirmed'] == 'exclude':
 			continue
-	
-# 		# 3. Merge the (ds:DataSource) into the database
+		
+	# 		# 3. Merge the (ds:DataSource) into the database
 		ds = Node('DataSource')
-# 			parse Source of Information column as a list, trimming whitespace
+	# 			parse Source of Information column as a list, trimming whitespace
 		ds['uri'] = list(map(str.strip, row['data_source'].split(',')))
 		graph.merge(ds)
 		ds['description'] = 'Found by searching publicly accessible websites'
 		ds.push()
 		
 		
-# 		# 4. Create an (ul:UpdateLog); we'll fill in more info later
-# 		ul = Node('UpdateLog', id=uuid.uuid4().hex)
-# 		graph.merge(ul)
-# 
-# 		
-# 		# 5. Merge (ul)-[:BASED_ON]->(ds)
-# 		rel = Relationship(ul, 'BASED_ON', ds)
-# 		graph.merge(rel)
-# 		
-# 		6. Merge the (p:Person) into the database
+	# 		# 4. Create an (ul:UpdateLog); we'll fill in more info later
+	# 		ul = Node('UpdateLog', id=uuid.uuid4().hex)
+	# 		graph.merge(ul)
+	# 
+	# 		
+	# 		# 5. Merge (ul)-[:BASED_ON]->(ds)
+	# 		rel = Relationship(ul, 'BASED_ON', ds)
+	# 		graph.merge(rel)
+	# 		
+	# 		6. Merge the (p:Person) into the database
 		#			combine first and last name
 		fullname = row['first_name'] + ' ' + row['last_name']
 		p = Node('Person', name=fullname)
 		
-#			if the name already exists, check that studied_at matches
-#			- if it doesn't, save for manual entry and go to the next row
-#			- if it does match or there is no studied_at, proceed
+	#			if the name already exists, check that studied_at matches
+	#			- if it doesn't, save for manual entry and go to the next row
+	#			- if it does match or there is no studied_at, proceed
 		phd_school = row['phd_school']
 		query = '''
 		MATCH (p:Person {name: "%s"})
@@ -122,41 +127,40 @@ def import_fer(graph):
 		  i.name CONTAINS "%s" as school_match
 		'''
 		reply = graph.run(query % (fullname, phd_school)).data()[:1]
-
+		
 		if type(reply) == 'dict' and reply['name_found'] and reply ['school_found']:
 			if not reply['school_match']:
 				print("%s is already in the database, but with a different PhD program; please check that it's the same person and enter manually. This row will be skipped and saved for later." % fullname)
 				manual_entry.append(row)
 				continue
 		
-# 		looks like we don't have a weird mismatched duplicate, let's proceed
+	# 		looks like we don't have a weird mismatched duplicate, let's proceed
 		graph.merge(p)
 		
-# 		7. Merge the studied_at (i1:Institution) into the database.
-# 			Match first with the unique name, then update
+	# 		7. Merge the studied_at (i1:Institution) into the database.
+	# 			Match first with the unique name, then update
 		i1 = Node('Institution', name=phd_school)
 		graph.merge(i1)
-# 		i1['type']='school'		# we don't need an extra hit to the database;
-# 		i1.push()				# just find all studied_at relations later
+
 		
-#		8. Merge the studied_at relation
-# 			- include department and year		
+	#		8. Merge the studied_at relation
+	# 			- include department and year		
 		rel = Relationship(p, 'STUDIED_AT', i1)
 		rel['toward_degree'] = 'PhD'		### update for a diff dataset ###
 		rel['department'] = row['phd_department']
 		rel['graduation_year'] = row['phd_year']
 		graph.merge(rel)
-#			TO DO: adjust  (p)-[:LAST_UPDATE]-(ul) and
-#					  (i1)-[:LAST_UPDATE]->(ul)
-#					  using some helper function I have to write
+	#			TO DO: adjust  (p)-[:LAST_UPDATE]-(ul) and
+	#					  (i1)-[:LAST_UPDATE]->(ul)
+	#					  using some helper function I have to write
 		
-#		9. Merge the worked_at (i2:Institution) into the database
-#		TO DO: Look up and add location data automatically
-#		TO DO: Prompt on name variants using Levenshtein distance or similar
+	#		9. Merge the worked_at (i2:Institution) into the database
+	#		TO DO: Look up and add location data automatically
+	#		TO DO: Prompt on name variants using Levenshtein distance or similar
 		i2 = Node('Institution', name=row['worked_at'])
 		graph.merge(i2)
 		
-#		10. Merge the worked_at relation, including title, role, start, end
+	#		10. Merge the worked_at relation, including title, role, start, end
 		rel = Relationship(p, 'WORKED_AT', i2)
 		rel['title'] = row['title']
 		rel['role'] = row['role']
@@ -164,15 +168,22 @@ def import_fer(graph):
 		rel['end'] = row['end']
 		rel['as_of'] = row['entered_on']
 		graph.merge(rel)
-#			TO DO: adjust  (p)-[:LAST_UPDATE]-(ul) and
-#					  (i1)-[:LAST_UPDATE]->(ul)
-#					  using some helper function I have to write
-	
+	#			TO DO: adjust  (p)-[:LAST_UPDATE]-(ul) and
+	#					  (i1)-[:LAST_UPDATE]->(ul)
+	#					  using some helper function I have to write
+		
 	# TO DO: Make this save to csv instead of printing
 	if len(manual_entry):
 		print('The following rows need to be handled manually:')
 		for row in manual_entry:
 			print(row)
+	
+	# Outside the loop, find all definite schools (b/c people studied there)
+	query = '''
+		MATCH (a)-[:STUDIED_AT]->(b:Institution)
+		SET b.type = 'school'
+	'''
+	graph.run(query)
 
 
 if __name__=='__main__': 

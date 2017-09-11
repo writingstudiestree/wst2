@@ -43,6 +43,10 @@ def load_nodes(graph, start_clean=0, do_people=1, do_schools=1):
 		graph.run('CREATE CONSTRAINT ON (u:User) ASSERT u.id IS UNIQUE;')
 		graph.run('CREATE CONSTRAINT ON (p:Person) ASSERT p.nid IS UNIQUE')
 		graph.run('CREATE CONSTRAINT ON (i:Institution) ASSERT i.nid IS UNIQUE')
+		graph.run('CREATE INDEX ON :MENTORED(subtype)')
+		graph.run('CREATE INDEX ON :WORKED_AT(subtype)')
+		graph.run('CREATE INDEX ON :WORKED_ALONGSIDE(subtype)')
+		graph.run('CREATE INDEX ON :STUDIED_AT(subtype)')
 
 # Use Python to read in the node data, 
 # hopefully fixing weird encoding and escaping errors in the process

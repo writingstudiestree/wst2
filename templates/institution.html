@@ -1,39 +1,53 @@
-{% extends "bootstrap/base.html" %}
+{% extends "layout.html" %}
 
 {% block title %}
 {{name}} is in the WST
 {% endblock %}
 
-{% block content %}
+{% block main %}
 <h1>{{ institution.name }}</h1>
-{% if institution.location %}
-	{{ institution.location }}
+{% if institution.city  %}
+	{{ institution.city }}, {{ institution.state }}
 {% else %}
-	Location unknown
+	Location not yet entered
 {% endif %}
-
-<h2>Counts among its students...</h2>
-<ul>
-{% for item in institution.students %}
-	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
-{% else %}
-	<li>None listed yet...</li>
-{% endfor %}	
-</ul>
 
 <h2>Has employed...</h2>
 <ul>
-{% for item in institution.employees %}
+{% for item in institution.employees|sort %}
 	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
 {% endfor %}	
 </ul>
 
-{% if institution.type != School %}
+{% if institution.type == "school" %}
+<h2>Counts among its students...</h2>
+<ul>
+{% for item in institution.students|sort %}
+	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+
+<h2>People who studied here went on to work at...</h2>
+<ul>
+{% for item in institution.alumni_worked_at()|sort %}
+	<li><a href="/institution/{{ item.name }}">{{ item.name }}</a></li>
+{% else %}
+	<li>None listed yet...</li>
+{% endfor %}	
+</ul>
+
+{% endif %}
+
+
+{% if institution.type != "school" %}
 <h2>Members have included...</h2>
 <ul>
-{% for item in institution.members %}
+{% for item in institution.members|sort %}
 	<li><a href="/person/{{ item.name }}">{{ item.name }}</a></li>
 {% else %}
 	<li>None listed yet...</li>
