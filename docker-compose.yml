@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: wst
       MYSQL_ROOT_PASSWORD: abcdefg123
     ports:
-      - '3306:3306'
+      - 3306:3306
     volumes:
       - ./db/app:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
