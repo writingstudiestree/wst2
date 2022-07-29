@@ -5,6 +5,9 @@ WORKDIR /app
 # copy everything to the container
 COPY . .
 
+# remove any ".env" file (variables should be specified in Docker config)
+RUN rm .env
+
 # clean install all dependencies
 RUN npm ci
 

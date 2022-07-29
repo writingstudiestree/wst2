@@ -13,7 +13,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./db/app:/var/lib/mysql
+      - db-data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
   app:
     container_name: wst2-app
@@ -27,3 +27,6 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: mysql://root:abcdefg123@db:3306/wst
+
+volumes:
+  db-data:

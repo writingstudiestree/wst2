@@ -36,11 +36,10 @@ To start this server, use the below command with [docker-compose](https://docs.d
 docker-compose up -d db
 ```
 
-The database files will be stored persistently in `db/app`. To reset this database, simply stop the application, delete the folder, and restart the server:
+The database files will be stored persistently in a [Docker volume](https://docs.docker.com/storage/volumes/). To reset this database, simply stop the application with the `-v` flag to remove the volume, and restart the server:
 
 ```shell
-docker-compose down
-rm -rf db/app
+docker-compose down -v
 docker-compose up -d db
 ```
 
@@ -64,7 +63,7 @@ The `npm test` command can be used to run all tests in the project and print the
 
 To test the server with the database in a production environment, `docker-compose up` can be used to start both the SvelteKit app and the database.
 
-If the SvelteKit application is changed, use `docker-compose up --build` to rebuild the `app` container.
+If the SvelteKit application is changed, use `docker-compose up --build app` to rebuild the `app` container.
 
 ## Creating a Pull Request
 
