@@ -17,6 +17,7 @@
     "coverage": "vitest run src --coverage"
   },
   "devDependencies": {
+    "@databases/mysql-test": "^4.0.2",
     "@popperjs/core": "^2.11.5",
     "@sveltejs/adapter-node": "next",
     "@sveltejs/kit": "next",
