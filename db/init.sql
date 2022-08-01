@@ -37,7 +37,3 @@ CREATE TABLE revisions (
   created DATETIME NOT NULL,
   content JSON NOT NULL
 );
-
--- Testing data:
-INSERT INTO content (type, name, content)
-VALUES ("institution", "University of Pittsburgh", "{\"description\": \"\",\"websites\": [\"https://pitt.edu\"]}");
