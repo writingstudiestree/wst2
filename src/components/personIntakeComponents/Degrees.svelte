@@ -64,8 +64,7 @@
     }
 
 </script>
-
-    <h1 class = "formType">New Person</h1>
+<div class = "inside">
     <h2>3. Degrees</h2>
     <p>Where did this person receive their education?</p>
     <div class = "indented">
@@ -105,7 +104,7 @@
         <br/>
         <button on:click = {packageNode}>Add degree</button>
     </div>
-
+</div>
 <style>
     .increasedWidth
     {

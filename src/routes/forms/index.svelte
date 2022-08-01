@@ -1,23 +1,50 @@
-<script>
-import { goto } from "$app/navigation";
+<script lang="ts">
+    import { goto } from "$app/navigation";
+    import { v4 as uuid } from 'uuid';
+    import { draftForms } from '../../utils/forms/stores';
+    import { get } from 'svelte/store';
 
-    import Heading from "../components/header.svelte";
-    let formType;
+    let formType: "no value"|"person"|"school"|"institution"|"citation";
 
-    const provideForm = () => 
-    {
-        if (formType == "no value")
-        {
+    const provideForm = () => {
+        const formId = uuid();
+        const forms = get(draftForms);
+    
+        if (formType === "person" || formType === "school" || formType === "institution") {
+            const type = "person";
+            draftForms.set({
+                ...forms,
+                [formId]: {
+                    '0': {
+                        type: "content",
+                        value: {
+                            id: 0,
+                            type: formType,
+                            name: "",
+                            content: {
+                                orcId: "",
+			                    pronounceLink: "",
+			                    tags: [],
+			                    websites: [],
+			                    description: "",
+                            },
+                        }
+                    },
+                }
+            });
+        } else if (formType === "citation") {
+            //TODO: add handling for citation types
+            console.log("upcoming functionality");
+            return;
+        } else {
             //do nothing
+            return;
         }
-        else if (formType == "person")
-        {
-            goto("/personIntake");
-        }
+        
+        goto(`/forms/${formId}`);
     }
 </script>
 <body>
-    <Heading/>
     <div class = "inside">
         <h2>Add a new entry here</h2>
         <p>Please select the type of entry you would like to create from the list below:</p>
@@ -71,6 +98,6 @@ import { goto } from "$app/navigation";
         background-attachment: fixed;
         margin: 0;
         padding: 0;
-        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
     }
 </style>

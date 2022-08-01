@@ -32,3 +32,17 @@
 @import "bootstrap/scss/placeholders";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
+
+.inside 
+	{
+		
+		width: 80%;
+		border: 2px solid black;
+		height: auto;
+		padding: 2%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+		background-color: white;
+		opacity: 0.92;
+	}
