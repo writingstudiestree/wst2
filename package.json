@@ -43,6 +43,7 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "svelte-tags-input": "^2.9.2"
   }
 }
