@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "build:types": "dotenv -- bash -c 'mysql-schema-ts $DATABASE_URL > src/api/types.ts'",
+    "clean": "rm -rf node_modules .svelte-kit build",
     "package": "svelte-kit package",
     "preview": "vite preview",
     "prepare": "svelte-kit sync",
@@ -15,8 +17,9 @@
     "coverage": "vitest run src --coverage"
   },
   "devDependencies": {
+    "@databases/mysql-test": "^4.0.2",
     "@popperjs/core": "^2.11.5",
-    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-node": "next",
     "@sveltejs/kit": "next",
     "@sveltejs/vite-plugin-svelte": "^1.0.1",
     "@testing-library/jest-dom": "^5.16.4",
@@ -24,7 +27,9 @@
     "babel-jest": "^27.0.0",
     "bootstrap": "^5.2.0",
     "cross-env": "^7.0.3",
+    "dotenv-cli": "^6.0.0",
     "jsdom": "^20.0.0",
+    "mysql-schema-ts": "^1.9.1",
     "sass": "^1.53.0",
     "svelte": "^3.44.0",
     "svelte-check": "^2.7.1",
@@ -35,5 +40,9 @@
     "vite": "^3.0.3",
     "vitest": "^0.19.1"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "mysql2": "^2.3.3"
+  }
 }

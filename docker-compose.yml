@@ -1,0 +1,32 @@
+
+version: '3.3'
+services:
+  db:
+    container_name: wst2-db
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      MYSQL_DATABASE: wst
+      MYSQL_ROOT_PASSWORD: abcdefg123
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  app:
+    container_name: wst2-app
+    build:
+      context: ./
+    image: wst2-app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: mysql://root:abcdefg123@db:3306/wst
+
+volumes:
+  db-data:
