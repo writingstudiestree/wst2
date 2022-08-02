@@ -8,7 +8,7 @@
 
 	//Form Modules
 	import { goto } from "$app/navigation";
-	
+
 	function handleSubmit() {
 		const form = get(draftForms);
 		console.log(form);
@@ -26,29 +26,3 @@
 {/each}
 
 <button class="btn btn-primary" on:click={handleSubmit}>Submit</button>
-
-<style>
-	.next
-	{
-		color: white;
-		background-color: blue;
-		border-radius: 2px;
-	}
-	
-	.next:hover
-	{
-		background-color: darkblue;
-	}
-	
-	body
-	{
-		background-image: url(../images/background2.png);
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: center;
-		background-attachment: fixed;
-		margin: 0;
-		padding: 0;
-		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-	}
-</style>

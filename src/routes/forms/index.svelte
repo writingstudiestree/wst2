@@ -1,103 +1,79 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { v4 as uuid } from 'uuid';
-    import { draftForms } from '../../utils/forms/stores';
-    import { get } from 'svelte/store';
+	import { goto } from "$app/navigation";
+	import { v4 as uuid } from 'uuid';
+	import { draftForms } from '../../utils/forms/stores';
+	import { FormType, defaultForms } from '../../utils/forms/constants';
+	import { get } from 'svelte/store';
 
-    let formType: "no value"|"person"|"school"|"institution"|"citation";
+	const provideForm = (formType: FormType) => {
+		// insert a new draft under uuid with default form content
+		const formId = uuid();
+		const forms = get(draftForms);
 
-    const provideForm = () => {
-        const formId = uuid();
-        const forms = get(draftForms);
-    
-        if (formType === "person" || formType === "school" || formType === "institution") {
-            const type = "person";
-            draftForms.set({
-                ...forms,
-                [formId]: {
-                    '0': {
-                        type: "content",
-                        value: {
-                            id: 0,
-                            type: formType,
-                            name: "",
-                            content: {
-                                orcId: "",
-			                    pronounceLink: "",
-			                    tags: [],
-			                    websites: [],
-			                    description: "",
-                            },
-                        }
-                    },
-                }
-            });
-        } else if (formType === "citation") {
-            //TODO: add handling for citation types
-            console.log("upcoming functionality");
-            return;
-        } else {
-            //do nothing
-            return;
-        }
-        
-        goto(`/forms/${formId}`);
-    }
+		draftForms.set({
+			...forms,
+
+			// "deep clone" default form object to avoid modifications
+			[formId]: JSON.parse(JSON.stringify(defaultForms[formType]))
+		});
+
+		// navigate to draft edit page
+		goto(`/forms/${formId}`);
+	}
+
+	const links: {
+		type: FormType,
+		color: string,
+		icon: string,
+		desc: string,
+	}[] = [
+	{ type: "person", color: "primary", icon: "person", desc: "Add a new person to the network." },
+	{ type: "school", color: "success", icon: "school", desc: "Add new information about a school to the network." },
+	{ type: "institution", color: "warning", icon: "domain", desc: "Add new information about an institution to the network." },
+	{ type: "citation", color: "secondary", icon: "book", desc: "Declare a location or article that new information is sourced from." },
+	];
 </script>
-<body>
-    <div class = "inside">
-        <h2>Add a new entry here</h2>
-        <p>Please select the type of entry you would like to create from the list below:</p>
-        <select class = "largeSelect" bind:value = {formType}>
-            <option value = "no value"></option>
-            <option value = "person">Add a new person</option>
-            <option value = "school">Add a new school or university</option>
-            <option value = "institution">Add a new non-school institution</option>
-            <option value = "citation">Add a citation to an existing entry</option>
-        </select>
-        <button class = "go" on:click = {provideForm}>Go</button>
-    </div>
-    <div class = "inside">
-        <h2>Want to edit an existing entry instead?</h2>
-        <p>Click <a href = "https://writingstudiestree.org/">here</a> to be sent to our edit page instead.</p>
-    </div>
-</body>
-<style>
-    .inside 
-    {
-        
-        width: 80%;
-        border: 2px solid black;
-        height: auto;
-        padding: 2%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 20px;
-        background-color: white;
-        opacity: 0.92;
-    }
 
-    .largeSelect
-    {
-        width: 70%;
-        font-size: large;
-    }
+<div class="card mb-5">
+	<div class="card-body">
+		<h2 class="card-title">Add a new entry</h2>
+		<p class="card-subtitle text-muted mb-3">Please select the type of entry you would like to create:</p>
 
-    .go
-    {
-        width: 28%;
-        font-size: large;
-    }
+		<div id="form-links" class="row gx-3 gy-3">
+			{#each links as link (link.type)}
+			<div class="col col-12 col-lg-4">
+				<button class={`btn btn-${link.color} w-100 h-100 p-2`} on:click={() => provideForm(link.type)}>
+					<i class="material-icons" aria-hidden="true">{link.icon}</i>
+					<h5>{link.type}</h5>
+					<p>{link.desc}</p>
+				</button>
+			</div>
+			{/each}
+		</div>
+	</div>
+</div>
 
-    body
-    {
-        background-image: url(../images/background2.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        margin: 0;
-        padding: 0;
-        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
-    }
+<div class="card mb-5">
+	<div class="card-body">
+		<h2 class="card-title">Want to edit an existing entry instead?</h2>
+		<p class="card-text">Find an entry <a href="/explore/">from the Explore page</a>, and select the page to edit.</p>
+
+		<a href="/explore/" class="btn btn-primary d-inline-flex align-items-center">
+			<i class="material-icons me-2" aria-hidden="true">explore</i>
+			Explore
+		</a>
+	</div>
+</div>
+
+<style lang="scss">
+	#form-links .btn {
+		.material-icons {
+			font-size: 2.5rem;
+		}
+
+		h5 {
+			text-transform: capitalize;
+			margin: 0;
+		}
+	}
 </style>
