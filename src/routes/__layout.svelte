@@ -1,5 +1,6 @@
 <script>
 	import { page } from "$app/stores";
+	import { goto } from '$app/navigation';
 	import "../app.scss";
 
 	import Modal from "../components/Modal.svelte";
@@ -37,7 +38,13 @@
 	</div>
 </nav>
 
-<Modal title="Sign In" show={$page.url.hash === "#signin"}>
+<Modal
+	title="Sign In"
+	show={$page.url.hash === "#signin"}
+	on:close={
+		() => goto('#')
+	}
+>
 	<form id="signIn">
 		<div class="mb-3">
 			<label for="signInEmail" class="form-label">Email address</label>
@@ -51,7 +58,6 @@
 	</form>
 
 	<div slot="footer">
-		<a href="./#" type="submit" class="btn btn-secondary">Cancel</a>
 		<input type="submit" form="signIn" class="btn btn-primary" value="Sign In"/>
 	</div>
 </Modal>
