@@ -5,7 +5,6 @@
 </script>
 
 <div class="inside">
-    <h1 class="formType">New Person</h1>
     <h2>1. Basic Informtion</h2>
     <p>Enter some basic information about the person being added</p>
     <div class="indented">

@@ -2,6 +2,7 @@
 	import Person from "../../../components/forms/Person.svelte";
 	import School from "../../../components/forms/School.svelte";
 
+	import { isRecordType, InsertFormType } from '../../../api/form/base';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
 	import { draftForms } from '../../../utils/forms/stores';
@@ -16,13 +17,13 @@
 </script>
 
 {#each Object.entries($draftForms[$page.params.uuid]) as [id, entry] (id)}
-{#if entry.type === "content"}
-{#if entry.value.type === "person"}
-<Person bind:value={entry.value} />
-{:else if entry.value.type === "school"}
-<School bind:value={entry.value} />
-{/if}
-{/if}
+	{#if isRecordType(entry, InsertFormType.CONTENT) }
+		{#if entry.value.type === "person"}
+		<Person bind:value={entry.value} />
+		{:else if entry.value.type === "school"}
+		<School bind:value={entry.value} />
+		{/if}
+	{/if}
 {/each}
 
 <button class="btn btn-primary" on:click={handleSubmit}>Submit</button>

@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 
     //degrees exported as a list of relation nodes
     export let relationNodes = []; 
