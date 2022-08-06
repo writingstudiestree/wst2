@@ -3,18 +3,23 @@
     
     export let enteredTags: string[] = [];
     
+    let itsMe = false;
     function addInterest(event: any) {
         enteredTags = event.detail.tags;
     }
     
     //Add tags from WST 1 here
-    let interestTags = ["African American Rhetoric", "Basic Writing", "Big Data", "19th Century"];
+    let interestTags = ["LGBTQ+", "He/him", "She/her", "They/them", "African American"];
     
 </script>
 
 <div class = "inside">
-    <h2>3. Interests</h2>
-        <p>What areas of interest or focus does this person have?</p>
+    <h2>4. Self-indentification</h2>
+    <p>How do you self-identify?</p>
+        <label>
+        <input type=checkbox bind:checked={itsMe}>
+        I am entering myself in this form
+        </label>
         <Tags 
         on:tags={addInterest}
         addKeys={[13]}
@@ -24,12 +29,12 @@
         splitWith={"|"}
         onlyUnique={true}
         removeKeys={[8]}
+        disable={!itsMe}
         placeholder={"Press enter to add an entry. Add multiple!"}
         autoComplete={interestTags}
         name={"interestBar"}
         id={Math.random()}
         allowBlur={true}
-        disable={false}
         minChars={0}
         onlyAutocomplete={false}
         labelShow={false}/>
@@ -41,4 +46,4 @@
         {
             font-size: x-small;
         }
-    </style>
+</style>

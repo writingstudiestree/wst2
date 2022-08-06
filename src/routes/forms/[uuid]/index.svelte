@@ -26,4 +26,11 @@
 	{/if}
 {/each}
 
-<button class="btn btn-primary" on:click={handleSubmit}>Submit</button>
+<button class="btn btn-primary indent" on:click={handleSubmit}>Save and continue</button>
+
+<style>
+	.indent
+	{
+		margin-left: 10%;
+	}
+</style>

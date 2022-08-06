@@ -41,7 +41,7 @@
 
 		<div id="form-links" class="row gx-3 gy-3">
 			{#each links as link (link.type)}
-			<div class="col col-12 col-lg-4">
+			<div class="col col-12 col-lg-6">
 				<button class={`btn btn-${link.color} w-100 h-100 p-2`} on:click={() => provideForm(link.type)}>
 					<i class="material-icons" aria-hidden="true">{link.icon}</i>
 					<h5>{link.type}</h5>
@@ -56,7 +56,7 @@
 <div class="card mb-5">
 	<div class="card-body">
 		<h2 class="card-title">Want to edit an existing entry instead?</h2>
-		<p class="card-text">Find an entry <a href="/explore/">from the Explore page</a>, and select the page to edit.</p>
+		<p class="card-text">Find an entry <a href="/explore/">from the Explore page</a> and select the page to edit.</p>
 
 		<a href="/explore/" class="btn btn-primary d-inline-flex align-items-center">
 			<i class="material-icons me-2" aria-hidden="true">explore</i>

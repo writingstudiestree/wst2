@@ -11,6 +11,10 @@
 		url: '/',
 	},{
 		type: 'link',
+		name: 'Contribute',
+		url: '/forms',
+	},{
+		type: 'link',
 		name: 'Explore',
 		url: '/explore/',
 	}];
