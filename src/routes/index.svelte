@@ -3,11 +3,11 @@
 		<h1 class="card-title centerHeader">Welcome to The Writing Studies Tree!</h1>
 		<p class="card-subtitle text-muted mb-3">
         <p>The WST is an online, crowdsourced database of academic genealogies within writing studies; in other words, it is an interactive archive for recording and mapping scholarly relationships in Composition and Rhetoric and adjacent disciplines.</p>
-        <p><a href="/#signin">Create an account to get started</a></p>
+        <p class = "xl"><a href="/#signin">Create an account to get started</a></p>
     </div>
     <div class = "banner"></div>
     <div class="card-body">
-        <h2>Not sure where to start?</h2>
+        <h2>Have an account but not sure where to start?</h2>
         <br/>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
@@ -81,5 +81,10 @@
     .cardHeight
     {
         min-height: 200px;
+    }
+
+    .xl
+    {
+      font-size: x-large;
     }
 </style>

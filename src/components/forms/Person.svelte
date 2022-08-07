@@ -3,7 +3,6 @@
 
 	import BasicInformation from "../personIntakeComponents/BasicInformation.svelte";
 	import Tags from "../personIntakeComponents/Tags.svelte";
-	import Degrees from "../personIntakeComponents/Degrees.svelte";
 	import Websites from '../personIntakeComponents/Websites.svelte';
 	import IdentityTags from '../personIntakeComponents/IdentityTags.svelte';
 	import Description from '../personIntakeComponents/Description.svelte';

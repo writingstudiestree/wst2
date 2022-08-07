@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Content } from '../../api/types';
 	import SchoolBasicInformation from '../schoolntakeComponents/SchoolBasicInformation.svelte';
-import SchoolDescription from '../schoolntakeComponents/SchoolDescription.svelte';
-import SchoolLocation from '../schoolntakeComponents/SchoolLocation.svelte';
-import SchoolTags from '../schoolntakeComponents/SchoolTags.svelte';
+	import SchoolDescription from '../schoolntakeComponents/SchoolDescription.svelte';
+	import SchoolLocation from '../schoolntakeComponents/SchoolLocation.svelte';
+	import SchoolTags from '../schoolntakeComponents/SchoolTags.svelte';
 
     /*export let value: Content & {
 		content: {
@@ -16,7 +16,7 @@ import SchoolTags from '../schoolntakeComponents/SchoolTags.svelte';
     content: any,
 	};
 </script>
-
+<h1 class="textCenter">New School or University</h1>
 <SchoolBasicInformation
 	bind:name={value.name}
 	bind:websites={value.content.websites}

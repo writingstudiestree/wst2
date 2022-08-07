@@ -33,7 +33,6 @@
 	{ type: "citation", color: "secondary", icon: "book", desc: "Declare a location or article that new information is sourced from." },
 	];
 </script>
-
 <div class="card mb-5">
 	<div class="card-body">
 		<h2 class="card-title">Add a new entry</h2>

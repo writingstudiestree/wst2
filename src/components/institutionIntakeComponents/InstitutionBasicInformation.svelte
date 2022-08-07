@@ -20,17 +20,17 @@
 
 <div class="inside">
     <h2>1. Basic Information</h2>
-    <p>Let's start with some basic information about the school or university</p>
+    <p>Let's start with some basic information about the insitution</p>
     <div>
         <form>
             <div class="form-group">
-                <label for="schoolName">Name of school or university</label>
+                <label for="schoolName">Name of insitution</label>
                 <input type="text" class="form-control" id="schoolName" placeholder="Please avoid acronyms and abbreviations" bind:value = {name} required>
             </div>
             <br/>
             <label for = "websiteTerminal">Websites</label>
             <div class="input-group mb-3" id="websiteTerminal">
-                <input type="text" class="form-control" placeholder="Enter school site, social media, department sites, etc." aria-label="Website input" aria-describedby="basic-addon2" bind:value={currWebsite}>
+                <input type="text" class="form-control" placeholder="Enter insitution site, social media, etc." aria-label="Website input" aria-describedby="basic-addon2" bind:value={currWebsite}>
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" on:click = {addSite}>Add website</button>
                 </div>
@@ -51,11 +51,6 @@
     .red
     {
         color: red;
-    }
-
-    .smallText
-    {
-        font-size: x-small;
     }
 
     .indented

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Person from "../../../components/forms/Person.svelte";
 	import School from "../../../components/forms/School.svelte";
+	import Institution from "../../../components/forms/Institution.svelte";
 
 	import { isRecordType, InsertFormType } from '../../../api/form/base';
 	import { page } from '$app/stores';
@@ -14,14 +15,20 @@
 		const form = get(draftForms);
 		console.log(form);
 	}
-</script>
 
+	const back = () => {
+		goto(`/forms`);
+	};
+</script>
+<button on:click = {back} class = "btn btn-secondary">Back to menu</button>
 {#each Object.entries($draftForms[$page.params.uuid]) as [id, entry] (id)}
 	{#if isRecordType(entry, InsertFormType.CONTENT) }
 		{#if entry.value.type === "person"}
 		<Person bind:value={entry.value} />
 		{:else if entry.value.type === "school"}
 		<School bind:value={entry.value} />
+		{:else if entry.value.type === "institution"}
+		<Institution bind:value={entry.value} />
 		{/if}
 	{/if}
 {/each}
