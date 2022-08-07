@@ -11,6 +11,10 @@
 		url: '/',
 	},{
 		type: 'link',
+		name: 'About Us',
+		url: '/about',
+	},{
+		type: 'link',
 		name: 'Contribute',
 		url: '/forms',
 	},{
