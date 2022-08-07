@@ -21,10 +21,11 @@
 <div class="inside">
     <h2>1. Basic Information</h2>
     <p>Let's start with some basic information about the insitution</p>
+    <p><span class="red">*</span>Required fields</p>
     <div>
         <form>
             <div class="form-group">
-                <label for="schoolName">Name of insitution</label>
+                <label for="schoolName">Name of insitution<span class="red">*</span></label>
                 <input type="text" class="form-control" id="schoolName" placeholder="Please avoid acronyms and abbreviations" bind:value = {name} required>
             </div>
             <br/>

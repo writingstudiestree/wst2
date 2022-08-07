@@ -21,10 +21,11 @@
 <div class="inside">
     <h2>1. Basic Information</h2>
     <p>Let's start with some basic information about the school or university</p>
+    <p><span class="red">*</span>Required fields</p>
     <div>
         <form>
             <div class="form-group">
-                <label for="schoolName">Name of school or university</label>
+                <label for="schoolName">Name of school or university<span class="red">*</span></label>
                 <input type="text" class="form-control" id="schoolName" placeholder="Please avoid acronyms and abbreviations" bind:value = {name} required>
             </div>
             <br/>
@@ -37,7 +38,7 @@
             </div>
             <div class="list-group indented">
                 {#if websites.length > 0}
-                    <span>Your websites (Click to remove entries)</span>
+                    <span>Your website list (Click to remove entries)</span>
                     {#each websites as site, i}
                     <button type="button" on:click = {() => removeSite(i)} class="list-group-item list-group-item-action">{site}</button>
                     {/each}
@@ -51,11 +52,6 @@
     .red
     {
         color: red;
-    }
-
-    .smallText
-    {
-        font-size: x-small;
     }
 
     .indented

@@ -30,11 +30,11 @@
     {#if inUSA}
     <div class="row">
         <div class="col largerWidth">
-          <label for="inputCity">City</label>
+          <label for="inputCity">City<span class="red">*</span></label>
           <input type="text" bind:value={cityName} class="form-control" id="inputCity">
         </div>
         <div class="col">
-          <label for="inputState">State</label>
+          <label for="inputState">State<span class="red">*</span></label>
           <select id="inputState" class="form-control" bind:value={stateAbbrev}>
             {#each stateAbbrevList as state}
                 <option value={state}>
@@ -51,11 +51,11 @@
     {:else}
     <div class="row">
         <div class="col largerWidth">
-          <label for="inputCity">City</label>
+          <label for="inputCity">City<span class="red">*</span></label>
           <input type="text" bind:value={cityName} class="form-control" id="inputCity">
         </div>
         <div class="col">
-          <label for="inputZip">Country</label>
+          <label for="inputZip">Country<span class="red">*</span></label>
           <input type="text" class="form-control" id="inputZip" bind:value={countryName}>
         </div>
     </div>
@@ -63,6 +63,10 @@
 </div>
 
 <style>
+    .red
+    {
+      color: red;
+    }
     .largerWidth
     {
         width:60%;

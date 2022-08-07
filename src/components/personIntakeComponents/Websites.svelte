@@ -38,7 +38,7 @@
             </div>
             <div class="list-group indented">
                 {#if websites.length > 0}
-                    <span>Your websites (Click to remove entries)</span>
+                    <span>Your website list (Click to remove entries)</span>
                     {#each websites as site, i}
                     <button type="button" on:click = {() => removeSite(i)} class="list-group-item list-group-item-action">{site}</button>
                     {/each}
@@ -50,5 +50,10 @@
     .list-group-item:hover
     {
         text-decoration: line-through;
+    }
+
+    .indented
+    {
+        margin-left: 20px;
     }
 </style>
