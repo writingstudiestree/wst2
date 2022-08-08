@@ -13,7 +13,7 @@
         <input type="text" id="fullname" class="form-control" aria-describedby="enterFullname" bind:value = {name} placeholder="Your preferred name (first and last, if applicable)">
         <br/>
         <label for="orcid">ORCiD</label>
-        <input type="text" id="orcid" class="form-control" aria-describedby="enterOrcid" bind:value = {ORCiD}>
+        <input type="text" id="orcid" class="form-control" aria-describedby="orcid-tip" bind:value = {ORCiD}>
         <small id="orcid-tip" class="form-text text-muted">
             An ORCiD is a persistent identifier you control, which can help distinguish you from others with the same name – or match you to your work when your name changes. Learn more or create one at <a href="https://orcid.org/">orcid.org</a>.
         </small>

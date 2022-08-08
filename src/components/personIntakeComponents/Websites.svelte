@@ -5,7 +5,7 @@
     //entered website handling
     let currWebsite: string = "";
 
-    const addSite = () => 
+    const addSite = () =>
     {
         if (currWebsite != "" && currWebsite != undefined)
         websites = [currWebsite, ...websites];
@@ -23,15 +23,15 @@
     <h2>2. Websites</h2>
     <p>Where can we find you online?</p>
     <label for="pronounceLinkBox">Pronunciation Link</label>
-        <input type="text" id="pronounceLinkBox" class="form-control" aria-describedby="enterOrcid" bind:value = {pronounceLink}>
-        <small id="orcid-tip" class="form-text text-muted">
+        <input type="text" id="pronounceLinkBox" class="form-control" aria-describedby="pronounce-tip" bind:value = {pronounceLink}>
+        <small id="pronounce-tip" class="form-text text-muted">
             NB: THIS SHOULD PROBABLY BE UNDER BASIC INFORMATION, RATHER THAN WEBSITES. Is there a recording of this person's name at <a href="https://kairos.technorhetoric.net/scholarnames/">Kairos ScholarNames</a> or elsewhere? Please share a link here.
         </small>
         <br/>
         <br/>
 <label for = "websiteTerminal">Websites</label>
     <div class="input-group mb-3" id="websiteTerminal">
-                <input type="text" class="form-control" placeholder="Enter your LinkedIn, Blog, Social Media, Academic Website, etc..." aria-label="Website input" aria-describedby="basic-addon2" bind:value={currWebsite}>
+                <input type="text" class="form-control" placeholder="Enter your LinkedIn, Blog, Social Media, Academic Website, etc. One at a time, please!" aria-label="Website input" aria-describedby="basic-addon2" bind:value={currWebsite}>
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" on:click = {addSite}>Add website</button>
                 </div>
