@@ -25,7 +25,7 @@
     <label for="pronounceLinkBox">Pronunciation Link</label>
         <input type="text" id="pronounceLinkBox" class="form-control" aria-describedby="pronounce-tip" bind:value = {pronounceLink}>
         <small id="pronounce-tip" class="form-text text-muted">
-            NB: THIS SHOULD PROBABLY BE UNDER BASIC INFORMATION, RATHER THAN WEBSITES. Is there a recording of this person's name at <a href="https://kairos.technorhetoric.net/scholarnames/">Kairos ScholarNames</a> or elsewhere? Please share a link here.
+Is there a recording of this person's name at <a href="https://kairos.technorhetoric.net/scholarnames/">Kairos ScholarNames</a> or elsewhere? Please share a link here.
         </small>
         <br/>
         <br/>
