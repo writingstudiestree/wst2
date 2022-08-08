@@ -3,7 +3,7 @@
     export let websites: string[] = [];
     let currWebsite: string = "";
 
-    const addSite = () => 
+    const addSite = () =>
     {
         if (currWebsite != "" && currWebsite != undefined)
         websites = [currWebsite, ...websites];
@@ -20,18 +20,18 @@
 
 <div class="inside">
     <h2>1. Basic Information</h2>
-    <p>Let's start with some basic information about the insitution</p>
+    <p>Let's start with some basic information about the institution</p>
     <p><span class="red">*</span>Required fields</p>
     <div>
         <form>
             <div class="form-group">
-                <label for="schoolName">Name of insitution<span class="red">*</span></label>
+                <label for="schoolName">Name of institution<span class="red">*</span></label>
                 <input type="text" class="form-control" id="schoolName" placeholder="Please avoid acronyms and abbreviations" bind:value = {name} required>
             </div>
             <br/>
             <label for = "websiteTerminal">Websites</label>
             <div class="input-group mb-3" id="websiteTerminal">
-                <input type="text" class="form-control" placeholder="Enter insitution site, social media, etc." aria-label="Website input" aria-describedby="basic-addon2" bind:value={currWebsite}>
+                <input type="text" class="form-control" placeholder="Enter institution site, social media, etc." aria-label="Website input" aria-describedby="basic-addon2" bind:value={currWebsite}>
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" on:click = {addSite}>Add website</button>
                 </div>
