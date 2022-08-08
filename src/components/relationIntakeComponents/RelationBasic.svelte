@@ -1,6 +1,6 @@
 <script lang="ts"> 
-    export let from: Object;
-    let link_to: Object = {
+    export let from: any;
+    let link_to = {
         id: 0,
         name: "",
         type: "none"
