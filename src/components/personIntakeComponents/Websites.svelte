@@ -21,7 +21,7 @@
 </script>
 <div class="inside">
     <h2>2. Websites</h2>
-    <p>Where can we find you online?</p>
+    <p>Where can we find this person online?</p>
     <label for="pronounceLinkBox">Pronunciation Link</label>
         <input type="text" id="pronounceLinkBox" class="form-control" aria-describedby="pronounce-tip" bind:value = {pronounceLink}>
         <small id="pronounce-tip" class="form-text text-muted">
