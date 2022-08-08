@@ -1,7 +1,7 @@
 import * as zod from 'zod';
 import type { Content, Citations, Relations, Attributions } from '../types';
 
-const UID = zod.number();
+const UID = zod.number().lt(0);
 
 export const personSchema: zod.ZodSchema<Content> = zod.object({
 	id: UID,

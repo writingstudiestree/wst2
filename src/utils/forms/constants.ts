@@ -4,10 +4,10 @@ export type FormType = "person"|"school"|"institution"|"citation";
 
 export const defaultForms: Record<FormType, InsertForm> = {
 	person: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CONTENT,
 			value: {
-				id: 0,
+				id: -1,
 				type: "person",
 				name: "",
 				content: {
@@ -21,10 +21,10 @@ export const defaultForms: Record<FormType, InsertForm> = {
 		},
 	},
 	school: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CONTENT,
 			value: {
-				id: 0,
+				id: -1,
 				type: "school",
 				name: "",
 				content: {
@@ -37,10 +37,10 @@ export const defaultForms: Record<FormType, InsertForm> = {
 		},
 	},
 	institution: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CONTENT,
 			value: {
-				id: 0,
+				id: -1,
 				type: "institution",
 				name: "",
 				content: {
@@ -53,10 +53,10 @@ export const defaultForms: Record<FormType, InsertForm> = {
 		},
 	},
 	citation: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CITATION,
 			value: {
-				id: 0,
+				id: -1,
 				name: "",
 				collection: "",
 				content: {
