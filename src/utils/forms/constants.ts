@@ -31,6 +31,7 @@ export const defaultForms: Record<FormType, InsertForm> = {
 					location: "",
 					tags: [],
 					websites: [],
+					description: "",
 				},
 			}
 		},
@@ -46,6 +47,7 @@ export const defaultForms: Record<FormType, InsertForm> = {
 					location: "",
 					tags: [],
 					websites: [],
+					description: "",
 				},
 			}
 		},

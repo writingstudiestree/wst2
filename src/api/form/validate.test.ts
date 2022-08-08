@@ -12,7 +12,7 @@ describe('validate.ts', () => {
 					name: "A Person",
 					content: {
 						orcId: "",
-						pronounceLink: "",
+						pronounceLink: "https://example.com",
 						tags: [],
 						websites: [],
 						description: "",
@@ -27,7 +27,7 @@ describe('validate.ts', () => {
 					name: "Another Person",
 					content: {
 						orcId: "",
-						pronounceLink: "",
+						pronounceLink: "https://example.com",
 						tags: [],
 						websites: [],
 						description: "",
@@ -63,7 +63,7 @@ describe('validate.ts', () => {
 					name: "A Person",
 					content: {
 						orcId: "",
-						pronounceLink: "",
+						pronounceLink: "https://example.com",
 						tags: [],
 						websites: [],
 						description: "",
