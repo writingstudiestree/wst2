@@ -1,13 +1,13 @@
 <script lang="ts">
-	import Person from "../../../components/forms/Person.svelte";
-	import School from "../../../components/forms/School.svelte";
-	import Institution from "../../../components/forms/Institution.svelte";
-	import Citation from "../../../components/forms/Citation.svelte";
+	import Person from "src/components/forms/Person.svelte";
+	import School from "src/components/forms/School.svelte";
+	import Institution from "src/components/forms/Institution.svelte";
+	import Citation from "src/components/forms/Citation.svelte";
 
-	import { isRecordType, InsertFormType } from '../../../api/form/base';
+	import { isRecordType, InsertFormType } from 'src/api/forms/base';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
-	import { draftForms } from '../../../utils/forms/stores';
+	import { draftForms } from 'src/utils/forms';
 
 	//Form Modules
 	import { goto } from "$app/navigation";

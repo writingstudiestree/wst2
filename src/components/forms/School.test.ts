@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
 import School from './School.svelte';
 
-import { defaultForms } from '../../utils/forms/constants';
+import { defaultForms } from 'src/utils/forms';
 
 /**
 * This is an example test that only checks if
@@ -10,7 +10,7 @@ import { defaultForms } from '../../utils/forms/constants';
 */
 describe('School', () => {
 	test('should render with default props', () => {
-		const form = Object.values(defaultForms["school"])[0];
+		const form = Object.values(defaultForms.school)[0];
 
 		const { container } = render(School, {
 			value: form.value,

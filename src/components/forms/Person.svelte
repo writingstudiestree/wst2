@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Content } from '../../api/types';
+	import type { Content } from 'src/api';
 
 	import BasicInformation from "../personIntakeComponents/BasicInformation.svelte";
 	import Tags from "../personIntakeComponents/Tags.svelte";

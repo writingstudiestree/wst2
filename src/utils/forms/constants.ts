@@ -1,13 +1,13 @@
-import { InsertForm, InsertFormType } from '../../api/form/base';
+import { InsertForm, InsertFormType } from 'src/api/forms/base';
 
 export type FormType = "person"|"school"|"institution"|"citation";
 
 export const defaultForms: Record<FormType, InsertForm> = {
 	person: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CONTENT,
 			value: {
-				id: 0,
+				id: -1,
 				type: "person",
 				name: "",
 				content: {
@@ -21,40 +21,42 @@ export const defaultForms: Record<FormType, InsertForm> = {
 		},
 	},
 	school: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CONTENT,
 			value: {
-				id: 0,
+				id: -1,
 				type: "school",
 				name: "",
 				content: {
 					location: "",
 					tags: [],
 					websites: [],
+					description: "",
 				},
 			}
 		},
 	},
 	institution: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CONTENT,
 			value: {
-				id: 0,
+				id: -1,
 				type: "institution",
 				name: "",
 				content: {
 					location: "",
 					tags: [],
 					websites: [],
+					description: "",
 				},
 			}
 		},
 	},
 	citation: {
-		'0': {
+		'-1': {
 			type: InsertFormType.CITATION,
 			value: {
-				id: 0,
+				id: -1,
 				name: "",
 				collection: "",
 				content: {

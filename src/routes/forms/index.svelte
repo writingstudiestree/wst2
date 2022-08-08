@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { v4 as uuid } from 'uuid';
-	import { draftForms } from '../../utils/forms/stores';
-	import { FormType, defaultForms } from '../../utils/forms/constants';
+	import { FormType, defaultForms, draftForms } from 'src/utils/forms';
 	import { get } from 'svelte/store';
 
 	const provideForm = (formType: FormType) => {

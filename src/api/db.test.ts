@@ -4,7 +4,7 @@ import * as db from './db';
 vi.mock("mysql2/promise");
 
 describe('db.ts', () => {
-	test('should run insertContent query', async () => {
+	test('should run insertContent command', async () => {
 		await db.insertContent({
 			type: "school",
 			name: "University of Pittsburgh",
@@ -16,7 +16,7 @@ describe('db.ts', () => {
 		// TODO: assert whether test has passed
 	});
 
-	test('should run insertRelation query', async () => {
+	test('should run insertRelation command', async () => {
 		await db.insertRelation({
 			type: "worked alongside",
 			subtype: "co-administrator",
@@ -28,5 +28,21 @@ describe('db.ts', () => {
 		});
 
 		// TODO: assert whether test has passed
+	});
+
+	test('should run insertCitation command', async () => {
+		await db.insertCitation({
+			name: "Some Citation",
+			collection: "Internet Archive",
+			content: { description: "An extended description." },
+		})
+	});
+
+	test('should run insertAttribution command', async () => {
+		await db.insertAttribution({
+			type: "content",
+			link_material: 2,
+			link_citation: 0,
+		});
 	});
 });
