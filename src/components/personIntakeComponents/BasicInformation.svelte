@@ -15,7 +15,7 @@
         <label for="orcid">ORCiD</label>
         <input type="text" id="orcid" class="form-control" aria-describedby="enterOrcid" bind:value = {ORCiD}>
         <small id="orcid-tip" class="form-text text-muted">
-            Don't have one? Create one <a href="https://orcid.org/">here</a>
+            An ORCiD is a persistent identifier you control, which can help distinguish you from others with the same name – or match you to your work when your name changes. Learn more or create one at <a href="https://orcid.org/">orcid.org</a>.
         </small>
     </div>
     </div>
