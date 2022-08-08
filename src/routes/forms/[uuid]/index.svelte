@@ -17,7 +17,7 @@
 		{
 			const form = get(draftForms);
 			console.log(form);
-			alert("submission successful");
+			goto(`./relationMaker`);
 		}
 	}
 

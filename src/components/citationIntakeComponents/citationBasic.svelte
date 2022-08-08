@@ -5,7 +5,7 @@
 
     let node1 = "";
     let node2 = "";
-    let nodeList = ['Pitt', 'Penn State', 'Donald']
+    let nodeList = ['Pitt', 'Penn State', 'Jeff']
 
     import AutoComplete from "simple-svelte-autocomplete";
 </script>
@@ -14,12 +14,16 @@
     <p><span class="red">*</span>Required fields</p>
     <div class = "inception">
         <div>I want to add a citation for the relationship between 
-            <AutoComplete bind:selectedItem={node1} items="{nodeList}" hideArrow={true}/> and 
-            <AutoComplete bind:selectedItem={node2} items="{nodeList}" hideArrow={true}/></div>
+            <AutoComplete bind:selectedItem={node1} items="{nodeList}" hideArrow={true}/><span class="red">*</span> and 
+            <AutoComplete bind:selectedItem={node2} items="{nodeList}" hideArrow={true}/><span class="red">*</span></div>
             {#if node1 != "" && node2 != ""}
             <br/>
-            <label for="node-select">Please specify which relationship you would like to add a citation to</label>
-            <select class="form-control custom-select" id="node-select"/>
+            <label for="node-select">Please specify which relationship you would like to add a citation to<span class="red">*</span></label>
+            <select class="form-control custom-select" id="node-select">
+                <option>The database will be queried here</option>
+                <option>To find current relationships between these two nodes</option>
+            </select>
+            <a href = "/" class = "small">I can't find the relationship I'm looking for</a>
             {/if}
     </div>
     <label for="name">Citation Author<span class="red">*</span></label>
@@ -52,5 +56,10 @@
 	margin-bottom: 20px;
 	background-color: white;
 	opacity: 0.95;
+    }
+
+    .small
+    {
+        font-size: small;
     }
 </style>
