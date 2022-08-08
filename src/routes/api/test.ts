@@ -1,4 +1,4 @@
-import { queryTest } from "../../api/db";
+import { queryTest } from "src/api/db";
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function GET() {

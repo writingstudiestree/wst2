@@ -1,8 +1,5 @@
-import { validateForm } from "../../../api/form/validate";
-import { insertForm } from "../../../api/form/insert";
-
+import { validateForm, insertForm, InsertForm } from "src/api/forms";
 import type { RequestHandler } from "@sveltejs/kit";
-import type { InsertForm } from "../../../api/form/base";
 
 export const POST: RequestHandler = async ({ request }) => {
 	// TODO: authenticate the user

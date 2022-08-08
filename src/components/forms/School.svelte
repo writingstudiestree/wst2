@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Content } from '../../api/types';
+	import type { Content } from 'src/api';
 	import SchoolBasicInformation from '../schoolntakeComponents/SchoolBasicInformation.svelte';
 	import SchoolDescription from '../schoolntakeComponents/SchoolDescription.svelte';
 	import SchoolLocation from '../schoolntakeComponents/SchoolLocation.svelte';

@@ -1,4 +1,4 @@
-import { InsertForm, InsertFormType } from '../../api/form/base';
+import { InsertForm, InsertFormType } from 'src/api/forms/base';
 
 export type FormType = "person"|"school"|"institution"|"citation";
 
