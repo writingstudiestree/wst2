@@ -2,7 +2,7 @@ import { readFile } from 'fs/promises';
 import getDatabase from '@databases/mysql-test';
 import type mysql2 from 'mysql2/promise';
 
-import { vi } from 'vitest';
+import { vi, afterAll } from 'vitest';
 const mysql: typeof mysql2 = await vi.importActual("mysql2/promise");
 
 async function createConnection(...args: any[]): ReturnType<typeof mysql2.createConnection> {
@@ -19,7 +19,10 @@ async function createConnection(...args: any[]): ReturnType<typeof mysql2.create
 		line = line.trim();
 		if (!line) continue;
 
-		await conn.execute(line);
+		await conn.execute(line).catch(() => null);
+
+		const [_, table] = /^CREATE TABLE (\s+)/.exec(line) || [];
+		if (table) await conn.execute(`TRUNCATE TABLE ${table}`);
 	}
 
 	return conn;
