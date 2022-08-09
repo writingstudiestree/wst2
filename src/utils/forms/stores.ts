@@ -1,4 +1,4 @@
-import { writable, derived, Writable, Readable, get } from 'svelte/store';
+import { writable, Writable, Readable, get } from 'svelte/store';
 import debounce from 'lodash/debounce';
 
 import type { InsertForm, InsertFormError } from 'src/api/forms/base';
@@ -27,7 +27,11 @@ function createDraftFormStore() : DraftFormStore {
 
 	function createForm(uuid: string, template: InsertForm) {
 		const form = writable(template);
-		const errors = derived(form, handleValidate, []);
+		const errors: Writable<InsertFormError[]> = writable([]);
+
+		form.subscribe(($form) => {
+			handleValidate($form, ($errors) => errors.set($errors));
+		});
 
 		draftForms.set({
 			...get(draftForms),

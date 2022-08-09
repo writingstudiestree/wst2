@@ -4,11 +4,18 @@
 
 	export let field: [number, string];
 
+	// hide errors until user has interacted with the input
+	let displayErrors = false;
+
+	function handleFocus() {
+		displayErrors = true;
+	}
+
 	$: errors = draftForm.getForm($page.params.uuid)?.errors;
-	$: fieldErrors = $errors?.filter(e => e.key === field[0] && e.field?.startsWith(field[1])) || [];
+	$: fieldErrors = (displayErrors && $errors?.filter(e => e.key === field[0] && e.field?.startsWith(field[1]))) || [];
 </script>
 
-<div>
+<div on:focusin={handleFocus}>
 	<slot
 		isValid={!(fieldErrors.length)}
 		errors={errors}
