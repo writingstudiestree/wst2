@@ -5,6 +5,7 @@
 - [Docker](https://www.docker.com/get-started/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+
 "Node" and "NPM" (the Node Package Manager) are tools for building JavaScript applications; [SvelteKit](https://kit.svelte.dev) is a front-end framework that runs on Node. *The article ["WebDev 101: How to use npm and Yarn"](https://unicorn-utterances.com/posts/how-to-use-npm) might be useful as an introduction to this tooling.*
 
 Docker allows us to "containerize" and run our application as if it were being hosted in its production environment. We have provided a [docker-compose.yml](./docker-compose.yml) configuration in this repository for hosting both the MySQL "db" server and the SvelteKit "app" server.
@@ -13,12 +14,13 @@ Docker allows us to "containerize" and run our application as if it were being h
 
 ## Developing
 
-1. First, [clone the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) from GitHub, and `cd` into the root folder:
+1. First, [clone the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) from GitHub, and open the root folder:
 
 	```bash
 	# Clone the git repository
 	git clone https://github.com/writingstudiestree/wst2
-	# "cd" into the cloned folder
+  
+	# Change Directory into the cloned folder
 	cd wst2
 	```
 
@@ -34,6 +36,7 @@ Docker allows us to "containerize" and run our application as if it were being h
 	```bash
 	# Installs dependencies
 	npm install
+  
 	# Runs a SvelteKit development server
 	npm run dev
 	```
@@ -54,6 +57,7 @@ See [src/routes/index.test.ts](./src/routes/index.test.ts) for an example test t
 
 The `npm test` command can be used to run all tests in the project and print the results.
 
+
 ## Database Management
 
 The database files will be stored persistently in a [Docker volume](https://docs.docker.com/storage/volumes/). To reset this database, simply stop the application with the `-v` flag to remove the volume, and restart the server:
@@ -61,6 +65,7 @@ The database files will be stored persistently in a [Docker volume](https://docs
 ```shell
 # Stop the docker container(s) and remove the volume
 docker-compose down -v
+
 # Re-start the database container (re-creating an empty volume)
 docker-compose up -d db
 ```
@@ -73,6 +78,7 @@ To make changes to the database schema, edit the entries in `db/init.sql`.
 
 The data types used in the database API are generated using [mysql-schema-ts](https://www.npmjs.com/package/mysql-schema-ts). **While the database is running,** the `npm run build:types` command can be used to re-generate these TypeScript definitions from the SQL schema. These generated types are stored in `src/api/types.ts`.
 
+
 ### Using a different MySQL server
 
 By default, the application is configured to use the database server provided through `docker-compose`. However, it can be configured to use a different server by changing its `DATABASE_URL`.
@@ -83,6 +89,7 @@ By default, the application is configured to use the database server provided th
 - Restart the application server using `npm run dev`
 
 The database connection URL must be specified in a `.env` file under the `DATABASE_URL=` parameter.
+
 
 ## Running the full Docker configuration
 
