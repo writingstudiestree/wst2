@@ -34,6 +34,6 @@
 
 <Tags bind:enteredTags={value.content.tags}/>
 
-<IdentityTags bind:enteredTags={value.content.identitiy}/>
+<IdentityTags bind:enteredTags={value.content.Identity}/>
 
 <Description bind:description={value.content.description}/>

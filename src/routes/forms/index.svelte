@@ -22,9 +22,9 @@
 		desc: string,
 	}[] = [
 	{ type: "person", color: "primary", icon: "person", desc: "Add a new person to the network." },
-	{ type: "school", color: "success", icon: "school", desc: "Add new information about a school to the network." },
-	{ type: "institution", color: "warning", icon: "domain", desc: "Add new information about an institution to the network." },
-	{ type: "citation", color: "secondary", icon: "book", desc: "Declare a location or article that new information is sourced from." },
+	{ type: "school", color: "success", icon: "school", desc: "Add a school or university to the network." },
+	{ type: "institution", color: "warning", icon: "domain", desc: "Add a non-school institution (e.g. an organization, conference, journal, etc) to the network." },
+	{ type: "citation", color: "secondary", icon: "book", desc: "Introduce a reference or archive that new information is sourced from." },
 	];
 </script>
 <div class="card mb-5">

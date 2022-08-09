@@ -1,19 +1,19 @@
 <script lang="ts">
     import Tags from "svelte-tags-input";
-    
+
     export let enteredTags: string[] = [];
-    
+
     function addInterest(event: any) {
         enteredTags = event.detail.tags;
     }
-    
+
     //Add tags from WST 1 here
     let interestTags = ["African American Rhetoric", "Basic Writing", "Big Data", "19th Century"];
-    
+
 </script>
 
 <div class = "inside">
-    <h2>3. Areas of Interest or Identitiy</h2>
+    <h2>3. Areas of Interest or Identity</h2>
         <p>What keywords would you use to describe this institution?</p>
         <Tags class = "form-control"
         on:tags={addInterest}
@@ -35,7 +35,7 @@
         labelShow={false}/>
         <span class = "smallText">Not sure what to put here? Start typing and see which tags other users have used before!</span>
 </div>
-    
+
     <style>
         .smallText
         {
