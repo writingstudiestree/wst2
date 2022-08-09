@@ -51,7 +51,9 @@ export function validateForm(form: InsertForm) : InsertFormError[] {
 	const errors: InsertFormError[] = [];
 
 	// validate relation/attribution links
-	for (const [key, record] of form.entries()) {
+	for (const record of form) {
+		const key = record.value.id;
+
 		if (isRecordType(record, InsertFormType.CONTENT)) {
 			const contentSchemata = {
 				person: schemata.personSchema,

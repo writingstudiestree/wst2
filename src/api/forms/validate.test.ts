@@ -87,7 +87,7 @@ describe('validate.ts', () => {
 		// expected: there is at least one error
 		expect(errors.length).toBeGreaterThan(0);
 		expect(errors).not.toStrictEqual([]);
-		// expected: an error exists for the relation node (index=1)
-		expect(errors.some(e => e.key === 1)).toBeTruthy();
+		// expected: an error exists for the relation node (id=-3)
+		expect(errors.some(e => e.key === -3)).toBeTruthy();
 	});
 });

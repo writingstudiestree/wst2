@@ -21,7 +21,7 @@
 		<p><span class="text-danger">*</span>Required fields</p>
 
 		<TextField
-			field="name"
+			field={[value.id, "name"]}
 			name="Full name"
 			placeholder="Your preferred name (first and last, if applicable)"
 			required
@@ -29,7 +29,7 @@
 		/>
 
 		<TextField
-			field="content.orcId"
+			field={[value.id, "content.orcId"]}
 			name="ORCiD"
 			bind:value={value.content.orcId}
 		>
@@ -39,7 +39,7 @@
 		</TextField>
 
 		<TextField
-			field="content.pronounceLink"
+			field={[value.id, "content.pronounceLink"]}
 			name="Pronunciation Link"
 			type="url"
 			bind:value={value.content.pronounceLink}

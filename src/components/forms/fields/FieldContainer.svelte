@@ -2,10 +2,10 @@
 	import { page } from '$app/stores';
 	import { draftForm } from 'src/utils/forms/stores';
 
-	export let field: string;
+	export let field: [number, string];
 
 	$: errors = draftForm.getForm($page.params.uuid)?.errors;
-	$: fieldErrors = $errors?.filter(e => e.field?.startsWith(field)) || [];
+	$: fieldErrors = $errors?.filter(e => e.key === field[0] && e.field?.startsWith(field[1])) || [];
 </script>
 
 <div>
