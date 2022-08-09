@@ -28,8 +28,6 @@
 			bind:value={value.name}
 		/>
 
-		<br/>
-
 		<TextField
 			field="content.orcId"
 			name="ORCiD"
@@ -39,8 +37,6 @@
 				An ORCiD is a persistent identifier you control, which can help distinguish you from others with the same name – or match you to your work when your name changes. Learn more or create one at <a href="https://orcid.org/">orcid.org</a>.
 			</span>
 		</TextField>
-
-		<br/>
 
 		<TextField
 			field="content.pronounceLink"
