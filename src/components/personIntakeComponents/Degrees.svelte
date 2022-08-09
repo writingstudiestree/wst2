@@ -97,7 +97,7 @@
             <option value = "educational program">Other</option>
         </select>
         <input type = "text" placeholder = "Department or Program" bind:value = {department}>
-        <input type = "text" placeholder = "Awarding insitution" bind:value = {awardingInst}>
+        <input type = "text" placeholder = "Awarding institution" bind:value = {awardingInst}>
         <input class = "increasedWidth" type = "text" placeholder = "Concentration or Track (optional)" bind:value = {concentration}>
         <br/>
         <input class = "short" type = "text" placeholder = "Start Year" bind:value = {startYear}>
