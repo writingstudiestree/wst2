@@ -54,7 +54,6 @@
 
 <Websites
 	bind:websites={value.content.websites}
-	bind:pronounceLink={value.content.pronounceLink}
 />
 
 <Tags bind:enteredTags={value.content.tags}/>
