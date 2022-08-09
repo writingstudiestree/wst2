@@ -1,80 +1,98 @@
 ## Prerequisites
 
 - A development environment, such as [Visual Studio Code](https://code.visualstudio.com)
-- [Node.JS 16+](https://nodejs.org/), a JavaScript runtime framework for scalable network applications
-- [Docker](https://www.docker.com/get-started/), a containerizing tool to ensure cross-platform function
-- [Docker Compose](https://docs.docker.com/compose/install/), a companion to Docker that manages multi-container configurations. (NB: If you installed the Docker Desktop app, the Docker Compose plugin is already included.)
+- [Node.JS 16+](https://nodejs.org/)
+- [Docker](https://www.docker.com/get-started/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 
-#### Starting the database server with docker
+"Node" and "NPM" (the Node Package Manager) are tools for building JavaScript applications; [SvelteKit](https://kit.svelte.dev) is a front-end framework that runs on Node. *The article ["WebDev 101: How to use npm and Yarn"](https://unicorn-utterances.com/posts/how-to-use-npm) might be useful as an introduction to this tooling.*
 
-While any MYSQL-compatible server can be used with this application, as long as it is accessible through the `DATABASE_URL` and is initialized with the correct schema, the way to start it with the fewest steps is to use Docker. The provided Docker container does this by default, using the script in `db/init.sql`.
+Docker allows us to "containerize" and run our application as if it were being hosted in its production environment. We have provided a [docker-compose.yml](./docker-compose.yml) configuration in this repository for hosting both the MySQL "db" server and the SvelteKit "app" server.
 
-To test the server with the database in a production-like environment, navigate to the repository and run the following Docker Compose command to start both the SvelteKit app and the database.
+> **Note**: On most systems, it is recommended to install [Docker Desktop](https://www.docker.com/products/docker-desktop/), which includes both "Docker" and "Docker Compose".
 
-```shell
-docker-compose up
-```
+## Developing
 
-Note that, depending on how you installed Docker and Docker Compose, you may need to have the Docker Desktop application running to enable this command.
+1. First, [clone the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) from GitHub, and open the root folder:
 
-If the SvelteKit application is changed, use `docker-compose up --build app` to rebuild the `app` container.
+	```bash
+	# Clone the git repository
+	git clone https://github.com/writingstudiestree/wst2
+  
+	# Change Directory into the cloned folder
+	cd wst2
+	```
 
-### Storage
+2. To start the database server with the provided `docker-compose` configuration, run the following command in the cloned repo:
+
+	```bash
+	# Start the "wst2-db" container
+	docker-compose up -d db
+	```
+
+3. Use NPM to install the SvelteKit application's dependencies and start a development server:
+
+	```bash
+	# Installs dependencies
+	npm install
+  
+	# Runs a SvelteKit development server
+	npm run dev
+	```
+
+	This will host the website on `localhost`, which can keep running while you are editing the project; any browser tabs will "hot reload" with your changes.
+
+Once you have completed your changes, you can [create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) to ask for your changes to be merged into this repository.
+
+### Declaring styles
+
+This project imports [Bootstrap styles](https://getbootstrap.com/docs/5.2/getting-started/introduction/) through [Sass](https://sass-lang.com). These can be used through class names on any HTML element, and Sass utilities can be used by declaring a `<style lang="scss">` in any `.svelte` component.
+
+### Writing unit tests
+
+Any component can add unit tests by declaring a `(component).test.ts` file adjacent to its location. These are executed with [Vitest](https://vitest.dev/api/), and [svelte-testing-library](https://testing-library.com/docs/svelte-testing-library/api). For other available utilities and test conditions, see the [testing library documentation](https://testing-library.com/docs/).
+
+See [src/routes/index.test.ts](./src/routes/index.test.ts) for an example test that runs on the site's homepage.
+
+The `npm test` command can be used to run all tests in the project and print the results.
+
+
+## Database Management
 
 The database files will be stored persistently in a [Docker volume](https://docs.docker.com/storage/volumes/). To reset this database, simply stop the application with the `-v` flag to remove the volume, and restart the server:
 
 ```shell
+# Stop the docker container(s) and remove the volume
 docker-compose down -v
+
+# Re-start the database container (re-creating an empty volume)
 docker-compose up -d db
 ```
 
+> **Warning**: This will permanently erase any data in your local `wst2-db` server!
 
-### Flexible development
-
-To avoid having to restart when you make changes to the app, you can also use Docker only for the database, and rely on Node.js to hot-reload your changes.
-
-In this case, skip the above steps and run the following commands within the repository folder to start a Sveltekit development server:
-
-```bash
-npm install
-npm run dev
-```
-
-This development server can run while you are editing the project; any browser tabs will hot reload with your changes.
-
-In this case, you will need to manually connect to a separate database server. The database connection URL must be specified in a file called `.env` file, using the `DATABASE_URL=` parameter. By default, that file contains the following:
-
-```shell
-DATABASE_URL=mysql://root:abcdefg123@localhost:3306/wst
-```
-
-The above URL will work in a local environment, but needs to be changed when SvelteKit runs in a docker container. In production, the password should also be different from what is publicly available in our testing environment.
-
-Once you've confirmed the contents of the `.env` file, to start just the database server, use the below command with [docker-compose](https://docs.docker.com/compose/):
-
-```shell
-docker-compose up -d db
-```
-
-
-#### Editing the database schema
+### Editing the database schema
 
 To make changes to the database schema, edit the entries in `db/init.sql`.
 
 The data types used in the database API are generated using [mysql-schema-ts](https://www.npmjs.com/package/mysql-schema-ts). **While the database is running,** the `npm run build:types` command can be used to re-generate these TypeScript definitions from the SQL schema. These generated types are stored in `src/api/types.ts`.
 
-### Styles
 
-This project imports [Bootstrap styles](https://getbootstrap.com/docs/5.2/getting-started/introduction/) through [Sass](https://sass-lang.com). These can be used through class names on any HTML element, and Sass utilities can be used by declaring a `<style lang="scss">` in any `.svelte` component.
+### Using a different MySQL server
 
-### Unit tests
+By default, the application is configured to use the database server provided through `docker-compose`. However, it can be configured to use a different server by changing its `DATABASE_URL`.
 
-Any component can add unit tests by declaring a `(component).test.ts` file adjacent to its location. These are executed with [Vitest](https://vitest.dev/api/), and [svelte-testing-library](https://testing-library.com/docs/svelte-testing-library/api). For other available utilities and test conditions, see the [testing library documentation](https://testing-library.com/docs/).
+- Ensure that your MySQL server has the correct schema defined in [db/init.sql](./db/init.sql)
+- Copy the [`.env.example`](./.env.example) file to a new file named `.env`
+- Change the URL after `DATABASE_URL=` to point to your MySQL server
+- Restart the application server using `npm run dev`
 
-The `npm test` command can be used to run all tests in the project and print the results.
+The database connection URL must be specified in a `.env` file under the `DATABASE_URL=` parameter.
 
 
-## Creating a Pull Request
+## Running the full Docker configuration
 
-Once you have completed your changes, you can [create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) to ask for your changes to be merged into this repository.
+To test the server with the database in a production environment, `docker-compose up` can be used to start both the SvelteKit app and the database. This will host the SvelteKit site at `http://localhost:3000`.
+
+If the SvelteKit application is changed, use `docker-compose up --build app` to rebuild the `app` container.
