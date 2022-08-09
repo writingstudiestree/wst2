@@ -1,20 +1,15 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { v4 as uuid } from 'uuid';
-	import { FormType, defaultForms, draftForms } from 'src/utils/forms';
-	import { get } from 'svelte/store';
+	import { FormType, defaultForms, draftForm } from 'src/utils/forms';
+	import cloneDeep from 'lodash/cloneDeep';
 
 	const provideForm = (formType: FormType) => {
 		// insert a new draft under uuid with default form content
 		const formId = uuid();
-		const forms = get(draftForms);
 
-		draftForms.set({
-			...forms,
-
-			// "deep clone" default form object to avoid modifications
-			[formId]: JSON.parse(JSON.stringify(defaultForms[formType]))
-		});
+		// "deep clone" default form object to avoid modifications
+		draftForm.createForm(formId, cloneDeep(defaultForms[formType]));
 
 		// navigate to draft edit page
 		goto(`/forms/${formId}`);
