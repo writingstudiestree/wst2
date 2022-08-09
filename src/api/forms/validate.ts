@@ -1,12 +1,6 @@
 import { ZodError, ZodType } from 'zod';
-import { InsertForm, InsertFormRecord, InsertFormType, InsertFormTypes, isRecordType } from './base';
+import { InsertForm, InsertFormRecord, InsertFormType, InsertFormTypes, InsertFormError, isRecordType } from './base';
 import * as schemata from './schemata';
-
-type InsertFormError = {
-	key: string,
-	field?: string,
-	message: string,
-};
 
 /**
  * Validate a Zod schema, mapping any caught errors into the `InsertFormError` type.
@@ -17,7 +11,7 @@ type InsertFormError = {
  * @returns Any caught errors, or an empty array if none were found.
  */
 function validateSchema<T extends InsertFormType>(
-	key: string,
+	key: number,
 	schema: ZodType<InsertFormTypes[T]>,
 	record: InsertFormRecord<T>
 ) : InsertFormError[] {
@@ -33,8 +27,7 @@ function validateSchema<T extends InsertFormType>(
 			for (const issue of e.issues) {
 				errors.push({
 					key,
-					// field is last component of the path (i.e. "content.orcId" -> "orcId")
-					field: issue.path.slice(-1)[0] + '',
+					field: issue.path.join("."),
 					message: issue.message,
 				});
 			}
@@ -58,7 +51,7 @@ export function validateForm(form: InsertForm) : InsertFormError[] {
 	const errors: InsertFormError[] = [];
 
 	// validate relation/attribution links
-	for (const [key, record] of Object.entries(form)) {
+	for (const [key, record] of form.entries()) {
 		if (isRecordType(record, InsertFormType.CONTENT)) {
 			const contentSchemata = {
 				person: schemata.personSchema,
@@ -77,8 +70,8 @@ export function validateForm(form: InsertForm) : InsertFormError[] {
 				...validateSchema(key, schemata.relationSchema, record)
 			);
 
-			const linkFrom = form[record.value.link_from + ''];
-			const linkTo = form[record.value.link_to + ''];
+			const linkFrom = form.find(r => r.value.id === record.value.link_from);
+			const linkTo = form.find(r => r.value.id === record.value.link_to);
 
 			if (!linkFrom || !isRecordType(linkFrom, InsertFormType.CONTENT))
 				errors.push({ key, message: `Missing link_from element in record ${key}`});
@@ -98,14 +91,14 @@ export function validateForm(form: InsertForm) : InsertFormError[] {
 				...validateSchema(key, schemata.attributionSchema, record)
 			);
 
-			const linkMaterial = form[record.value.link_material + ''];
-			const linkCitation = form[record.value.link_citation + ''];
+			const linkMaterial = form.find(r => r.value.id === record.value.link_material);
+			const linkCitation = form.find(r => r.value.id === record.value.link_citation);
 
 			if (!linkMaterial)
 				errors.push({ key, message: `Missing link_material element in record ${key}` });
-			if (record.value.type === "content" && !isRecordType(linkMaterial, InsertFormType.CONTENT))
+			if (record.value.type === "content" && (!linkMaterial || !isRecordType(linkMaterial, InsertFormType.CONTENT)))
 				errors.push({ key, message: `link_material element ${key} is not the expected CONTENT type` });
-			if (record.value.type === "relations" && !isRecordType(linkMaterial, InsertFormType.RELATION))
+			if (record.value.type === "relations" && (!linkMaterial || !isRecordType(linkMaterial, InsertFormType.RELATION)))
 				errors.push({ key, message: `link_material element ${key} is not the expected RELATION type` });
 			if (!linkCitation || !isRecordType(linkCitation, InsertFormType.CITATION))
 				errors.push({ key, message: `Missing link_citation element in record ${key}` });

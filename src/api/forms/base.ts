@@ -19,7 +19,13 @@ export interface InsertFormRecord<T extends InsertFormType = InsertFormType> {
 	value: InsertFormTypes[T],
 };
 
-export type InsertForm = Record<string, InsertFormRecord>;
+export type InsertForm = InsertFormRecord[];
+
+export type InsertFormError = {
+	key: number,
+	field?: string,
+	message: string,
+};
 
 export function isRecordType<T extends InsertFormType>(record: InsertFormRecord, type: T): record is InsertFormRecord<T> {
 	return record.type === type;
@@ -27,5 +33,5 @@ export function isRecordType<T extends InsertFormType>(record: InsertFormRecord,
 
 export function filterRecordType<T extends InsertFormType>(form: InsertForm, type: T) : InsertFormRecord<T>[] {
 	const isType = (r: InsertFormRecord): r is InsertFormRecord<T> => isRecordType(r, type);
-	return Object.values(form).filter(isType);
+	return form.filter(isType);
 }

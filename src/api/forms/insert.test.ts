@@ -6,8 +6,8 @@ vi.mock("mysql2/promise");
 
 describe('insert.ts', () => {
 	test('inserts a minimum valid form submission', async () => {
-		await insert.insertForm({
-			'-1': {
+		await insert.insertForm([
+			{
 				type: InsertFormType.CONTENT,
 				value: {
 					id: -1,
@@ -22,7 +22,7 @@ describe('insert.ts', () => {
 					},
 				}
 			},
-			'-2': {
+			{
 				type: InsertFormType.CONTENT,
 				value: {
 					id: -2,
@@ -37,7 +37,7 @@ describe('insert.ts', () => {
 					},
 				}
 			},
-			'-3': {
+			{
 				type: InsertFormType.RELATION,
 				value: {
 					id: -3,
@@ -49,7 +49,7 @@ describe('insert.ts', () => {
 					content: {},
 				}
 			}
-		});
+		]);
 
 		// expected: there are no returned errors
 	});
