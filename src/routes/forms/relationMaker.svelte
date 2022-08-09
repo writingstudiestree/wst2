@@ -1,11 +1,11 @@
 <script type="ts">
-import { draftForms } from '../../utils/forms/stores';
+import { draftForm } from '../../utils/forms/stores';
 import type { Relations } from "src/api/types";
 import RelationBasic from "../../components/relationIntakeComponents/RelationBasic.svelte";
 import { get } from 'svelte/store';
 
-const form = get(draftForms);
-const link_from = form[Object.keys(form)[0]];
+const form = get(draftForm);
+const link_from = form[0];
 
 let displayArray = [];
 

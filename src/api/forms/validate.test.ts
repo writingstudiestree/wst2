@@ -3,8 +3,8 @@ import * as validate from './validate';
 
 describe('validate.ts', () => {
 	test('passes minimum valid form submission', () => {
-		const errors = validate.validateForm({
-			'-1': {
+		const errors = validate.validateForm([
+			{
 				type: InsertFormType.CONTENT,
 				value: {
 					id: -1,
@@ -19,7 +19,7 @@ describe('validate.ts', () => {
 					},
 				}
 			},
-			'-2': {
+			{
 				type: InsertFormType.CONTENT,
 				value: {
 					id: -2,
@@ -34,7 +34,7 @@ describe('validate.ts', () => {
 					},
 				}
 			},
-			'-3': {
+			{
 				type: InsertFormType.RELATION,
 				value: {
 					id: -3,
@@ -46,7 +46,7 @@ describe('validate.ts', () => {
 					content: {},
 				}
 			}
-		});
+		]);
 
 		// expected: there are no returned errors
 		expect(errors.length).toBe(0);
@@ -54,8 +54,8 @@ describe('validate.ts', () => {
 	});
 
 	test('fails submission with a missing node', () => {
-		const errors = validate.validateForm({
-			'-1': {
+		const errors = validate.validateForm([
+			{
 				type: InsertFormType.CONTENT,
 				value: {
 					id: -1,
@@ -70,7 +70,7 @@ describe('validate.ts', () => {
 					},
 				}
 			},
-			'-3': {
+			{
 				type: InsertFormType.RELATION,
 				value: {
 					id: -3,
@@ -82,12 +82,12 @@ describe('validate.ts', () => {
 					content: {},
 				}
 			}
-		});
+		]);
 
 		// expected: there is at least one error
 		expect(errors.length).toBeGreaterThan(0);
 		expect(errors).not.toStrictEqual([]);
-		// expected: an error exists for the relation node ('2')
-		expect(errors.some(e => e.key === '-3')).toBeTruthy();
+		// expected: an error exists for the relation node (id=-3)
+		expect(errors.some(e => e.key === -3)).toBeTruthy();
 	});
 });

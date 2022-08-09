@@ -3,8 +3,8 @@ import { InsertForm, InsertFormType } from 'src/api/forms/base';
 export type FormType = "person"|"school"|"institution"|"citation";
 
 export const defaultForms: Record<FormType, InsertForm> = {
-	person: {
-		'-1': {
+	person: [
+		{
 			type: InsertFormType.CONTENT,
 			value: {
 				id: -1,
@@ -19,9 +19,9 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				},
 			}
 		},
-	},
-	school: {
-		'-1': {
+	],
+	school: [
+		{
 			type: InsertFormType.CONTENT,
 			value: {
 				id: -1,
@@ -35,9 +35,9 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				},
 			}
 		},
-	},
-	institution: {
-		'-1': {
+	],
+	institution: [
+		{
 			type: InsertFormType.CONTENT,
 			value: {
 				id: -1,
@@ -51,9 +51,9 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				},
 			}
 		},
-	},
-	citation: {
-		'-1': {
+	],
+	citation: [
+		{
 			type: InsertFormType.CITATION,
 			value: {
 				id: -1,
@@ -64,5 +64,5 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				},
 			}
 		},
-	}
+	]
 };

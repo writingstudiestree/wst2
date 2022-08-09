@@ -9,7 +9,7 @@ export const personSchema: zod.ZodSchema<Content> = zod.object({
 	name: zod.string().min(1),
 	content: zod.object({
 		orcId: zod.string().optional(),
-		pronounceLink: zod.string().url().optional(),
+		pronounceLink: zod.string().url().or(zod.literal("")).optional(),
 		tags: zod.array(
 			zod.string()
 		).optional(),
