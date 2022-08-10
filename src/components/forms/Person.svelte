@@ -6,11 +6,18 @@
 	import IdentityTags from '../personIntakeComponents/IdentityTags.svelte';
 	import Description from '../personIntakeComponents/Description.svelte';
 	import TextField from './fields/TextField.svelte';
+	import MultiEntry from './fields/MultiEntry.svelte';
 
 	export let value: Content & {
     content: any,
 	};
 </script>
+
+<div class="inside">
+	<MultiEntry
+	field={[value.id, "content.name"]}
+	/>
+</div>
 
 <h1 class="textCenter">New Person</h1>
 
