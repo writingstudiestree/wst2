@@ -14,9 +14,7 @@
 </script>
 
 <div class="inside">
-	<MultiEntry
-	field={[value.id, "content.name"]}
-	/>
+	<MultiEntry/>
 </div>
 
 <h1 class="textCenter">New Person</h1>
