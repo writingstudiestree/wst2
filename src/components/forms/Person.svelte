@@ -14,7 +14,12 @@
 </script>
 
 <div class="inside">
-	<MultiEntry/>
+	<MultiEntry
+		label = "Full name"
+		firstPlaceholder = "Your preferred name (first and last if applicable)"
+		nextPlaceholder = "Additional name"
+		addMessage = "+ I use another name"
+	/>
 </div>
 
 <h1 class="textCenter">New Person</h1>
