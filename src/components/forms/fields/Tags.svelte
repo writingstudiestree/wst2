@@ -2,17 +2,14 @@
     import Tags from "svelte-tags-input";
     
     export let enteredTags: string[] = [];
+
     export let autoComplete: string[] = [];
-    
-    export let description: string = "Describe the section here";
-    export let placeholder: string = "Enter tags here!";
+    export let placeholder: string = "Press enter to add an entry. Add multiple!";
 
     function addInterest(event: any) {
         enteredTags = event.detail.tags;
     }
 </script>
-
-        <p>{description}</p>
         <Tags 
         on:tags={addInterest}
         addKeys={[13]}

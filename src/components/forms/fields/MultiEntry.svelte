@@ -5,7 +5,7 @@ import type { inferFormattedError } from "zod";
 import FieldContainer from "./FieldContainer.svelte";
 import TextField from "./TextField.svelte";
 
-    let entries: string[] = [""];
+    export let entries: string[] = [""];
     let needsContent: boolean = true
     $: needsContent = entries[entries.length-1] === "";
 
@@ -25,28 +25,31 @@ import TextField from "./TextField.svelte";
     };
 
 </script>
-{#each entries as entry, i}
-    {#if i === 0}
-    <label class="form-label" for="first-entry">{label}{#if required}<span class = "red">*</span>{/if}
-    </label>
+<label class="form-label" for="first-entry">{label}{#if required}<span class = "red">*</span>{/if}
+</label>
+<div class="input-group">
+    <input type="text" id="first-entry" class="form-control" placeholder={firstPlaceholder} bind:value={entries[0]}>
+    <div class="input-group-append">
+    </div>
+</div>
+{#each entries as entry, i} <!-- Additional entries -->
+    {#if i >= 1}
         <div class="input-group">
-            <input type="text" id="first-entry" class="form-control" placeholder={firstPlaceholder} bind:value={entries[i]}>
+            <input type="text" class="form-control" placeholder={nextPlaceholder} bind:value={entries[i]}>
             <div class="input-group-append">
+            <button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>
             </div>
         </div>
-    {:else}
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder={nextPlaceholder} bind:value={entries[i]}>
-        <div class="input-group-append">
-        <button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>
-        </div>
-    </div>
     {/if}
 {/each}
-<button class="btn btn-outline-secondary" on:click={() => newField()} type="button" disabled={needsContent}>{addMessage}</button>
+<button class="btn bottom btn-outline-secondary" on:click={() => newField()} type="button" disabled={needsContent}>{addMessage}</button>
 <style>
     .red
     {
         color:red;
+    }
+    .bottom
+    {
+        margin-bottom: 30px;
     }
 </style>
