@@ -1,0 +1,41 @@
+<script lang="ts">
+    import Tags from "svelte-tags-input";
+    
+    export let enteredTags: string[] = [];
+    export let autoComplete: string[] = [];
+    
+    export let description: string = "Describe the section here";
+    export let placeholder: string = "Enter tags here!";
+
+    function addInterest(event: any) {
+        enteredTags = event.detail.tags;
+    }
+</script>
+
+        <p>{description}</p>
+        <Tags 
+        on:tags={addInterest}
+        addKeys={[13]}
+        maxTags={false}
+        allowPaste={true}
+        allowDrop={true}
+        splitWith={", "}
+        onlyUnique={true}
+        removeKeys={[8]}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        name={"interestBar"}
+        id={Math.random()}
+        allowBlur={true}
+        disable={false}
+        minChars={0}
+        onlyAutocomplete={false}
+        labelShow={false}/>
+        <span class = "smallText">Not sure what to put here? Start typing and see which tags other users have used before!</span>
+    
+    <style>
+        .smallText
+        {
+            font-size: x-small;
+        }
+    </style>
