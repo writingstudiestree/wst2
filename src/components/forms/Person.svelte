@@ -87,14 +87,9 @@ import { values } from 'lodash';
 <div class="inside">
 	<h2>5. Additional Description</h2>
 	<div class="form-group">
-		<TextField
-			field={[value.id, "content.description"]}
-			name="Is there anything else you would like to add?"
-			bind:value={value.content.description}
-		>
-			<span slot="tip">
-				Keep in mind: You'll be forming relationships with other entries in the next step!
-			</span>
-		</TextField>
+		<div class="form-group">
+			<textarea class="form-control" bind:value = {value.content.description} id="additionalDescription" rows="3"></textarea>
+			<span class = "smallText">Keep in mind: You'll be forming relationships with other entries in the next step!</span>
+		</div>
 	</div>
 </div>

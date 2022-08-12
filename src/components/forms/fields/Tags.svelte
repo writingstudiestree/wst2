@@ -29,10 +29,3 @@
         onlyAutocomplete={false}
         labelShow={false}/>
         <span class = "smallText">Not sure what to put here? Start typing and see which tags other users have used before!</span>
-    
-    <style>
-        .smallText
-        {
-            font-size: x-small;
-        }
-    </style>
