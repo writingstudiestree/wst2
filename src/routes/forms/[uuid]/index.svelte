@@ -6,34 +6,40 @@
 
 	import { isRecordType, InsertFormType } from 'src/api/forms/base';
 	import { page } from '$app/stores';
-	import { get } from 'svelte/store';
 	import { draftForm } from 'src/utils/forms';
 
 	//Form Modules
 	import { goto } from "$app/navigation";
 	import { browser } from '$app/env';
 
-	function handleSubmit() {
-		if (validateForms())
-		{
-			const form = get(draftForm);
-			console.log(form);
-			goto(`./relationMaker`);
-		}
-	}
-
-	function validateForms() {
-		return true;
-	}
-
 	const back = () => {
 		goto(`/forms`);
 	};
 
 	$: form = $draftForm[$page.params.uuid]?.form;
+	$: errors = $draftForm[$page.params.uuid]?.errors;
 	$: if (browser && !$form) {
 		// If the draft is missing/empty, return to the forms page
 		goto("/forms");
+	}
+
+	async function handleSubmit() {
+		if ($errors.length == 0) {
+			// submit form to the API route
+			const res = await fetch("/api/forms/insert", {
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify($form),
+			}).then(r => r.json()).catch(e => e);
+
+			if (res.message || res.errors)
+				alert("Could not submit the form. Please check your submission for errors.");
+
+			if (res.url)
+				goto(res.url);
+		}
 	}
 </script>
 <button on:click = {back} class = "btn btn-secondary">Back to menu</button>
@@ -53,7 +59,7 @@
 		{/if}
 	{/each}
 
-	<button class="btn btn-primary indent" on:click={handleSubmit}>Save and continue</button>
+	<button class="btn btn-primary indent" on:click={handleSubmit}>Submit</button>
 {/if}
 
 <style>

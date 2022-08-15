@@ -11,11 +11,27 @@ export const POST: RequestHandler = async ({ request }) => {
 	if (errors.length) {
 		return {
 			status: 400,
-			body: errors,
+			body: {
+				errors,
+			},
 		};
 	}
 
 	// otherwise, insert the form data
-	await insertForm(form);
-	return { status: 200 };
+	const result = await insertForm(form);
+	if (!result) {
+		return {
+			status: 400,
+			body: {
+				errors: [],
+			}
+		};
+	}
+
+	return {
+		status: 200,
+		body: {
+			url: `/${result.type}/${result.value.id}`,
+		},
+	};
 }
