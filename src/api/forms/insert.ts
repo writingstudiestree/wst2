@@ -1,11 +1,12 @@
-import { InsertForm, InsertFormType, filterRecordType } from './base';
+import { InsertForm, InsertFormType, isRecordType, filterRecordType, InsertFormRecord } from './base';
 import * as db from '../db';
 
-export async function insertForm(form: InsertForm) {
+export async function insertForm(form: InsertForm) : Promise<InsertFormRecord | void> {
 	// map local (within `form`) ids to created database ids
 	const contentIdMap: Map<number, number> = new Map();
 	const relationIdMap: Map<number, number> = new Map();
 	const citationIdMap: Map<number, number> = new Map();
+	const attributionIdMap: Map<number, number> = new Map();
 
 	for (const record of filterRecordType(form, InsertFormType.CONTENT)) {
 		const { id, ...value } = record.value;
@@ -64,6 +65,30 @@ export async function insertForm(form: InsertForm) {
 		}
 
 		// Insert attribution node
-		await db.insertAttribution(value);
+		const newId = await db.insertAttribution(value);
+		attributionIdMap.set(id, newId);
+	}
+
+	// get the first node's new database ID
+	if (form[0]) {
+		let id = form[0].value.id;
+		if (isRecordType(form[0], InsertFormType.CONTENT))
+			id = contentIdMap.get(id) || id;
+		if (isRecordType(form[0], InsertFormType.RELATION))
+			id = relationIdMap.get(id) || id;
+		if (isRecordType(form[0], InsertFormType.CITATION))
+			id = citationIdMap.get(id) || id;
+		if (isRecordType(form[0], InsertFormType.ATTRIBUTION))
+			id = attributionIdMap.get(id) || id;
+
+		if (id >= 0) {
+			return {
+				type: form[0].type,
+				value: {
+					...form[0].value,
+					id,
+				}
+			};
+		}
 	}
 }
