@@ -6,7 +6,6 @@
 	import TextField from './fields/TextField.svelte';
 	import MultiEntry from './fields/MultiEntry.svelte';
 	import Tags from './fields/Tags.svelte';
-import { values } from 'lodash';
 
 	export let value: Content & {
     content: any,
