@@ -12,22 +12,12 @@
 	//Form Modules
 	import { goto } from "$app/navigation";
 	import { browser } from '$app/env';
-	import RelationBasic from "src/components/relationIntakeComponents/RelationBasic.svelte";
 
-	$: thisForm = draftForm.getForm($page.params.uuid)?.form;
+	//Relation components
+	import RelationMaker from "../relationMaker.svelte";
+	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
+
 	let saveAndContinue = false;
-	function handleSubmit() {
-		if (validateForms())
-		{
-			const form = get(draftForm);
-			console.log($thisForm[0].value);
-			saveAndContinue = true;
-		}
-	}
-
-	function validateForms() {
-		return true;
-	}
 
 	const back = () => {
 		if (!saveAndContinue)
@@ -53,30 +43,16 @@
 		{#if isRecordType(entry, InsertFormType.CONTENT)}
 			{#if entry.value.type === "person" && !saveAndContinue}
 			<Person bind:value={entry.value} />
-			{#if saveAndContinue}
-			<h1 class = "textCenter">Form relationships</h1>
-			<div class = "inside">
-				<h2>Getting Ready</h2>
-				<p>Now that your node has been created, it is time to start forming relationships within the network! First, let's take a look at your current entry:</p>
-				<div class = "inception">
-					<h2>{entry.value.content?.valueOf()}</h2>
-				</div>
-				<p>See any errors? Use the 'back' button at the top of the page to correct them before we start integrating your node in to the network!</p>
-			</div>
-			{/if}
-			<div>{entry.value.content}</div>
 			{:else if entry.value.type === "school"}
 			<School bind:value={entry.value} />
 			{:else if entry.value.type === "institution"}
 			<Institution bind:value={entry.value} />
 			{/if}
-		{/if}
-		{#if isRecordType(entry, InsertFormType.RELATION) }
-			<p>You just made a relation node</p>
+			<RelationButtons bind:cont = {saveAndContinue} bind:entry={entry.value}/>
+		{:else if isRecordType(entry, InsertFormType.RELATION)}
+			<RelationMaker bind:value={entry.value}/>
 		{/if}
 	{/each}
-
-	<button class="btn btn-primary indent" on:click={handleSubmit}>Save and continue</button>
 {/if}
 
 <style>

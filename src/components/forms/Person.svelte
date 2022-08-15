@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Content } from 'src/api';
 
-	import IdentityTags from '../personIntakeComponents/IdentityTags.svelte';
-	import Description from '../personIntakeComponents/Description.svelte';
 	import TextField from './fields/TextField.svelte';
 	import MultiEntry from './fields/MultiEntry.svelte';
 	import Tags from './fields/Tags.svelte';
