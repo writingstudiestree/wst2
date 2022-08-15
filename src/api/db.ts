@@ -10,6 +10,15 @@ export async function queryTest(): Promise<Content[]> {
 	return rows;
 }
 
+export async function getContent(id: number): Promise<Content|null> {
+	const [results] = await connection.execute(
+		"SELECT * FROM content WHERE content.id = ? LIMIT 1",
+		[id]
+	) as [Content[], any];
+
+	return results[0];
+}
+
 export async function insertContent(content: Omit<Content, "id">): Promise<number> {
 	const [result] = await connection.execute(
 		"INSERT INTO content (type, name, content) VALUES (?, ?, ?);",
@@ -17,6 +26,15 @@ export async function insertContent(content: Omit<Content, "id">): Promise<numbe
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;
+}
+
+export async function getRelation(id: number): Promise<Relations|null> {
+	const [results] = await connection.execute(
+		"SELECT * FROM relations WHERE relations.id = ? LIMIT 1",
+		[id]
+	) as [Relations[], any];
+
+	return results[0];
 }
 
 export async function insertRelation(relation: Omit<Relations, "id">): Promise<number> {
@@ -28,6 +46,14 @@ export async function insertRelation(relation: Omit<Relations, "id">): Promise<n
 	return result.insertId;
 }
 
+export async function getCitation(id: number): Promise<Citations|null> {
+	const [results] = await connection.execute(
+		"SELECT * FROM citations WHERE citations.id = ? LIMIT 1",
+		[id]
+	) as [Citations[], any];
+
+	return results[0];
+}
 
 export async function insertCitation(citation: Omit<Citations, "id">): Promise<number> {
 	const [result] = await connection.execute(
@@ -36,6 +62,15 @@ export async function insertCitation(citation: Omit<Citations, "id">): Promise<n
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;
+}
+
+export async function getAttribution(id: number): Promise<Attributions|null> {
+	const [results] = await connection.execute(
+		"SELECT * FROM attributions WHERE attributions.id = ? LIMIT 1",
+		[id]
+	) as [Attributions[], any];
+
+	return results[0];
 }
 
 export async function insertAttribution(attribution: Omit<Attributions, "id">): Promise<number> {

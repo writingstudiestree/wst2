@@ -5,7 +5,7 @@ vi.mock("mysql2/promise");
 
 describe('db.ts', () => {
 	test('should run insertContent command', async () => {
-		await db.insertContent({
+		const id = await db.insertContent({
 			type: "school",
 			name: "University of Pittsburgh",
 			content: {
@@ -13,11 +13,12 @@ describe('db.ts', () => {
 			},
 		});
 
-		// TODO: assert whether test has passed
+		const result = await db.getContent(id);
+		expect(result?.name).toStrictEqual("University of Pittsburgh");
 	});
 
 	test('should run insertRelation command', async () => {
-		await db.insertRelation({
+		const id = await db.insertRelation({
 			type: "worked alongside",
 			subtype: "co-administrator",
 			link_from: 1,
@@ -27,22 +28,29 @@ describe('db.ts', () => {
 			content: {},
 		});
 
-		// TODO: assert whether test has passed
+		const result = await db.getRelation(id);
+		expect(result?.subtype).toStrictEqual("co-administrator");
 	});
 
 	test('should run insertCitation command', async () => {
-		await db.insertCitation({
+		const id = await db.insertCitation({
 			name: "Some Citation",
 			collection: "Internet Archive",
 			content: { description: "An extended description." },
-		})
+		});
+
+		const result = await db.getCitation(id);
+		expect(result?.name).toStrictEqual("Some Citation");
 	});
 
 	test('should run insertAttribution command', async () => {
-		await db.insertAttribution({
+		const id = await db.insertAttribution({
 			type: "content",
 			link_material: 2,
 			link_citation: 0,
 		});
+
+		const result = await db.getAttribution(id);
+		expect(result?.link_material).toStrictEqual(2);
 	});
 });
