@@ -39,6 +39,20 @@
 
 			if (res.url)
 				goto(res.url);
+		} else {
+			for (const err of $errors) {
+				// look for a field with the id referenced in the error obj
+				const field = err.field && document.getElementById(err.field);
+				if (field) {
+					// if a field is found with the erroring id, focus on it & scroll the page
+					field.focus();
+					field.scrollIntoView({
+						behavior: "smooth",
+						block: "center"
+					});
+					break;
+				}
+			}
 		}
 	}
 </script>
