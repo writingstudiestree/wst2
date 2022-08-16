@@ -19,17 +19,22 @@
 	import Preview from "src/components/viewingComponents/preview.svelte";
 	
 
-	let saveAndContinue = false;
+	let next = false;
 
 	const back = () => {
-		if (!saveAndContinue)
+		if (!next)
 		{
 			goto(`/forms`);
 		}
 		else
 		{
-			saveAndContinue = false;
+			next = false;
 		}
+	};
+
+	const nextStep = () =>
+	{
+		next = true;
 	};
 
 	$: form = $draftForm[$page.params.uuid]?.form;
@@ -44,18 +49,29 @@
 	{#each $form as entry (entry.value.id)}
 		{#if isRecordType(entry, InsertFormType.CONTENT)}
 			{#if entry.value.type === "person"}
-				{#if !saveAndContinue}
+				{#if !next}
 				<Person bind:value={entry.value} />
 				{:else}
 				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
 				{/if}
 			{:else if entry.value.type === "school"}
-			<School bind:value={entry.value} />
+				{#if !next}
+				<School bind:value={entry.value} />
+				{:else}
+				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
+				{/if}
 			{:else if entry.value.type === "institution"}
-			<Institution bind:value={entry.value} />
+				{#if !next}
+				<Institution bind:value={entry.value} />
+				{:else}
+				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
+				{/if}
 			{/if}
-			{#if !saveAndContinue}
-			<RelationButtons bind:cont = {saveAndContinue} bind:entry={entry.value}/>
+			{#if !next}
+			<button class="btn btn-primary" on:click={() => nextStep()}>Next</button>
 			{/if}
 		{:else if isRecordType(entry, InsertFormType.RELATION)}
 			<RelationMaker bind:value={entry.value}/>

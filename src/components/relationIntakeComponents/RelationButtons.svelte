@@ -7,7 +7,6 @@
     import { get } from 'svelte/store';
 
     $: form = $draftForm[$page.params.uuid]?.form;
-    export let cont: boolean = true;
     export let entry: Content & {
     content: any,
 	};
@@ -30,7 +29,6 @@
         }
         ]);
         console.log($form);
-        cont = true;
     };
 </script>
-<button class="btn btn-primary indent" on:click={addRelation}>Save and continue</button>
+<button class="btn btn-primary indent" on:click={addRelation}>Next</button>

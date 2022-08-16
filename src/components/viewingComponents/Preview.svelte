@@ -55,6 +55,8 @@
 
 	//Person
 	let showOrcid: string = "";
+	let isPerson: boolean = value.type === "person"
+	if (isPerson) {
 	if (value.content.orcId === "" || value.content.orcId === undefined)
 	{
 		showOrcid = "none provided"
@@ -62,9 +64,10 @@
 	else
 	{
 		showOrcid = value.content.orcId;
-	}
+	}}
 
 	let showPronounceLink: string = "";
+	if (isPerson) {
 	if (value.content.pronounceLink === "" || value.content.pronounceLink === undefined)
 	{
 		showPronounceLink = "none provided"
@@ -72,9 +75,10 @@
 	else
 	{
 		showPronounceLink = value.content.pronounceLink;
-	}
+	}}
 
 	let showIdentity: string = "";
+	if (isPerson) {
 	if (value.content.identity.length === 0)
 	{
 		showIdentity = "none provided"
@@ -87,7 +91,7 @@
 		if (value.content.identity[i] !== "" && i !== 0)
 		showIdentity += ", " + value.content.identity[i];
 	}
-	};
+	}}
 
 </script>
 <h1 class = "textCenter">Form relationships</h1>
@@ -96,7 +100,7 @@
 				<p>Now that your node has been created, it is time to start forming relationships within the network! First, let's take a look at your current entry:</p>
 				<div class = "inception">
 					<h2>New {value.type} - {value.content.tempNames[0]}</h2>
-					{#if value.content.tempNames.length > 1}
+					{#if value.content.tempNames.length > 1 && value.content.tempNames[1] !== ''}
 					<span>Also known as: {extraNames}</span>
 					{/if}
 					<ul class="list-group">
@@ -108,9 +112,13 @@
 						<li class="list-group-item"><b>Identity descriptors:</b><br/>{showIdentity}</li>
 						<li class="list-group-item"><b>Additional description:</b><br/>{showDescription}</li>
 						{/if}
-					</ul>
-
-					
+						{#if value.type === "school" || value.type === "institution"}
+						<li class="list-group-item"><b>Location:</b><br/>{value.content.location}</li>
+						<li class="list-group-item"><b>Websites:</b><br/>{showWebsites}</li>
+						<li class="list-group-item"><b>Areas of Focus:</b><br/>{showTags}</li>
+						<li class="list-group-item"><b>Additional description:</b><br/>{showDescription}</li>
+						{/if}
+					</ul>					
 				</div>
 				<p>See any errors? Use the 'back' button at the top of the page to correct them before we start integrating your node in to the network!</p>
 			</div>
