@@ -3,19 +3,22 @@
     import type { Content } from 'src/api';
     import { draftForm } from '../../utils/forms/stores';
     import { v4 as uuid } from 'uuid';
+    import { page } from '$app/stores';
+    import { get } from 'svelte/store';
 
-    let form = draftForm.getForm
+    $: form = $draftForm[$page.params.uuid]?.form;
     export let cont: boolean = true;
     export let entry: Content & {
     content: any,
 	};
 
-
-    const saveAndcont = () =>
+    const addRelation = () =>
     {
-        /*form = [...form, { type: InsertFormType.RELATION, value: 
+        const newId = Math.min(...$form.map(record => record.value.id), -1) - 1;
+        console.log($form);
+        form.set([...get(form), { type: InsertFormType.RELATION, value: 
             { 
-            id: uuid(),
+            id: newId,
             type: 'mentored',
             subtype: '',
             link_from: entry.id,
@@ -24,9 +27,10 @@
             year_end: null,
             content: {}
             }
-        ];*/
-        console.log(form);
+        }
+        ]);
+        console.log($form);
         cont = true;
     };
 </script>
-<button class="btn btn-primary indent" on:click={saveAndcont}>Save and continue</button>
+<button class="btn btn-primary indent" on:click={addRelation}>Save and continue</button>

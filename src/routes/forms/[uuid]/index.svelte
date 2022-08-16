@@ -16,6 +16,8 @@
 	//Relation components
 	import RelationMaker from "../relationMaker.svelte";
 	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
+	import Preview from "src/components/viewingComponents/preview.svelte";
+	
 
 	let saveAndContinue = false;
 
@@ -41,8 +43,12 @@
 {#if form}
 	{#each $form as entry (entry.value.id)}
 		{#if isRecordType(entry, InsertFormType.CONTENT)}
-			{#if entry.value.type === "person" && !saveAndContinue}
-			<Person bind:value={entry.value} />
+			{#if entry.value.type === "person"}
+				{#if !saveAndContinue}
+				<Person bind:value={entry.value} />
+				{:else}
+				<Preview bind:value={entry.value}/>
+				{/if}
 			{:else if entry.value.type === "school"}
 			<School bind:value={entry.value} />
 			{:else if entry.value.type === "institution"}
