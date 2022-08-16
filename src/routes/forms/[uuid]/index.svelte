@@ -2,7 +2,6 @@
 	import Person from "src/components/forms/Person.svelte";
 	import School from "src/components/forms/School.svelte";
 	import Institution from "src/components/forms/Institution.svelte";
-	import Citation from "src/components/forms/Citation.svelte";
 
 	import { isRecordType, InsertFormType } from 'src/api/forms/base';
 	import { page } from '$app/stores';
@@ -14,9 +13,10 @@
 	import { browser } from '$app/env';
 
 	//Relation components
-	import RelationMaker from "../relationMaker.svelte";
+	import RelationMaker from "src/components/relationIntakeComponents/RelationMaker.svelte";
 	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
 	import Preview from "src/components/viewingComponents/preview.svelte";
+	import Citation from "src/components/forms/Citation.svelte";
 	
 
 	let next = false;
@@ -74,7 +74,9 @@
 			<button class="btn btn-primary" on:click={() => nextStep()}>Next</button>
 			{/if}
 		{:else if isRecordType(entry, InsertFormType.RELATION)}
+			{#if next}
 			<RelationMaker bind:value={entry.value}/>
+			{/if}
 		{/if}
 	{/each}
 {/if}

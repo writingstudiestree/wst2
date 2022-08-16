@@ -31,4 +31,8 @@
         console.log($form);
     };
 </script>
-<button class="btn btn-primary indent" on:click={addRelation}>Next</button>
+<div class = "inside">
+<h2>Everything looking good?</h2>
+    <p>Press the button below to start adding relations!</p>
+<button class="btn btn-primary indent" on:click={addRelation}>+ Add relation</button>
+</div>
