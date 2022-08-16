@@ -54,7 +54,9 @@
 			{:else if entry.value.type === "institution"}
 			<Institution bind:value={entry.value} />
 			{/if}
+			{#if !saveAndContinue}
 			<RelationButtons bind:cont = {saveAndContinue} bind:entry={entry.value}/>
+			{/if}
 		{:else if isRecordType(entry, InsertFormType.RELATION)}
 			<RelationMaker bind:value={entry.value}/>
 		{/if}
