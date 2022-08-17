@@ -96,7 +96,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
 
 <div class = "inside minHeight">
     <h3>New relationship</h3>
-    <div class="d-inline-flex p-2 align-items-center">
+    <div class="d-inline-flex p-2 flex-wrap align-items-center">
     <div class = "rightSpace">Create a relationship between my entry and a</div>
     <div class = "rightSpace"><AutoComplete 
         hideArrow={false} 
@@ -118,7 +118,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
         /></div></div>
         <div class = "cushion"/>
         {#if target.name != ""}
-        <div class="d-inline-flex p-2 align-items-center">
+        <div class="d-inline-flex flex-wrap p-2 align-items-center">
             <div class = "rightSpace">My entry</div>
             <div class = "rightSpace smallMinWidth"><select class="form-control" bind:value={relType}>
                 {#each possRelationships as relationship}
@@ -137,7 +137,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
             </select></div>
         </div>
         <br/>
-        <div class="d-inline-flex p-2 align-items-center">
+        <div class="d-inline-flex flex-wrap p-2 align-items-center">
             <div class = "rightSpace">From years</div>
             <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={value.year_start}></div>
             <div class = "rightSpace">-</div>

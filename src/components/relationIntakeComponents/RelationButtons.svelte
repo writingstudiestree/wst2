@@ -21,7 +21,7 @@
             subtype: '',
             link_from: entry.id,
             link_to: 0,
-            year_start: 2022,
+            year_start: NaN,
             year_end: null,
             content: {
                 description: ""+entry.type
