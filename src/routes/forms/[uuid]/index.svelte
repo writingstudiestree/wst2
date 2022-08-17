@@ -77,13 +77,10 @@
 			{#if next}
 			<RelationMaker bind:value={entry.value}/>
 			{/if}
+		{:else if isRecordType(entry, InsertFormType.CITATION)}
+		{#if next}
+			<Citation bind:value={entry.value}/>
+			{/if}
 		{/if}
 	{/each}
 {/if}
-
-<style>
-	.indent
-	{
-		margin-left: 10%;
-	}
-</style>

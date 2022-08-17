@@ -22,9 +22,11 @@
             subtype: '',
             link_from: entry.id,
             link_to: 0,
-            year_start: 0,
+            year_start: 2022,
             year_end: null,
-            content: {}
+            content: {
+                description: ""+entry.type
+            }
             }
         }
         ]);

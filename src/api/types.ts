@@ -85,7 +85,7 @@ export interface ContentWithDefaults {
  */
 export interface Relations {
   id: number
-  type: 'mentored' | 'studied at' | 'worked at' | 'worked alongside' | 'served on'
+  type: string;
   subtype: string
   link_from: number
   link_to: number
