@@ -6,6 +6,4 @@
 		content: any,
 	};
 </script>
-
-<h1 class="textCenter">Add a Citation</h1>
 <CitationBasic/>

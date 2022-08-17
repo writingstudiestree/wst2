@@ -1,65 +1,35 @@
 <script lang="ts">
-    export let name: string = "";
-    export let collection: string = "";
+    export let source: string = "";
     export let description: string = "";
+    let selectedSource: string = "";
 
-    let node1 = "";
-    let node2 = "";
-    let nodeList = ['Pitt', 'Penn State', 'Jeff']
+    $: if (selectedSource !== "Other")
+    source = selectedSource;
 
-    import AutoComplete from "simple-svelte-autocomplete";
+    const sourceTypes: string[] = ["", "Personal experience / memory", "Curriculum vitae or resume", "Alumni list", "Dissertation, thesis, or similar scholastic record", "Published document, including articles or acknowledgments", "Archival records or papers", "Interview", "Crowdsourced from the first Writing Studies Tree database", "Other"];
 </script>
 
-<div class="inside">
-    <p><span class="red">*</span>Required fields</p>
-    <div class = "inception">
-        <div>I want to add a citation for the relationship between 
-            <AutoComplete bind:selectedItem={node1} items="{nodeList}" hideArrow={true}/><span class="red">*</span> and 
-            <AutoComplete bind:selectedItem={node2} items="{nodeList}" hideArrow={true}/><span class="red">*</span></div>
-            {#if node1 != "" && node2 != ""}
-            <br/>
-            <label for="node-select">Please specify which relationship you would like to add a citation to<span class="red">*</span></label>
-            <select class="form-control custom-select" id="node-select">
-                <option>The database will be queried here</option>
-                <option>To find current relationships between these two nodes</option>
-            </select>
-            <a href = "/" class = "small">I can't find the relationship I'm looking for</a>
-            {/if}
-    </div>
-    <label for="name">Citation Author<span class="red">*</span></label>
-    <input type="text" id="name" class="form-control" aria-describedby="enterName" bind:value = {name} placeholder="Your preferred name (first and last, if applicable)">
-    <br/>
-    <label for="container-select">Collection</label>
-    <select class="form-control custom-select" id="container-select" bind:value={collection}>
-        <option value="Personal experience">Personal experience</option>
-        <option value="Exists in archived site">Exists in archived site</option>
+    <p><span class="red">*</span>Required fields</p> 
+    <label for="source-select">What is the source of the citation?<span class="red">*</span></label>
+    <select class="form-control custom-select" id="source-select" bind:value={selectedSource}>
+        {#each sourceTypes as sourceType}
+        <option value = {sourceType}>
+            {sourceType}
+        </option>
+        {/each}
     </select>
+    {#if selectedSource === "Other"}
     <br/>
-    <label for="additionalDescription">Additional description</label>
+    <label for="other">Other<span class="red">*</span></label>
+    <input type="text" class="form-control" id="other">
+    {/if}
+    <br/>
+    <label for="additionalDescription">Please provide a link, description, or full citation here: <span class="red">*</span></label>
     <textarea class="form-control" bind:value = {description} id="additionalDescription" rows="3"></textarea>
-</div>
-<style>
-    .red
-    {
-        color: red;
-    }
-
-    .inception 
-    {
-	border-radius: 10px;
-	width: 100%;
-	border: 1px solid grey;
-	height: auto;
-	padding: 2%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 20px;
-	background-color: white;
-	opacity: 0.95;
-    }
-
-    .small
-    {
-        font-size: small;
-    }
-</style>
+    <span class = "smallText">If your source is from a website, consider inserting <a href = "https://web.archive.org/save/">a web archive snapshot</a></span>
+    <style>
+        .red
+        {
+            color: red;
+        }
+    </style>

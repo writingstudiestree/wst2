@@ -1,6 +1,5 @@
 <script type="ts">
     import AutoComplete from "simple-svelte-autocomplete";
-import { insertContent } from "src/api/db";
 
     import type { Relations } from "src/api/types";
 import CitationAddButton from "./CitationAddButton.svelte";
@@ -140,7 +139,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
         <hr/>
         <CitationAddButton bind:citationList = {value.content.citationList}/>
         {#each value.content.citationList as citation}
-            <div>Citation Added</div>
+            <div>Citation Added - {citation.name}</div>
         {/each}
         {/if}
 </div>

@@ -2,7 +2,6 @@
     import { InsertFormType } from 'src/api/forms/base';
     import type { Content } from 'src/api';
     import { draftForm } from '../../utils/forms/stores';
-    import { v4 as uuid } from 'uuid';
     import { page } from '$app/stores';
     import { get } from 'svelte/store';
 
