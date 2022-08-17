@@ -27,9 +27,10 @@ import CitationAddButton from "./CitationAddButton.svelte";
     let selectedType = {val: "", display: ""};
     let possibleTypes: Object[] = [
         {val: "person", display: "Person"},
-        {val: "school", display: "School or University"},
-        {val: "institution", display: "Non-school Institution"}
     ]
+    if (fromType === "school")
+    possibleTypes.push({val: "school", display: "School or University"});
+
     let target = {id: 0, name: "", type: ""};
     const clearTargetField = () => {
         target = {id: 0, name: "", type: ""};
@@ -45,6 +46,13 @@ import CitationAddButton from "./CitationAddButton.svelte";
         possRelationships = ["Studied At", "Worked At"]
     else if (fromType === "person" && target.type === "institution") 
         possRelationships = ["Served On", "Worked At"]
+    else if (fromType === "person" && target.type === "institution") 
+        possRelationships = ["Served On", "Worked At"]
+    else if (fromType === "school" && target.type === "person") 
+        possRelationships = ["Counts Among its Students", "Has Employed"]
+    else if (fromType === "institution" && target.type === "person") 
+        possRelationships = ["Has Employed"]
+    
 
     let possSubtypes: String[] = [""];
     $: if (relType === "Mentored"  || relType === "Was Mentored By")

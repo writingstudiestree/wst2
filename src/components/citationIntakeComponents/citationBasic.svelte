@@ -24,6 +24,7 @@
     <input type="text" class="form-control" id="other">
     {/if}
     <br/>
+    <div class = "inception">In the following textbox, please try to include at least a name, source location, and date in your citation. However, we welcome more information and recommend citation softwares such as <a href="https://zbib.org/">zbib.org</a> to assist in your citation.</div>
     <label for="additionalDescription">Please provide a link, description, or full citation here: <span class="red">*</span></label>
     <textarea class="form-control" bind:value = {description} id="additionalDescription" rows="3"></textarea>
     <span class = "smallText">If your source is from a website, consider inserting <a href = "https://web.archive.org/save/">a web archive snapshot</a></span>
