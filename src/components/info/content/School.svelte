@@ -11,7 +11,7 @@
 
 	{#if names.length > 1}
 	<small>
-		<h6>Also known as:</h6>
+		<h2 class="h6">Also known as:</h2>
 		<ul>
 			{#each names.slice(1) as name}
 			<li>{name}</li>
@@ -31,7 +31,7 @@
 <div class="row">
 	<div class="col col-12 col-lg-8">
 		{#if json.description}
-		<h5>Description</h5>
+		<h2 class="h5">Description</h2>
 		<p>{json.description}</p>
 		{/if}
 
@@ -45,7 +45,7 @@
 	</div>
 	<div class="col col-12 col-lg-4">
 		{#if json.websites && json.websites.length > 0}
-		<h5>Websites</h5>
+		<h2 class="h5">Websites</h2>
 		<ul>
 			{#each json.websites as website}
 			<li><a href={website} rel="external nofollow">{website}</a></li>
