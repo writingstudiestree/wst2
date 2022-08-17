@@ -27,9 +27,13 @@ import CitationAddButton from "./CitationAddButton.svelte";
     let selectedType = {val: "", display: ""};
     let possibleTypes: Object[] = [
         {val: "person", display: "Person"},
+        {val: "school", display: "School or University"},
+        {val: "institution", display: "Non-School Institution"}
     ]
     if (fromType === "school")
-    possibleTypes.push({val: "school", display: "School or University"});
+    possibleTypes = possibleTypes.slice(0, 2);
+    if (fromType === "institution") 
+    possibleTypes = possibleTypes.slice(0, 1);
 
     let target = {id: 0, name: "", type: ""};
     const clearTargetField = () => {
