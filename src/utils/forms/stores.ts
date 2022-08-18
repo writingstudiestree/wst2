@@ -17,8 +17,8 @@ type DraftFormStore = Readable<DraftForms> & {
 }
 
 // debounce validations with a 500ms delay (so the page doesn't update during typing/input)
-const handleValidate = debounce(($form: InsertForm, set: (value: InsertFormError[]) => void) => {
-	const errors = validateForm($form);
+const handleValidate = debounce(async ($form: InsertForm, set: (value: InsertFormError[]) => void) => {
+	const errors = await validateForm($form);
 	set(errors);
 }, 500);
 

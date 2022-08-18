@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const form: InsertForm = await request.json();
 
 	// if there are errors in form validation, return them
-	const errors = validateForm(form);
+	const errors = await validateForm(form);
 	if (errors.length) {
 		return {
 			status: 400,

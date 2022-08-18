@@ -15,8 +15,10 @@
 	}
 
 	function handleDelete() {
-		if (confirmValid)
+		if (confirmValid) {
+			show = false;
 			dispatch("delete");
+		}
 	}
 </script>
 
