@@ -5,7 +5,7 @@ import type { Attributions, Citations, Content, Relations } from './types';
 const connection = await mysql.createConnection(DATABASE_URL);
 
 export async function queryTest(): Promise<Content[]> {
-	const [rows, fields] = await connection.execute("SELECT * FROM content") as [Content[], any];
+	const [rows] = await connection.execute("SELECT * FROM content") as [Content[], any];
 
 	return rows;
 }
