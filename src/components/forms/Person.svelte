@@ -23,7 +23,7 @@
 			firstPlaceholder = "Your preferred name (first and last if applicable)"
 			nextPlaceholder = "Additional name"
 			addMessage = "+ I use another name"
-			bind:entries={value.content.tempNames}
+			bind:entriesAsString={value.name}
 		/>
 		<br/>
 		<TextField
@@ -58,7 +58,7 @@
 			nextPlaceholder = "Additional site"
 			addMessage = "+ Add another site"
 			required = {false}
-			bind:entries = {value.content.websites}
+			bind:entriesAsList = {value.content.websites}
 		/>
 	</div>
 </div>

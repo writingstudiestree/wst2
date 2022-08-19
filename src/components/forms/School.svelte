@@ -27,7 +27,7 @@ import MultiEntry from './fields/MultiEntry.svelte';
 			firstPlaceholder = "Your school's most common name"
 			nextPlaceholder = "Acronym, abbreviation, or alternative name"
 			addMessage = "+ Add an abbreviation or acronym"
-			bind:entries={value.content.tempNames}
+			bind:entriesAsString={value.name}
 		/>
 		<br/>
 		<MultiEntry
@@ -36,7 +36,7 @@ import MultiEntry from './fields/MultiEntry.svelte';
 			nextPlaceholder = "Additional site"
 			addMessage = "+ Add another site"
 			required = {false}
-			bind:entries = {value.content.websites}
+			bind:entriesAsList = {value.content.websites}
 		/>
 </div>
 

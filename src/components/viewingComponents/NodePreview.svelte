@@ -5,12 +5,13 @@
 	};
 
 	//All
+	let nameArray: string[] =  value.name.split("|");
 	let extraNames: string = "";
-	for (let i = 1; i < value.content.tempNames.length; i++) {
-		if (value.content.tempNames[i] !== "" && i === 1)
-		extraNames += value.content.tempNames[i];
-		if (value.content.tempNames[i] !== "" && i != 1)
-		extraNames += ", " + value.content.tempNames[i];
+	for (let i = 1; i < nameArray.length; i++) {
+		if (nameArray[i] !== "" && i === 1)
+		extraNames += nameArray[i];
+		if (nameArray[i] !== "" && i != 1)
+		extraNames += ", " + nameArray[i];
 	}
 
 	let showWebsites: string = "";
@@ -99,8 +100,8 @@
 				<h2>Getting Ready</h2>
 				<p>Now that your node has been created, it is time to start forming relationships within the network! First, let's take a look at your current entry:</p>
 				<div class = "inception">
-					<h2>New {value.type} - {value.content.tempNames[0]}</h2>
-					{#if value.content.tempNames.length > 1 && value.content.tempNames[1] !== ''}
+					<h2>New {value.type} - {nameArray[0]}</h2>
+					{#if nameArray.length > 1 && nameArray[1] !== ''}
 					<span>Also known as: {extraNames}</span>
 					{/if}
 					<ul class="list-group">
