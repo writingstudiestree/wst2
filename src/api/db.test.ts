@@ -28,6 +28,14 @@ describe('db.ts', () => {
 		expect(result?.name).toStrictEqual(testContent.name);
 	});
 
+	test('should run updateContent command', async () => {
+		const id = await db.insertContent(testContent);
+
+		await db.updateContent({ id, type: "school", name: "CMU", content: { websites: ["https://pitt.edu"] } });
+		const result = await db.getContent(id);
+		expect(result?.name).toStrictEqual("CMU");
+	});
+
 	test('should run insertRelation command', async () => {
 		const link_from = await db.insertContent(testContent);
 		const link_to = await db.insertContent(testContent);
@@ -51,6 +59,14 @@ describe('db.ts', () => {
 
 		const result = await db.getCitation(id);
 		expect(result?.name).toStrictEqual(testCitation.name);
+	});
+
+	test('should run updateCitation command', async () => {
+		const id = await db.insertCitation(testCitation);
+
+		await db.updateCitation({ id, name: "Other Citation", collection: "Internet Archive", content: {} });
+		const result = await db.getCitation(id);
+		expect(result?.name).toStrictEqual("Other Citation");
 	});
 
 	test('should run insertAttribution command', async () => {

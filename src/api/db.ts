@@ -12,7 +12,7 @@ export async function queryTest(): Promise<Content[]> {
 
 export async function getContent(id: number): Promise<Content|null> {
 	const [results] = await connection.execute(
-		"SELECT * FROM content WHERE content.id = ? LIMIT 1",
+		"SELECT * FROM content WHERE content.id=? LIMIT 1",
 		[id]
 	) as [Content[], any];
 
@@ -21,16 +21,23 @@ export async function getContent(id: number): Promise<Content|null> {
 
 export async function insertContent(content: Omit<Content, "id">): Promise<number> {
 	const [result] = await connection.execute(
-		"INSERT INTO content (type, name, content) VALUES (?, ?, ?);",
-		[content.type, content.name, content.content],
+		"INSERT INTO content (`type`, `name`, `content`) VALUES (?, ?, ?)",
+		[content.type, content.name, content.content]
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;
 }
 
+export async function updateContent(content: Content): Promise<void> {
+	await connection.execute(
+		"UPDATE content SET type=?, name=?, content=? WHERE id=?",
+		[content.type, content.name, content.content, content.id]
+	);
+}
+
 export async function getRelation(id: number): Promise<Relations|null> {
 	const [results] = await connection.execute(
-		"SELECT * FROM relations WHERE relations.id = ? LIMIT 1",
+		"SELECT * FROM relations WHERE relations.id=? LIMIT 1",
 		[id]
 	) as [Relations[], any];
 
@@ -39,16 +46,23 @@ export async function getRelation(id: number): Promise<Relations|null> {
 
 export async function insertRelation(relation: Omit<Relations, "id">): Promise<number> {
 	const [result] = await connection.execute(
-		"INSERT INTO relations (type, subtype, link_from, link_to, year_start, year_end, content) VALUES (?, ?, ?, ?, ?, ?, ?);",
-		[relation.type, relation.subtype, relation.link_from, relation.link_to, relation.year_start, relation.year_end || null, relation.content],
+		"INSERT INTO relations (type, subtype, link_from, link_to, year_start, year_end, content) VALUES (?, ?, ?, ?, ?, ?, ?)",
+		[relation.type, relation.subtype, relation.link_from, relation.link_to, relation.year_start, relation.year_end || null, relation.content]
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;
 }
 
+export async function updateRelation(relation: Relations): Promise<void> {
+	await connection.execute(
+		"UPDATE relations SET type=?, subtype=?, link_from=?, link_to=?, year_start=?, year_end=?, content=? WHERE id=?",
+		[relation.type, relation.subtype, relation.link_from, relation.link_to, relation.year_start, relation.year_end || null, relation.content, relation.id]
+	);
+}
+
 export async function getCitation(id: number): Promise<Citations|null> {
 	const [results] = await connection.execute(
-		"SELECT * FROM citations WHERE citations.id = ? LIMIT 1",
+		"SELECT * FROM citations WHERE citations.id=? LIMIT 1",
 		[id]
 	) as [Citations[], any];
 
@@ -57,16 +71,23 @@ export async function getCitation(id: number): Promise<Citations|null> {
 
 export async function insertCitation(citation: Omit<Citations, "id">): Promise<number> {
 	const [result] = await connection.execute(
-		"INSERT INTO citations (name, collection, content) VALUES (?, ?, ?);",
-		[citation.name, citation.collection, citation.content],
+		"INSERT INTO citations (name, collection, content) VALUES (?, ?, ?)",
+		[citation.name, citation.collection, citation.content]
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;
 }
 
+export async function updateCitation(citation: Citations): Promise<void> {
+	await connection.execute(
+		"UPDATE citations SET name=?, collection=?, content=? WHERE id=?",
+		[citation.name, citation.collection, citation.content, citation.id]
+	);
+}
+
 export async function getAttribution(id: number): Promise<Attributions|null> {
 	const [results] = await connection.execute(
-		"SELECT * FROM attributions WHERE attributions.id = ? LIMIT 1",
+		"SELECT * FROM attributions WHERE attributions.id=? LIMIT 1",
 		[id]
 	) as [Attributions[], any];
 
@@ -75,9 +96,16 @@ export async function getAttribution(id: number): Promise<Attributions|null> {
 
 export async function insertAttribution(attribution: Omit<Attributions, "id">): Promise<number> {
 	const [result] = await connection.execute(
-		"INSERT INTO attributions (type, link_material, link_citation) VALUES (?, ?, ?);",
-		[attribution.type, attribution.link_material, attribution.link_citation],
+		"INSERT INTO attributions (type, link_material, link_citation) VALUES (?, ?, ?)",
+		[attribution.type, attribution.link_material, attribution.link_citation]
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;
+}
+
+export async function updateAttribution(attribution: Attributions): Promise<void> {
+	await connection.execute(
+		"UPDATE attributions SET type=?, link_material=?, link_citation=? WHERE id=?",
+		[attribution.type, attribution.link_material, attribution.link_citation, attribution.id]
+	);
 }
