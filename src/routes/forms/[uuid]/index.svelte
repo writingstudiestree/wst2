@@ -5,7 +5,6 @@
 
 	import { isRecordType, InsertFormType } from 'src/api/forms/base';
 	import { page } from '$app/stores';
-	import { get } from 'svelte/store';
 	import { draftForm } from 'src/utils/forms';
 
 	//Form Modules
@@ -15,8 +14,8 @@
 	//Relation components
 	import RelationMaker from "src/components/relationIntakeComponents/RelationMaker.svelte";
 	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
-	import Preview from "src/components/viewingComponents/preview.svelte";
 	import Citation from "src/components/forms/Citation.svelte";
+	import Preview from "src/components/viewingComponents/NodePreview.svelte";
 	
 
 	let next = false;
@@ -73,7 +72,13 @@
 			{#if !next}
 			<button class="btn btn-primary" on:click={() => nextStep()}>Next</button>
 			{/if}
-		{:else if isRecordType(entry, InsertFormType.RELATION)}
+		{/if}
+	{/each}
+{/if}
+
+{#if form}
+	{#each $form as entry (entry.value.id)}
+		{#if isRecordType(entry, InsertFormType.RELATION)}
 			{#if next}
 			<RelationMaker bind:value={entry.value}/>
 			{/if}
