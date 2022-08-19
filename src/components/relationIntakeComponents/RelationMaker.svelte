@@ -99,12 +99,12 @@ import CitationAddButton from "./CitationAddButton.svelte";
     <div class="d-inline-flex p-2 flex-wrap align-items-center">
     <div class = "rightSpace">Create a relationship between my entry and a</div>
     <div class = "rightSpace"><AutoComplete 
-        hideArrow={false} 
+        hideArrow={true} 
         items="{possibleTypes}"
         labelFieldName="display"
         valueFieldName="val"
         bind:selectedItem="{selectedType}" 
-        inputClassName  = {"form-control form-control-sm"}
+        inputClassName  = {"form-control form-control-sm form-select"}
         onChange = {clearTargetField()}
         /></div>
       <div class = "rightSpace">named</div>
@@ -120,7 +120,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
         {#if target.name != ""}
         <div class="d-inline-flex flex-wrap p-2 align-items-center">
             <div class = "rightSpace">My entry</div>
-            <div class = "rightSpace smallMinWidth"><select class="form-control" bind:value={relType}>
+            <div class = "rightSpace smallMinWidth"><select class="form-control form-select" bind:value={relType}>
                 {#each possRelationships as relationship}
                     <option value = {relationship}>
                         {relationship}
@@ -128,7 +128,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
                 {/each}
             </select></div>
             <div class = "rightSpace">{target.name}</div>
-            <div class = "rightSpace largeMinWidth"><select class="form-control" bind:value={subType}>
+            <div class = "rightSpace largeMinWidth"><select class="form-control form-select" bind:value={subType}>
                 {#each possSubtypes as subtype}
                     <option value = {subtype}>
                         {subtype}

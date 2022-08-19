@@ -11,7 +11,7 @@
 
     <p><span class="red">*</span>Required fields</p> 
     <label for="source-select">What is the source of the citation?<span class="red">*</span></label>
-    <select class="form-control custom-select" id="source-select" bind:value={selectedSource}>
+    <select class="form-control custom-select form-select" id="source-select" bind:value={selectedSource}>
         {#each sourceTypes as sourceType}
         <option value = {sourceType}>
             {sourceType}
