@@ -84,7 +84,7 @@
 			{/if}
 		{:else if isRecordType(entry, InsertFormType.CITATION)}
 		{#if next}
-			<Citation bind:value={entry.value}/>
+			<Citation/>
 			{/if}
 		{/if}
 	{/each}

@@ -1,7 +1,9 @@
 <script lang="ts">
    export let citationList: any[] = [];
+   import CitationModal from "../citationIntakeComponents/CitationModal.svelte";
    import Citation from "../forms/Citation.svelte";
    import Modal from "../Modal.svelte";
+
    let show: boolean = false;
    let increment = 0;
    const addCitation = () => {
@@ -12,6 +14,6 @@
 </script>
 
 <button class="btn btn-light" on:click={() => addCitation()}>Add a citation to this relationship</button>
-<Modal bind:show = {show} title = "New Citation">
-    <Citation bind:value={citationList[increment]} bind:show={show}/>
-</Modal>
+<CitationModal bind:show = {show} title = "New Citation">
+   <!-- <Citation bind:value={citationList[increment]} bind:show={show}/> -->
+</CitationModal>

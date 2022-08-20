@@ -2,11 +2,32 @@
     import AutoComplete from "simple-svelte-autocomplete";
 
     import type { Relations } from "src/api/types";
-import CitationAddButton from "./CitationAddButton.svelte";
+    import CitationAddButton from "./CitationAddButton.svelte";
     export let value: Relations & {
         content: any,
         };
-    const fromType = value.content.description;
+
+    
+    //Get "link_from" node for name and type
+    import { draftForm } from '../../utils/forms/stores';
+    import { page } from '$app/stores';
+    import { get } from 'svelte/store';
+    import { isRecordType, InsertFormType } from 'src/api/forms/base';
+    $: form = $draftForm[$page.params.uuid]?.form;
+    let fromType: string = "[Error]";
+    let fromName: string = "[Error]";
+    $: for (let i = 0; i < (get(form)).length; i++)
+    {
+        if(get(form)[i].value.id == value.link_from)
+        {
+            let found = get(form)[i];
+            if (isRecordType(found, InsertFormType.CONTENT))
+            {
+                fromType = found.value.type;
+                fromName = found.value.name;
+            }
+        }
+    }
     value.content.description = "";
 
     //Placeholders
@@ -97,7 +118,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
 <div class = "inside minHeight">
     <h3>New relationship</h3>
     <div class="d-inline-flex p-2 flex-wrap align-items-center">
-    <div class = "rightSpace">Create a relationship between my entry and a</div>
+    <div class = "rightSpace">Create a relationship between {fromName} and a</div>
     <div class = "rightSpace"><AutoComplete 
         hideArrow={true} 
         items="{possibleTypes}"
@@ -119,7 +140,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
         <div class = "cushion"/>
         {#if target.name != ""}
         <div class="d-inline-flex flex-wrap p-2 align-items-center">
-            <div class = "rightSpace">My entry</div>
+            <div class = "rightSpace">{fromName}</div>
             <div class = "rightSpace smallMinWidth"><select class="form-control form-select" bind:value={relType}>
                 {#each possRelationships as relationship}
                     <option value = {relationship}>
@@ -156,6 +177,7 @@ import CitationAddButton from "./CitationAddButton.svelte";
         {/if}
 </div>
 
+<button on:click={() => console.log(fromType)}>debug</button>
 <style>
     .minHeight
     {
