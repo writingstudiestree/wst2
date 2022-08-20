@@ -176,8 +176,6 @@
         {/each}
         {/if}
 </div>
-
-<button on:click={() => console.log(fromType)}>debug</button>
 <style>
     .minHeight
     {
