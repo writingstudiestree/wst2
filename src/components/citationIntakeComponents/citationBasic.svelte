@@ -3,8 +3,8 @@
     export let description: string = "";
     let selectedSource: string = "";
 
-    $: if (selectedSource !== "Other")
-    citation.source = selectedSource;
+    /* $: if (selectedSource !== "Other")
+    citation.source = selectedSource; */
 
     const sourceTypes: string[] = ["", "Personal experience / memory", "Curriculum vitae or resume", "Alumni list", "Dissertation, thesis, or similar scholastic record", "Published document, including articles or acknowledgments", "Archival records or papers", "Interview", "Crowdsourced from the first Writing Studies Tree database", "Other"];
 </script>
