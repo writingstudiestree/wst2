@@ -24,7 +24,7 @@
             year_start: NaN,
             year_end: null,
             content: {
-                description: ""+entry.type
+                description: ""
             }
             }
         }

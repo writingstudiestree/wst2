@@ -82,10 +82,6 @@
 			{#if next}
 			<RelationMaker bind:value={entry.value}/>
 			{/if}
-		{:else if isRecordType(entry, InsertFormType.CITATION)}
-		{#if next}
-			<Citation/>
-			{/if}
 		{/if}
 	{/each}
 {/if}

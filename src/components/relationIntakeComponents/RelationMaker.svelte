@@ -13,6 +13,7 @@
     import { page } from '$app/stores';
     import { get } from 'svelte/store';
     import { isRecordType, InsertFormType } from 'src/api/forms/base';
+    import RemoveRelationButton from "./RemoveRelationButton.svelte";
     $: form = $draftForm[$page.params.uuid]?.form;
     let fromType: string = "[Error]";
     let fromName: string = "[Error]";
@@ -28,7 +29,6 @@
             }
         }
     }
-    value.content.description = "";
 
     //Placeholders
     let exampleNodeList = [
@@ -116,7 +116,11 @@
 </script>
 
 <div class = "inside minHeight">
-    <h3>New relationship</h3>
+    <div class="d-flex w-100 justify-content-end">
+        <div class = "p-2 start-margin"><h3>New relationship</h3></div>
+        <div class = "p-2 mr-auto"><RemoveRelationButton bind:id = {value.id}/></div>
+    </div>
+    
     <div class="d-inline-flex p-2 flex-wrap align-items-center">
     <div class = "rightSpace">Create a relationship between {fromName} and a</div>
     <div class = "rightSpace"><AutoComplete 
@@ -196,5 +200,9 @@
     .numberWidth
     {
         width: 90px;
+    }
+    .start-margin
+    {
+        margin-right: auto;
     }
 </style>
