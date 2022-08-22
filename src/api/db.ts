@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { DATABASE_URL } from '../utils/constants';
-import type { Attributions, Citations, Content, Relations, Revisions } from './types';
+import type { Attributions, AttributionsWithDefaults, Citations, CitationsWithDefaults, Content, ContentWithDefaults, Relations, RelationsWithDefaults, Revisions, RevisionsWithDefaults } from './types';
 
 const connection = await mysql.createConnection(DATABASE_URL);
 
@@ -19,7 +19,7 @@ export async function getContent(id: number): Promise<Content|null> {
 	return results[0];
 }
 
-export async function insertContent(content: Omit<Content, "id">): Promise<number> {
+export async function insertContent(content: ContentWithDefaults): Promise<number> {
 	const [result] = await connection.execute(
 		"INSERT INTO content (`type`, `name`, `content`) VALUES (?, ?, ?)",
 		[content.type, content.name, content.content]
@@ -44,7 +44,7 @@ export async function getRelation(id: number): Promise<Relations|null> {
 	return results[0];
 }
 
-export async function insertRelation(relation: Omit<Relations, "id">): Promise<number> {
+export async function insertRelation(relation: RelationsWithDefaults): Promise<number> {
 	const [result] = await connection.execute(
 		"INSERT INTO relations (type, subtype, link_from, link_to, year_start, year_end, content) VALUES (?, ?, ?, ?, ?, ?, ?)",
 		[relation.type, relation.subtype, relation.link_from, relation.link_to, relation.year_start, relation.year_end || null, relation.content]
@@ -69,7 +69,7 @@ export async function getCitation(id: number): Promise<Citations|null> {
 	return results[0];
 }
 
-export async function insertCitation(citation: Omit<Citations, "id">): Promise<number> {
+export async function insertCitation(citation: CitationsWithDefaults): Promise<number> {
 	const [result] = await connection.execute(
 		"INSERT INTO citations (name, collection, content) VALUES (?, ?, ?)",
 		[citation.name, citation.collection, citation.content]
@@ -94,7 +94,7 @@ export async function getAttribution(id: number): Promise<Attributions|null> {
 	return results[0];
 }
 
-export async function insertAttribution(attribution: Omit<Attributions, "id">): Promise<number> {
+export async function insertAttribution(attribution: AttributionsWithDefaults): Promise<number> {
 	const [result] = await connection.execute(
 		"INSERT INTO attributions (type, link_material, link_citation) VALUES (?, ?, ?)",
 		[attribution.type, attribution.link_material, attribution.link_citation]
@@ -110,10 +110,10 @@ export async function updateAttribution(attribution: Attributions): Promise<void
 	);
 }
 
-export async function insertRevision(revision: Omit<Revisions, "id">): Promise<number> {
+export async function insertRevision(revision: RevisionsWithDefaults): Promise<number> {
 	const [result] = await connection.execute(
-		"INSERT INTO revisions (type, link_modifies, created, content) VALUES (?, ?, ?, ?)",
-		[revision.type, revision.link_modifies, revision.created, revision.content]
+		"INSERT INTO revisions (type, link_modifies, content) VALUES (?, ?, ?)",
+		[revision.type, revision.link_modifies, revision.content]
 	) as [mysql.ResultSetHeader, any];
 
 	return result.insertId;

@@ -14,6 +14,8 @@ describe('insert.ts', () => {
 					id: -1,
 					type: "person",
 					name: "A Person",
+					date_created: new Date(),
+					date_modified: new Date(),
 					content: {
 						orcId: "",
 						pronounceLink: "https://example.com",
@@ -29,6 +31,8 @@ describe('insert.ts', () => {
 					id: -2,
 					type: "person",
 					name: "Another Person",
+					date_created: new Date(),
+					date_modified: new Date(),
 					content: {
 						orcId: "",
 						pronounceLink: "https://example.com",
@@ -47,6 +51,8 @@ describe('insert.ts', () => {
 					link_from: -1,
 					link_to: -2,
 					year_start: 2021,
+					date_created: new Date(),
+					date_modified: new Date(),
 					content: {},
 				}
 			}
@@ -77,6 +83,8 @@ describe('insert.ts', () => {
 					id,
 					type: "person",
 					name: "A Different Person",
+					date_created: new Date(),
+					date_modified: new Date(),
 					content: {
 						orcId: "",
 						pronounceLink: "https://example.com",
