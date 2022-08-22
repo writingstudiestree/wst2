@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import * as db from './db';
-import type { Citations, Content } from './types';
+import type { Citations, Content, Revisions } from './types';
 
 vi.mock("mysql2/promise");
 
@@ -18,6 +18,20 @@ const testCitation: Citations = {
 	name: "Some Citation",
 	collection: "Internet Archive",
 	content: { description: "An extended description." },
+};
+
+const testRevision: Revisions = {
+	id: -1,
+	type: "content",
+	link_modifies: -1,
+	created: new Date(),
+	content: {
+		type: "school",
+		name: "University of Pittsburgh",
+		content: {
+			websites: ["https://pitt.edu"],
+		},
+	},
 };
 
 describe('db.ts', () => {
@@ -81,5 +95,11 @@ describe('db.ts', () => {
 
 		const result = await db.getAttribution(id);
 		expect(result?.link_material).toStrictEqual(link_material);
+	});
+
+	test('should run insertRevision command', async () => {
+		const id = await db.insertRevision(testRevision);
+
+		expect(id).toBeGreaterThan(0);
 	});
 });

@@ -11,9 +11,14 @@ export async function insertForm(form: InsertForm) : Promise<InsertFormRecord | 
 	for (const record of filterRecordType(form, InsertFormType.CONTENT)) {
 		const { id, ...value } = record.value;
 
-		// Insert content node & update map with returned id
-		const newId = await db.insertContent(value);
-		contentIdMap.set(id, newId);
+		if (id < 0) {
+			// Insert content node & update map with returned id
+			const newId = await db.insertContent(value);
+			contentIdMap.set(id, newId);
+		} else {
+			await db.updateContent({ id, ...value });
+			contentIdMap.set(id, id);
+		}
 	}
 
 	// Insert relation nodes using the `contentIdMap`

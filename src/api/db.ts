@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { DATABASE_URL } from '../utils/constants';
-import type { Attributions, Citations, Content, Relations } from './types';
+import type { Attributions, Citations, Content, Relations, Revisions } from './types';
 
 const connection = await mysql.createConnection(DATABASE_URL);
 
@@ -108,4 +108,13 @@ export async function updateAttribution(attribution: Attributions): Promise<void
 		"UPDATE attributions SET type=?, link_material=?, link_citation=? WHERE id=?",
 		[attribution.type, attribution.link_material, attribution.link_citation, attribution.id]
 	);
+}
+
+export async function insertRevision(revision: Omit<Revisions, "id">): Promise<number> {
+	const [result] = await connection.execute(
+		"INSERT INTO revisions (type, link_modifies, created, content) VALUES (?, ?, ?, ?)",
+		[revision.type, revision.link_modifies, revision.created, revision.content]
+	) as [mysql.ResultSetHeader, any];
+
+	return result.insertId;
 }
