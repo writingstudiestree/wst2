@@ -19,3 +19,11 @@
 <Institution {content} />
 {/if}
 
+<div>
+	<small>Created on <time datetime={new Date(content.date_created).toISOString()}>{new Date(content.date_created)}</time>.</small>
+	{#if content.date_created.toString() !== content.date_modified.toString()}
+		<br>
+		<small>Last updated on <time datetime={new Date(content.date_modified).toISOString()}>{new Date(content.date_modified)}</time>.</small>
+	{/if}
+</div>
+
