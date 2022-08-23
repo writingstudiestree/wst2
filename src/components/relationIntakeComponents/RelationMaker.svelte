@@ -51,12 +51,11 @@
         {val: "school", display: "School or University"},
         {val: "institution", display: "Non-School Institution"}
     ]
-    if (fromType === "school")
+    $: if (fromType === "school")
     possibleTypes = [
         {val: "person", display: "Person"},
-        {val: "school", display: "School or University"},
     ]
-    if (fromType === "school")
+    $: if (fromType === "institution")
     possibleTypes = [
         {val: "person", display: "Person"},
     ]
