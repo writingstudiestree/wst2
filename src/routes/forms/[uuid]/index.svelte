@@ -73,7 +73,7 @@
 		{/if}
 	{/each}
 
-	<button class="btn btn-primary indent" on:click={handleSubmit}>Submit</button>
+	<button class="btn btn-primary indent" on:click={handleSubmit}>Continue</button>
 {/if}
 
 <style>
