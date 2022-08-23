@@ -14,11 +14,11 @@
 	//Relation components
 	import RelationMaker from "src/components/relationIntakeComponents/RelationMaker.svelte";
 	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
-	import Citation from "src/components/forms/Citation.svelte";
 	import Preview from "src/components/viewingComponents/NodePreview.svelte";
+	import ContentValidationButton from "src/components/relationIntakeComponents/ContentValidationButton.svelte";
 	
 
-	let next = false;
+	export let next = false;
 
 	const back = () => {
 		if (!next)
@@ -31,16 +31,13 @@
 		}
 	};
 
-	const nextStep = () =>
-	{
-		next = true;
-	};
-
 	$: form = $draftForm[$page.params.uuid]?.form;
 	$: if (browser && !$form) {
 		// If the draft is missing/empty, return to the forms page
 		goto("/forms");
 	}
+
+	
 </script>
 <button on:click = {back} class = "btn btn-secondary">Back to previous step</button>
 
@@ -70,7 +67,7 @@
 				{/if}
 			{/if}
 			{#if !next}
-			<button class="btn btn-primary" on:click={() => nextStep()}>Next</button>
+			<ContentValidationButton bind:nextFlag={next}/>
 			{/if}
 		{/if}
 	{/each}

@@ -25,7 +25,7 @@ export const schoolSchema: zod.ZodSchema<Content> = zod.object({
 	type: zod.enum(["school"]),
 	name: zod.string().min(1),
 	content: zod.object({
-		location: zod.string().min(1).optional(),
+		location: zod.string().regex(/(^.+, ["A-Z"]+, United States)|(^.+, ["A-Za-z"]+)/),
 		tags: zod.array(
 			zod.string()
 		).optional(),
@@ -41,7 +41,7 @@ export const institutionSchema: zod.ZodSchema<Content> = zod.object({
 	type: zod.enum(["institution"]),
 	name: zod.string().min(1),
 	content: zod.object({
-		location: zod.string().min(1).optional(),
+		location: zod.string().regex(/(^.+, ["A-Z"]+, United States)|(^.+, ["A-Za-z"]+)/),
 		tags: zod.array(
 			zod.string()
 		).optional(),

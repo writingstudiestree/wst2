@@ -17,6 +17,7 @@ import MultiEntry from './fields/MultiEntry.svelte';
     <p>Let's start with some basic information about the institution</p>
     <p><span class="red">*</span>Required fields</p>
 	<MultiEntry
+			field={[value.id, "name"]}
 			label = "Instiution Name"
 			firstPlaceholder = "Your institution's most common name"
 			nextPlaceholder = "Acronym, abbreviation, or alternative name"
@@ -25,6 +26,7 @@ import MultiEntry from './fields/MultiEntry.svelte';
 		/>
 		<br/>
 		<MultiEntry
+			field={[value.id, "content.websites"]}
 			label = "Websites"
 			firstPlaceholder = "Enter your institution's website, social media, etc. One at a time, please!"
 			nextPlaceholder = "Additional site"

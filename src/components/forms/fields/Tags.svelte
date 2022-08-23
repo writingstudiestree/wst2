@@ -27,5 +27,6 @@
         disable={false}
         minChars={0}
         onlyAutocomplete={false}
-        labelShow={false}/>
+        labelShow={false}
+        class = "form-control"/>
         <span class = "smallText">Not sure what to put here? Start typing and see which tags other users have used before!</span>

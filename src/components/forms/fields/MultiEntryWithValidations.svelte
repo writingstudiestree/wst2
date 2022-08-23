@@ -36,17 +36,31 @@
 <label class="form-label" for="first-entry">{label}{#if required}<span class = "red">*</span>{/if}
 </label>
 <div class="input-group">
-    <input type="text" id="first-entry" class="form-control" placeholder={firstPlaceholder} bind:value={entriesAsList[0]}>
-    <div class="input-group-append">
-    </div>
+    <FieldContainer {field} let:isValid>
+        <input
+            type="text"
+            id={field[1]}
+            class={"form-control " + (!isValid ? "is-invalid" : "")}
+            bind:value={entriesAsList[0]}
+            placeholder={firstPlaceholder}
+            aria-describedby={"tip" in $$slots ? (field[1] + "-tip") : null}
+        >         
+    </FieldContainer>
 </div>
 {#each entriesAsList as entry, i} <!-- Additional entries -->
     {#if i >= 1}
         <div class="input-group">
-            <input type="text" class="form-control" placeholder={nextPlaceholder} bind:value={entriesAsList[i]}>
-            <div class="input-group-append">
+            <FieldContainer {field} let:isValid>
+                <input
+                    type="text"
+                    id={field[1]+"."+{i}}
+                    class={"form-control " + (!isValid ? "is-invalid" : "")}
+                    bind:value={entriesAsList[i]}
+                    placeholder={nextPlaceholder}
+                    aria-describedby={"tip" in $$slots ? (field[1] + "-tip") : null}
+                >         
+            </FieldContainer>
             <button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>
-            </div>
         </div>
     {/if}
 {/each}

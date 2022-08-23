@@ -176,7 +176,7 @@
         <hr/>
         <CitationAddButton bind:citationList = {value.content.citationList}/>
         {#each value.content.citationList as citation}
-            <div>Citation Added - {citation.name}</div>
+            <div>Citation Added</div>
         {/each}
         {/if}
 </div>

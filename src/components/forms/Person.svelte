@@ -19,6 +19,7 @@
 		<p><span class="text-danger">*</span>Required fields</p>
 
 		<MultiEntry
+			field={[value.id, "name"]}
 			label = "Full name"
 			firstPlaceholder = "Your preferred name (first and last if applicable)"
 			nextPlaceholder = "Additional name"
@@ -53,6 +54,7 @@
 	<p>Where can we find this person online?</p>
 	<div class="form-group">
 		<MultiEntry
+			field={[value.id, "content.websites"]}
 			label = "Websites"
 			firstPlaceholder = "Enter your LinkedIn, Blog, Social Media, Academic Website, etc. One at a time, please!"
 			nextPlaceholder = "Additional site"
