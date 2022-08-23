@@ -25,6 +25,9 @@
 	const submitCitation = () =>
 	{
 		citationList = [{source, description}, ...citationList];
+		source = "";
+		description = "";
+		selectedSource = "";
 		handleClose();
 	}
 
@@ -35,7 +38,7 @@
 </script>
 
 {#if show}
-<div class="modal show" tabindex="-1" aria-modal="true" role="dialog" on:click={(e) => e.target === e.currentTarget && handleClose()}>
+<div class="modal show" tabindex="-1" aria-modal="true" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -57,7 +60,7 @@
 				{#if selectedSource === "Other"}
 				<br/>
 				<label for="other">Other<span class="red">*</span></label>
-				<input type="text" class="form-control" id="other">
+				<input type="text" class="form-control" bind:value = {source} id="other">
 				{/if}
 				<br/>
 				<div class = "inception">In the following textbox, please try to include at least a name, source location, and date in your citation. However, we welcome more information and recommend citation softwares such as <a href="https://zbib.org/">zbib.org</a> to assist in your citation.</div>
