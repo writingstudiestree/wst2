@@ -14,12 +14,22 @@
 	}
 
 	//Citation logic
-	export let source: string = "";
-    export let description: string = "";
+	let source: string = "";
+    let description: string = "";
     let selectedSource: string = "";
+	export let citationList: any[];
 
     $: if (selectedSource !== "Other")
     source = selectedSource;
+	
+	const submitCitation = () =>
+	{
+		citationList = [{source, description}, ...citationList];
+		handleClose();
+	}
+
+	let filled: boolean = false;
+	$: filled = source !== "" && description !== "";
 
     const sourceTypes: string[] = ["", "Personal experience / memory", "Curriculum vitae or resume", "Alumni list", "Dissertation, thesis, or similar scholastic record", "Published document, including articles or acknowledgments", "Archival records or papers", "Interview", "Crowdsourced from the first Writing Studies Tree database", "Other"];
 </script>
@@ -54,6 +64,10 @@
 				<label for="additionalDescription">Please provide a link, description, or full citation here: <span class="red">*</span></label>
 				<textarea class="form-control" bind:value = {description} id="additionalDescription" rows="3"></textarea>
 				<span class = "smallText">If your source is from a website, consider inserting <a href = "https://web.archive.org/save/">a web archive snapshot</a></span>
+				<div class = "topPadding">
+				<button class = "btn btn-success btn-sm" disabled = {!filled} on:click={() => submitCitation()}>Submit</button>
+				<button class = "btn btn-danger btn-sm" on:click={() => handleClose()}>Cancel</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -68,5 +82,9 @@
 .red
 {
 	color:red;
+}
+.topPadding
+{
+	padding-top: 10px;	
 }
 </style>

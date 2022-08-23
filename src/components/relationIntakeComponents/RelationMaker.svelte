@@ -52,9 +52,14 @@
         {val: "institution", display: "Non-School Institution"}
     ]
     if (fromType === "school")
-    possibleTypes = possibleTypes.slice(0, 2);
-    if (fromType === "institution") 
-    possibleTypes = possibleTypes.slice(0, 1);
+    possibleTypes = [
+        {val: "person", display: "Person"},
+        {val: "school", display: "School or University"},
+    ]
+    if (fromType === "school")
+    possibleTypes = [
+        {val: "person", display: "Person"},
+    ]
 
     let target = {id: 0, name: "", type: ""};
     const clearTargetField = () => {
@@ -175,9 +180,6 @@
         <textarea class="form-control" bind:value = {value.content.description} id="additionalDescription" rows="3"></textarea>
         <hr/>
         <CitationAddButton bind:citationList = {value.content.citationList}/>
-        {#each value.content.citationList as citation}
-            <div>Citation Added</div>
-        {/each}
         {/if}
 </div>
 <style>

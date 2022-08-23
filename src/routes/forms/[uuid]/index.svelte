@@ -63,7 +63,7 @@
 				<Institution bind:value={entry.value} />
 				{:else}
 				<Preview bind:value={entry.value}/>
-				<RelationButtons bind:entry={entry.value}/>
+				
 				{/if}
 			{/if}
 			{#if !next}
