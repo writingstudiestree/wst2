@@ -7,7 +7,7 @@
 	export let show: boolean = false;
 
 	let confirm = "";
-	$: confirmValid = confirm.toLowerCase().includes("delete this entry");
+	$: confirmValid = /^\"?delete this entry\"?$/.test(confirm.toLowerCase().trim());
 
 	function handleClose() {
 		show = false;
