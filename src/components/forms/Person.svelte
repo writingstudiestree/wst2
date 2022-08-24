@@ -21,7 +21,7 @@
 		<MultiEntry
 			field={[value.id, "name"]}
 			label = "Full name"
-			firstPlaceholder = "Your preferred name (first and last if applicable)"
+			firstPlaceholder = "Preferred name (first and last if applicable)"
 			nextPlaceholder = "Additional name"
 			addMessage = "+ I use another name"
 			bind:entriesAsString={value.name}
