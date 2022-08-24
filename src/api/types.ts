@@ -101,7 +101,7 @@ export interface ContentWithDefaults {
  */
 export interface Relations {
   id: number
-  type: 'mentored' | 'studied at' | 'worked at' | 'worked alongside' | 'served on'
+  type: 'mentored' | 'studied at' | 'worked at' | 'worked alongside' | 'served on';
   subtype: string
   link_from: number
   link_to: number

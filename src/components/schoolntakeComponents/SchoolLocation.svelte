@@ -35,7 +35,7 @@
         </div>
         <div class="col">
           <label for="inputState">State<span class="red">*</span></label>
-          <select id="inputState" class="form-control" bind:value={stateAbbrev}>
+          <select id="inputState" class="form-control form-select" bind:value={stateAbbrev}>
             {#each stateAbbrevList as state}
                 <option value={state}>
                     {state}

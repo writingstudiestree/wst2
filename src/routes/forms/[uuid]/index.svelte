@@ -2,7 +2,6 @@
 	import Person from "src/components/forms/Person.svelte";
 	import School from "src/components/forms/School.svelte";
 	import Institution from "src/components/forms/Institution.svelte";
-	import Citation from "src/components/forms/Citation.svelte";
 
 	import { isRecordType, InsertFormType } from 'src/api/forms/base';
 	import { page } from '$app/stores';
@@ -12,8 +11,23 @@
 	import { goto } from "$app/navigation";
 	import { browser } from '$app/env';
 
+	//Relation components
+	import RelationMaker from "src/components/relationIntakeComponents/RelationMaker.svelte";
+	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
+	import Preview from "src/components/viewingComponents/NodePreview.svelte";
+	import ContentValidationButton from "src/components/relationIntakeComponents/ContentValidationButton.svelte";
+	
+	export let next = false;
+
 	const back = () => {
-		goto(`/forms`);
+		if (!next)
+		{
+			goto(`/forms`);
+		}
+		else
+		{
+			next = false;
+		}
 	};
 
 	$: form = $draftForm[$page.params.uuid]?.form;
@@ -22,6 +36,7 @@
 		// If the draft is missing/empty, return to the forms page
 		goto("/forms");
 	}
+
 
 	async function handleSubmit() {
 		if ($errors.length == 0) {
@@ -58,29 +73,49 @@
 		}
 	}
 </script>
-<button on:click = {back} class = "btn btn-secondary">Back to menu</button>
+<button on:click = {back} class = "btn btn-secondary">Back to previous step</button>
 
 {#if form}
 	{#each $form as entry (entry.value.id)}
-		{#if isRecordType(entry, InsertFormType.CONTENT) }
+		{#if isRecordType(entry, InsertFormType.CONTENT)}
 			{#if entry.value.type === "person"}
-			<Person bind:value={entry.value} />
+				{#if !next}
+				<Person bind:value={entry.value} />
+				{:else}
+				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
+				{/if}
 			{:else if entry.value.type === "school"}
-			<School bind:value={entry.value} />
+				{#if !next}
+				<School bind:value={entry.value} />
+				{:else}
+				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
+				{/if}
 			{:else if entry.value.type === "institution"}
-			<Institution bind:value={entry.value} />
+				{#if !next}
+				<Institution bind:value={entry.value} />
+				{:else}
+				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
+				{/if}
 			{/if}
-		{:else if isRecordType(entry, InsertFormType.CITATION) }
-			<Citation bind:value={entry.value}/>
+			{#if !next}
+			<ContentValidationButton bind:nextFlag={next}/>
+			{/if}
 		{/if}
 	{/each}
 
-	<button class="btn btn-primary indent" on:click={handleSubmit}>Continue</button>
+<button class="btn btn-primary indent" on:click={handleSubmit}>Continue</button>
+
 {/if}
 
-<style>
-	.indent
-	{
-		margin-left: 10%;
-	}
-</style>
+{#if form}
+	{#each $form as entry (entry.value.id)}
+		{#if isRecordType(entry, InsertFormType.RELATION)}
+			{#if next}
+			<RelationMaker bind:value={entry.value}/>
+			{/if}
+		{/if}
+	{/each}
+{/if}

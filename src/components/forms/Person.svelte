@@ -1,11 +1,9 @@
 <script lang="ts">
 	import type { Content } from 'src/api';
 
-	import Tags from "../personIntakeComponents/Tags.svelte";
-	import Websites from '../personIntakeComponents/Websites.svelte';
-	import IdentityTags from '../personIntakeComponents/IdentityTags.svelte';
-	import Description from '../personIntakeComponents/Description.svelte';
 	import TextField from './fields/TextField.svelte';
+	import MultiEntry from './fields/MultiEntry.svelte';
+	import Tags from './fields/Tags.svelte';
 
 	export let value: Content & {
     content: any,
@@ -20,14 +18,15 @@
 	<div class="form-group">
 		<p><span class="text-danger">*</span>Required fields</p>
 
-		<TextField
+		<MultiEntry
 			field={[value.id, "name"]}
-			name="Full name"
-			placeholder="Your preferred name (first and last, if applicable)"
-			required
-			bind:value={value.name}
+			label = "Full name"
+			firstPlaceholder = "Preferred name (first and last if applicable)"
+			nextPlaceholder = "Additional name"
+			addMessage = "+ Also known as"
+			bind:entriesAsString={value.name}
 		/>
-
+		<br/>
 		<TextField
 			field={[value.id, "content.orcId"]}
 			name="ORCiD"
@@ -48,16 +47,48 @@
 				Is there a recording of this person's name at <a href="https://kairos.technorhetoric.net/scholarnames/">Kairos ScholarNames</a> or elsewhere? Please share a link here.
 			</span>
 		</TextField>
-
 	</div>
 </div>
-
-<Websites
-	bind:websites={value.content.websites}
-/>
-
-<Tags bind:enteredTags={value.content.tags}/>
-
-<IdentityTags bind:enteredTags={value.content.Identity}/>
-
-<Description bind:description={value.content.description}/>
+<div class="inside">
+	<h2>2. Websites</h2>
+	<p>Where can we find this person online?</p>
+	<div class="form-group">
+		<MultiEntry
+			field={[value.id, "content.websites"]}
+			label = "Websites"
+			firstPlaceholder = "Link to an online profile, academic website, blog, etc. One at a time, please!"
+			nextPlaceholder = "Additional site"
+			addMessage = "+ Add another site"
+			required = {false}
+			bind:entriesAsList = {value.content.websites}
+		/>
+	</div>
+</div>
+<div class="inside">
+	<h2>3. Interests</h2>
+	<p>What areas of interest or focus does this person have?</p>
+	<div class="form-group">
+		<Tags
+			bind:enteredTags = {value.content.tags}
+		/>
+	</div>
+</div>
+<div class="inside">
+	<h2>4. Identity</h2>
+	<p>How does this person identify?</p>
+	<p>We recognize that asking you to name identity categories is fraught: some databases have the potential for abuse or surveillance, for example, and many people occupy different identity categories that can change over time. Nevertheless, we also know that what goes uncounted can be discounted; that it is currently hard for graduate students to find institutions where their experience of race, ethnicity, gender, disability, or religion will be familiar and welcomed; and that scholars often want to make claims about equity or the lack thereof, but data is hard to come by. We hope you will be able to share what you know first-hand or can verify from this person's writing, and we're happy to <a href="mailto:admin@writingstudiestree.org">discuss this further</a> if you have questions or suggestions!</p>
+	<div class="form-group">
+		<Tags
+			bind:enteredTags = {value.content.identity}
+		/>
+	</div>
+</div>
+<div class="inside">
+	<h2>5. Additional Description</h2>
+	<div class="form-group">
+		<div class="form-group">
+			<textarea class="form-control" bind:value = {value.content.description} id="additionalDescription" rows="3"></textarea>
+			<span class = "smallText">Keep in mind: You'll be forming relationships with other entries in the next step!</span>
+		</div>
+	</div>
+</div>

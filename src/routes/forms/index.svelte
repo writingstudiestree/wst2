@@ -24,7 +24,6 @@
 	{ type: "person", color: "primary", icon: "person", desc: "Add a new person to the network." },
 	{ type: "school", color: "success", icon: "school", desc: "Add a school or university to the network." },
 	{ type: "institution", color: "warning", icon: "domain", desc: "Add a non-school institution (e.g. an organization, conference, journal, etc) to the network." },
-	{ type: "citation", color: "secondary", icon: "book", desc: "Introduce a reference or archive that new information is sourced from." },
 	];
 </script>
 <div class="card mb-5">
@@ -34,7 +33,7 @@
 
 		<div id="form-links" class="row gx-3 gy-3">
 			{#each links as link (link.type)}
-			<div class="col col-12 col-lg-6">
+			<div class="col col-12 col-lg-12">
 				<button class={`btn btn-${link.color} w-100 h-100 p-2`} on:click={() => provideForm(link.type)}>
 					<i class="material-icons" aria-hidden="true">{link.icon}</i>
 					<h5>{link.type}</h5>
