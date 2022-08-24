@@ -15,7 +15,7 @@
 <div class = "inside">
     <h2>3. Areas of Interest or Identity</h2>
         <p>What keywords would you use to describe this institution?</p>
-        <Tags class = "form-control"
+        <Tags
         on:tags={addInterest}
         addKeys={[13]}
         maxTags={false}

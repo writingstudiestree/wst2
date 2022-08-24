@@ -17,7 +17,6 @@
 	import Preview from "src/components/viewingComponents/NodePreview.svelte";
 	import ContentValidationButton from "src/components/relationIntakeComponents/ContentValidationButton.svelte";
 	
-
 	export let next = false;
 
 	const back = () => {
@@ -32,12 +31,47 @@
 	};
 
 	$: form = $draftForm[$page.params.uuid]?.form;
+	$: errors = $draftForm[$page.params.uuid]?.errors;
 	$: if (browser && !$form) {
 		// If the draft is missing/empty, return to the forms page
 		goto("/forms");
 	}
 
-	
+
+	async function handleSubmit() {
+		if ($errors.length == 0) {
+			// submit form to the API route
+			const res = await fetch("/api/forms/insert", {
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify($form),
+			}).then(r => r.json()).catch(e => e);
+
+			if (res.message || res.errors)
+				alert("Could not submit the form. Please check your submission for errors.");
+
+			if (res.url)
+				goto(res.url);
+		} else {
+			console.log("Errors found in handleSubmit", $errors);
+
+			for (const err of $errors) {
+				// look for a field with the id referenced in the error obj
+				const field = err.field && document.getElementById(err.field);
+				if (field) {
+					// if a field is found with the erroring id, focus on it & scroll the page
+					field.focus();
+					field.scrollIntoView({
+						behavior: "smooth",
+						block: "center"
+					});
+					break;
+				}
+			}
+		}
+	}
 </script>
 <button on:click = {back} class = "btn btn-secondary">Back to previous step</button>
 
@@ -71,6 +105,9 @@
 			{/if}
 		{/if}
 	{/each}
+
+<button class="btn btn-primary indent" on:click={handleSubmit}>Continue</button>
+
 {/if}
 
 {#if form}

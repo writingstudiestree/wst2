@@ -1,6 +1,8 @@
 import { ZodError, ZodType } from 'zod';
+import type { Content, Relations } from '../types';
 import { InsertForm, InsertFormRecord, InsertFormType, InsertFormTypes, InsertFormError, isRecordType } from './base';
 import * as schemata from './schemata';
+import { browser } from '$app/env';
 
 /**
  * Validate a Zod schema, mapping any caught errors into the `InsertFormError` type.
@@ -12,7 +14,7 @@ import * as schemata from './schemata';
  */
 function validateSchema<T extends InsertFormType>(
 	key: number,
-	schema: ZodType<InsertFormTypes[T]>,
+	schema: ZodType<Partial<InsertFormTypes[T]>>,
 	record: InsertFormRecord<T>
 ) : InsertFormError[] {
 	const errors: InsertFormError[] = [];
@@ -41,13 +43,84 @@ function validateSchema<T extends InsertFormType>(
 }
 
 /**
+ * Ensures that a node referenced by an id actually exists in the
+ * database and has the correct expected type.
+ *
+ * On the client, this function always returns true.
+ */
+export async function validateEntryType(
+	key: number,
+	form: InsertForm,
+	id: number,
+	type: InsertFormType,
+	subtypes?: string[]
+) {
+	const errors: InsertFormError[] = [];
+
+	if (id < 0) {
+		// check the id locally in the form object
+		const record = form.find(r => r.value.id === id);
+
+		// if the record doesn't exist, return error
+		if (!record || !isRecordType(record, type))
+			errors.push({ key, message: `Record ${id} referenced by ${key} is missing the corresponding entry type ${type}` });
+
+		// if the record does exist, and it is a content node, ensure that it has the correct type
+		if (record && type === InsertFormType.CONTENT && isRecordType(record, InsertFormType.CONTENT)) {
+			if (subtypes && !subtypes.includes(record.value.type))
+				errors.push({ key, message: `Record ${id} referenced by ${key} is missing the expected content type ${subtypes} - it is actually a ${record.value.type}` });
+		}
+
+		return errors;
+	}
+
+	// db module cannot be imported on the client
+	const db = browser ? null : await import("src/api/db");
+	if (!db) return errors;
+
+	// check content records in the database
+	if (type === InsertFormType.CONTENT) {
+		const content = await db.getContent(id);
+
+		// if the content doesn't exist, return error
+		if (!content)
+			errors.push({key, message: `Content #${id} referenced by ${key} is missing from the database` });
+
+		// if the content does exist, ensure that it has the correct type
+		if (content && subtypes && !subtypes.includes(content.type))
+			errors.push({ key, message: `Content #${id} referenced by ${key} is missing the expected content type ${subtypes} - it is actually a ${content.type}` });
+	}
+
+	// check citation records in the database
+	if (type === InsertFormType.CITATION) {
+		const citation = await db.getCitation(id);
+
+		// if the citation doesn't exist, return error
+		if (!citation)
+			errors.push({key, message: `Citation #${id} referenced by ${key} is missing from the database` });
+	}
+
+	return errors;
+}
+
+const validateRelationTypes: {
+	[key in Relations["type"]]: [Content["type"][], Content["type"][]]
+} = {
+	"mentored": [["person"], ["person"]],
+	"studied at": [["person"], ["school"]],
+	"worked at": [["person"], ["school", "institution"]],
+	"worked alongside": [["person"], ["person"]],
+	"served on": [["person"], ["institution"]],
+}
+
+/**
  * Validates all nodes/fields in the provided form state,
  * and returns an array of all errors encountered in the form.
  *
  * @param form The complete form state to validate.
  * @returns Any errors encountered, or an empty array if successful.
  */
-export function validateForm(form: InsertForm) : InsertFormError[] {
+export async function validateForm(form: InsertForm) : Promise<InsertFormError[]> {
 	const errors: InsertFormError[] = [];
 
 	// validate relation/attribution links
@@ -72,13 +145,17 @@ export function validateForm(form: InsertForm) : InsertFormError[] {
 				...validateSchema(key, schemata.relationSchema, record)
 			);
 
-			const linkFrom = form.find(r => r.value.id === record.value.link_from);
-			const linkTo = form.find(r => r.value.id === record.value.link_to);
+			const [typeFrom, typeTo] = validateRelationTypes[record.value.type];
 
-			if (!linkFrom || !isRecordType(linkFrom, InsertFormType.CONTENT))
-				errors.push({ key, message: `Missing link_from element in record ${key}`});
-			if (!linkTo || !isRecordType(linkTo, InsertFormType.CONTENT))
-				errors.push({ key, message: `Missing link_to element in record ${key}` });
+			errors.push(
+				// validate link_from reference type
+				...await validateEntryType(key, form, record.value.link_from, InsertFormType.CONTENT, typeFrom)
+			);
+
+			errors.push(
+				// validate link_to reference type
+				...await validateEntryType(key, form, record.value.link_to, InsertFormType.CONTENT, typeTo)
+			);
 		}
 
 		if (isRecordType(record, InsertFormType.CITATION)) {
@@ -93,17 +170,24 @@ export function validateForm(form: InsertForm) : InsertFormError[] {
 				...validateSchema(key, schemata.attributionSchema, record)
 			);
 
-			const linkMaterial = form.find(r => r.value.id === record.value.link_material);
-			const linkCitation = form.find(r => r.value.id === record.value.link_citation);
+			if (record.value.type === "content") {
+				errors.push(
+					// validate link_material reference type as CONTENT
+					...await validateEntryType(key, form, record.value.link_material, InsertFormType.CONTENT)
+				);
+			}
 
-			if (!linkMaterial)
-				errors.push({ key, message: `Missing link_material element in record ${key}` });
-			if (record.value.type === "content" && (!linkMaterial || !isRecordType(linkMaterial, InsertFormType.CONTENT)))
-				errors.push({ key, message: `link_material element ${key} is not the expected CONTENT type` });
-			if (record.value.type === "relations" && (!linkMaterial || !isRecordType(linkMaterial, InsertFormType.RELATION)))
-				errors.push({ key, message: `link_material element ${key} is not the expected RELATION type` });
-			if (!linkCitation || !isRecordType(linkCitation, InsertFormType.CITATION))
-				errors.push({ key, message: `Missing link_citation element in record ${key}` });
+			if (record.value.type === "relations") {
+				errors.push(
+					// validate link_material reference type as RELATION
+					...await validateEntryType(key, form, record.value.link_material, InsertFormType.RELATION)
+				);
+			}
+
+			errors.push(
+				// validate link_citation reference type
+				...await validateEntryType(key, form, record.value.link_citation, InsertFormType.CITATION)
+			);
 		}
 	}
 

@@ -39,6 +39,10 @@ export interface Citations {
   id: number
   name: string
   collection: string
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_modified: Date
   content: JSONValue
 }
 
@@ -53,6 +57,10 @@ export interface CitationsWithDefaults {
   id?: number
   name: string
   collection: string
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created?: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_modified?: Date
   content: JSONValue
 }
 /**
@@ -63,6 +71,10 @@ export interface Content {
   id: number
   type: 'person' | 'school' | 'institution'
   name: string
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_modified: Date
   content: JSONValue
 }
 
@@ -77,6 +89,10 @@ export interface ContentWithDefaults {
   id?: number
   type: 'person' | 'school' | 'institution'
   name: string
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created?: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_modified?: Date
   content: JSONValue
 }
 /**
@@ -91,6 +107,10 @@ export interface Relations {
   link_to: number
   year_start: number
   year_end?: number | null
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_modified: Date
   content: JSONValue
 }
 
@@ -109,6 +129,10 @@ export interface RelationsWithDefaults {
   link_to: number
   year_start: number
   year_end?: number | null
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created?: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_modified?: Date
   content: JSONValue
 }
 /**
@@ -119,7 +143,8 @@ export interface Revisions {
   id: number
   type: 'content' | 'relations' | 'citations'
   link_modifies: number
-  created: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created: Date
   content: JSONValue
 }
 
@@ -134,6 +159,7 @@ export interface RevisionsWithDefaults {
   id?: number
   type: 'content' | 'relations' | 'citations'
   link_modifies: number
-  created: Date
+  /**  Defaults to: CURRENT_TIMESTAMP. */
+  date_created?: Date
   content: JSONValue
 }
