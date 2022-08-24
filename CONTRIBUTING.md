@@ -41,7 +41,7 @@ Docker allows us to "containerize" and run our application as if it were being h
 	npm run dev
 	```
 
-	This will host the website on `localhost`, which you can open in a local browser: see the address ouput by the final command above. You can keep this site running while you are editing the project; any browser tabs will "hot reload" with your changes when you save them.
+	This will host the website on `localhost`, which you can open in a local browser: see the address output by the final command above. You can keep this site running while you are editing the project; any browser tabs will "hot reload" with your changes when you save them.
 
 Once you have completed your changes, you can [create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) to ask for your changes to be merged into this repository.
 
