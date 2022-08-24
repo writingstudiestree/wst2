@@ -8,6 +8,8 @@ const testContent: Content = {
 	id: -1,
 	type: "school",
 	name: "University of Pittsburgh",
+	date_created: new Date(),
+	date_modified: new Date(),
 	content: {
 		websites: ["https://pitt.edu"],
 	},
@@ -17,6 +19,8 @@ const testCitation: Citations = {
 	id: -1,
 	name: "Some Citation",
 	collection: "Internet Archive",
+	date_created: new Date(),
+	date_modified: new Date(),
 	content: { description: "An extended description." },
 };
 
@@ -24,7 +28,7 @@ const testRevision: Revisions = {
 	id: -1,
 	type: "content",
 	link_modifies: -1,
-	created: new Date(),
+	date_created: new Date(),
 	content: {
 		type: "school",
 		name: "University of Pittsburgh",
@@ -45,7 +49,14 @@ describe('db.ts', () => {
 	test('should run updateContent command', async () => {
 		const id = await db.insertContent(testContent);
 
-		await db.updateContent({ id, type: "school", name: "CMU", content: { websites: ["https://pitt.edu"] } });
+		await db.updateContent({
+			id,
+			type: "school",
+			name: "CMU",
+			date_created: new Date(),
+			date_modified: new Date(),
+			content: { websites: ["https://pitt.edu"] },
+		});
 		const result = await db.getContent(id);
 		expect(result?.name).toStrictEqual("CMU");
 	});
@@ -78,7 +89,14 @@ describe('db.ts', () => {
 	test('should run updateCitation command', async () => {
 		const id = await db.insertCitation(testCitation);
 
-		await db.updateCitation({ id, name: "Other Citation", collection: "Internet Archive", content: {} });
+		await db.updateCitation({
+			id,
+			name: "Other Citation",
+			collection: "Internet Archive",
+			date_created: new Date(),
+			date_modified: new Date(),
+			content: {},
+		});
 		const result = await db.getCitation(id);
 		expect(result?.name).toStrictEqual("Other Citation");
 	});

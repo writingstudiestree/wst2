@@ -10,6 +10,8 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				id: -1,
 				type: "person",
 				name: "",
+				date_created: new Date(),
+				date_modified: new Date(),
 				content: {
 					orcId: "",
 					pronounceLink: "",
@@ -27,6 +29,8 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				id: -1,
 				type: "school",
 				name: "",
+				date_created: new Date(),
+				date_modified: new Date(),
 				content: {
 					location: "",
 					tags: [],
@@ -43,6 +47,8 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				id: -1,
 				type: "institution",
 				name: "",
+				date_created: new Date(),
+				date_modified: new Date(),
 				content: {
 					location: "",
 					tags: [],
@@ -59,6 +65,8 @@ export const defaultForms: Record<FormType, InsertForm> = {
 				id: -1,
 				name: "",
 				collection: "",
+				date_created: new Date(),
+				date_modified: new Date(),
 				content: {
 					description: "",
 				},

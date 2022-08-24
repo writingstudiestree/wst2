@@ -13,6 +13,8 @@ const testValidForm: InsertForm = [
 			id: -1,
 			type: "person",
 			name: "A Person",
+			date_created: new Date(),
+			date_modified: new Date(),
 			content: {
 				orcId: "",
 				pronounceLink: "https://example.com",
@@ -28,6 +30,8 @@ const testValidForm: InsertForm = [
 			id: -2,
 			type: "person",
 			name: "Another Person",
+			date_created: new Date(),
+			date_modified: new Date(),
 			content: {
 				orcId: "",
 				pronounceLink: "https://example.com",
@@ -46,6 +50,8 @@ const testValidForm: InsertForm = [
 			link_from: -1,
 			link_to: -2,
 			year_start: 2021,
+			date_created: new Date(),
+			date_modified: new Date(),
 			content: {},
 		}
 	}
@@ -58,6 +64,8 @@ const testInvalidForm: InsertForm = [
 			id: -1,
 			type: "person",
 			name: "A Person",
+			date_created: new Date(),
+			date_modified: new Date(),
 			content: {
 				orcId: "",
 				pronounceLink: "https://example.com",
@@ -76,6 +84,8 @@ const testInvalidForm: InsertForm = [
 			link_from: -1,
 			link_to: -2,
 			year_start: 2021,
+			date_created: new Date(),
+			date_modified: new Date(),
 			content: {},
 		}
 	}
@@ -152,6 +162,16 @@ describe('validate.ts', () => {
 
 	test('passes minimum valid form submission', async () => {
 		const errors = await validate.validateForm(testValidForm);
+
+		// expected: there are no returned errors
+		expect(errors.length).toBe(0);
+		expect(errors).toStrictEqual([]);
+	});
+
+	test('passes minimum valid form submission through JSON.stringify', async () => {
+		const errors = await validate.validateForm(
+			JSON.parse(JSON.stringify(testValidForm))
+		);
 
 		// expected: there are no returned errors
 		expect(errors.length).toBe(0);

@@ -1,9 +1,9 @@
 import * as zod from 'zod';
-import type { Content, Citations, Relations, Attributions } from '../types';
+import type { ContentWithDefaults, RelationsWithDefaults, CitationsWithDefaults, AttributionsWithDefaults } from '../types';
 
 const UID = zod.number();
 
-export const personSchema: zod.ZodSchema<Content> = zod.object({
+export const personSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(["person"]),
 	name: zod.string().min(1).max(1000),
@@ -20,7 +20,7 @@ export const personSchema: zod.ZodSchema<Content> = zod.object({
 	}),
 });
 
-export const schoolSchema: zod.ZodSchema<Content> = zod.object({
+export const schoolSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(["school"]),
 	name: zod.string().min(1).max(1000),
@@ -36,7 +36,7 @@ export const schoolSchema: zod.ZodSchema<Content> = zod.object({
 	}),
 });
 
-export const institutionSchema: zod.ZodSchema<Content> = zod.object({
+export const institutionSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(["institution"]),
 	name: zod.string().min(1).max(1000),
@@ -52,7 +52,7 @@ export const institutionSchema: zod.ZodSchema<Content> = zod.object({
 	}),
 });
 
-export const relationSchema: zod.ZodSchema<Relations> = zod.object({
+export const relationSchema: zod.ZodSchema<RelationsWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(['mentored', 'studied at', 'worked at', 'worked alongside', 'served on']),
 	subtype: zod.string().max(255),
@@ -65,7 +65,7 @@ export const relationSchema: zod.ZodSchema<Relations> = zod.object({
 	}),
 });
 
-export const citationSchema: zod.ZodSchema<Citations> = zod.object({
+export const citationSchema: zod.ZodSchema<CitationsWithDefaults> = zod.object({
 	id: UID,
 	name: zod.string().min(1).max(255),
 	collection: zod.string().max(255),
@@ -74,7 +74,7 @@ export const citationSchema: zod.ZodSchema<Citations> = zod.object({
 	}),
 });
 
-export const attributionSchema: zod.ZodSchema<Attributions> = zod.object({
+export const attributionSchema: zod.ZodSchema<AttributionsWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(['content', 'relations']),
 	link_material: zod.number(),

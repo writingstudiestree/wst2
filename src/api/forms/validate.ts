@@ -14,7 +14,7 @@ import { browser } from '$app/env';
  */
 function validateSchema<T extends InsertFormType>(
 	key: number,
-	schema: ZodType<InsertFormTypes[T]>,
+	schema: ZodType<Partial<InsertFormTypes[T]>>,
 	record: InsertFormRecord<T>
 ) : InsertFormError[] {
 	const errors: InsertFormError[] = [];

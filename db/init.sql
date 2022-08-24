@@ -2,6 +2,8 @@ CREATE TABLE content (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   type ENUM('person', 'school', 'institution') NOT NULL,
   name varchar(1000) NOT NULL,
+  date_created DATETIME NOT NULL DEFAULT NOW(),
+  date_modified DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
   content JSON NOT NULL
 );
 
@@ -13,6 +15,8 @@ CREATE TABLE relations (
   link_to int NOT NULL,
   year_start int NOT NULL,
   year_end int,
+  date_created DATETIME NOT NULL DEFAULT NOW(),
+  date_modified DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
   content JSON NOT NULL,
   FOREIGN KEY (link_from)
     REFERENCES content(id)
@@ -26,6 +30,8 @@ CREATE TABLE citations (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name varchar(255) NOT NULL,
   collection varchar(255) NOT NULL,
+  date_created DATETIME NOT NULL DEFAULT NOW(),
+  date_modified DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
   content JSON NOT NULL
 );
 
@@ -43,6 +49,6 @@ CREATE TABLE revisions (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   type ENUM('content', 'relations', 'citations') NOT NULL,
   link_modifies int NOT NULL,
-  created DATETIME NOT NULL,
+  date_created DATETIME NOT NULL DEFAULT NOW(),
   content JSON NOT NULL
 );

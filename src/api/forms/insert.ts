@@ -20,7 +20,6 @@ export async function insertForm(form: InsertForm) : Promise<InsertFormRecord | 
 			await db.insertRevision({
 				type: "content",
 				link_modifies: id,
-				created: new Date(),
 				content: {
 					// TODO: add a property for the user that created the revision
 					from: (await db.getContent(id)) as never,
@@ -59,7 +58,6 @@ export async function insertForm(form: InsertForm) : Promise<InsertFormRecord | 
 			await db.insertRevision({
 				type: "relations",
 				link_modifies: id,
-				created: new Date(),
 				content: {
 					// TODO: add a property for the user that created the revision
 					from: (await db.getRelation(id)) as never,
@@ -84,7 +82,6 @@ export async function insertForm(form: InsertForm) : Promise<InsertFormRecord | 
 			await db.insertRevision({
 				type: "citations",
 				link_modifies: id,
-				created: new Date(),
 				content: {
 					// TODO: add a property for the user that created the revision
 					from: (await db.getCitation(id)) as never,
