@@ -23,6 +23,8 @@
             link_to: 0,
             year_start: NaN,
             year_end: null,
+						date_created: new Date(),
+						date_modified: new Date(),
             content: {
                 description: ""
             }

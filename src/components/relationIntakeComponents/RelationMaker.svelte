@@ -99,7 +99,8 @@
     
     //Object fields
         //id is predefined
-        $: value.type = relType;
+				// TODO: "relType" should be limited to the types in the relations type column
+        $: value.type = relType as never;
         $: value.subtype = subType;
         //link_from is predefined
         $: value.link_to = target.id;
