@@ -56,7 +56,7 @@
 		<MultiEntry
 			field={[value.id, "content.websites"]}
 			label = "Websites"
-			firstPlaceholder = "Enter your LinkedIn, Blog, Social Media, Academic Website, etc. One at a time, please!"
+			firstPlaceholder = "Link to an online profile, academic website, blog, etc. One at a time, please!"
 			nextPlaceholder = "Additional site"
 			addMessage = "+ Add another site"
 			required = {false}
