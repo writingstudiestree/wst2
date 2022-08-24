@@ -1,7 +1,7 @@
 CREATE TABLE content (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   type ENUM('person', 'school', 'institution') NOT NULL,
-  name varchar(255) NOT NULL,
+  name varchar(1000) NOT NULL,
   content JSON NOT NULL
 );
 
@@ -13,7 +13,13 @@ CREATE TABLE relations (
   link_to int NOT NULL,
   year_start int NOT NULL,
   year_end int,
-  content JSON NOT NULL
+  content JSON NOT NULL,
+  FOREIGN KEY (link_from)
+    REFERENCES content(id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (link_to)
+    REFERENCES content(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE citations (
@@ -27,7 +33,10 @@ CREATE TABLE attributions (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   type ENUM('content', 'relations') NOT NULL,
   link_material int NOT NULL,
-  link_citation int NOT NULL
+  link_citation int NOT NULL,
+  FOREIGN KEY (link_citation)
+    REFERENCES citations(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE revisions (

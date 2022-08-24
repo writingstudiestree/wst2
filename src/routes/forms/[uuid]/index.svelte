@@ -40,6 +40,8 @@
 			if (res.url)
 				goto(res.url);
 		} else {
+			console.log("Errors found in handleSubmit", $errors);
+
 			for (const err of $errors) {
 				// look for a field with the id referenced in the error obj
 				const field = err.field && document.getElementById(err.field);
