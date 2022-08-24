@@ -23,7 +23,7 @@
 			label = "Full name"
 			firstPlaceholder = "Preferred name (first and last if applicable)"
 			nextPlaceholder = "Additional name"
-			addMessage = "+ I use another name"
+			addMessage = "+ Also known as"
 			bind:entriesAsString={value.name}
 		/>
 		<br/>
