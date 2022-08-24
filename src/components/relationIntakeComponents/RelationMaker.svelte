@@ -75,8 +75,6 @@
         possRelationships = ["Studied At", "Worked At"]
     else if (fromType === "person" && target.type === "institution") 
         possRelationships = ["Served On", "Worked At"]
-    else if (fromType === "person" && target.type === "institution") 
-        possRelationships = ["Served On", "Worked At"]
     else if (fromType === "school" && target.type === "person") 
         possRelationships = ["Counts Among its Students", "Has Employed"]
     else if (fromType === "institution" && target.type === "person") 
