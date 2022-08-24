@@ -34,7 +34,7 @@ import MultiEntry from './fields/MultiEntry.svelte';
 		<MultiEntry
 			field={[value.id, "content.websites"]}
 			label = "Websites"
-			firstPlaceholder = "Enter your school's website, social media, department pages, etc. One at a time, please!"
+			firstPlaceholder = "Enter this school's website, relevant department pages, etc. One at a time, please!"
 			nextPlaceholder = "Additional site"
 			addMessage = "+ Add another site"
 			required = {false}
