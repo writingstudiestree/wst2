@@ -25,7 +25,7 @@ import MultiEntry from './fields/MultiEntry.svelte';
 	<MultiEntry
 			field={[value.id, "name"]}
 			label = "School Name"
-			firstPlaceholder = "Your school's most common name"
+			firstPlaceholder = "This school's most common name"
 			nextPlaceholder = "Acronym, abbreviation, or alternative name"
 			addMessage = "+ Add an abbreviation or acronym"
 			bind:entriesAsString={value.name}
