@@ -76,7 +76,7 @@
 <div class="inside">
 	<h2>4. Identity</h2>
 	<p>How does this person identify?</p>
-	<p>TO FILL HERE: importance of this section, explanation of data, etc.</p>
+	<p>We recognize that asking you to name identity categories is fraught: some databases have the potential for abuse or surveillance, for example, and many people occupy different identity categories that can change over time. Nevertheless, we also know that what goes uncounted can be discounted; that it is currently hard for graduate students to find institutions where their experience of race, ethnicity, gender, disability, or religion will be familiar and welcomed; and that scholars often want to make claims about equity or the lack thereof, but data is hard to come by. We hope you will be able to share what you know first-hand or can verify from this person's writing, and we're happy to <a mailto:admin@writingstudiestree.org>discuss this further</a> if you have questions or suggestions!</p>
 	<div class="form-group">
 		<Tags
 			bind:enteredTags = {value.content.identity}
