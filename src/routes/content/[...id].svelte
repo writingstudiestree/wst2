@@ -10,15 +10,15 @@
 	export let content: api.Content;
 
 	function handleEdit() {
+		// insert the content entry into a new draft
 		const id = uuid();
 		draftForm.createForm(id, [{
 			type: InsertFormType.CONTENT,
 			value: content,
 		}]);
 
+		// open the draft form page
 		goto(`/forms/${id}`);
-
-		// TODO: handle updates to existing nodes within insertForm functionality to support editing content
 	}
 
 	let showDelete = false;
@@ -36,10 +36,10 @@
 		Edit this entry
 	</button>
 
-	<button class="btn btn-danger d-inline-flex me-3" on:click={() => showDelete = true}>
+	<!-- <button class="btn btn-danger d-inline-flex me-3" on:click={() => showDelete = true}>
 		<i class="material-icons me-2">delete</i>
 		Remove this entry
-	</button>
+	</button> -->
 </div>
 
 {#if showDelete}
