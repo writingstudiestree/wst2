@@ -15,7 +15,7 @@
 
     export let entriesAsList: string[] = [""];
     let needsContent: boolean = true
-    $: needsContent = entriesAsList[entriesAsList.length-1] === "";
+    $: needsContent = /^ */.test(entriesAsList[entriesAsList.length-1]);
 
     export let label: string = "Section Label";
     export let firstPlaceholder: string = "Enter the first entry here";

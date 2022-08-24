@@ -10,18 +10,18 @@
 
     const nextStep = () =>
 	{
-		/*console.log($errors);
+		console.log($errors);
 		if ($errors.length == 0)
-		{*/
+		{
 		nextFlag = true;
-		/*}
+		}
 		else
 		{
 			let failedFields: string = "";
 			for (let i = 0; i < $errors.length; i++)
 			failedFields +="-"+$errors[i].field + "\n";
 			alert("Please make sure to fill out the following required fields:\n"+failedFields);
-		}*/
+		}
 	};
 </script>
 <button class="btn btn-primary" on:click={() => nextStep()}>Next</button>

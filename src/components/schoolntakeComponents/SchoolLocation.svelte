@@ -7,6 +7,9 @@
     let inUSA = true;
     const stateAbbrevList = ['', 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
 
+    //validation
+    let cityFocus: boolean = false;
+
     //Update value of location depending on fields selected by user
     $: if (inUSA)
         {
@@ -29,9 +32,12 @@
     </div>
     {#if inUSA}
     <div class="row">
-        <div class="col largerWidth">
+        <div class="col largerWidth" on:focusin={() => cityFocus = true}>
           <label for="inputCity">City<span class="red">*</span></label>
           <input type="text" bind:value={cityName} class="form-control" id="inputCity">
+          <div class="invalid-feedback d-block mb-2">
+            <span class="me-4">{#if cityName.trim() === "" && cityFocus}City is required{/if}</span>
+          </div>
         </div>
         <div class="col">
           <label for="inputState">State<span class="red">*</span></label>

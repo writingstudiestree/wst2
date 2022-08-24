@@ -14,6 +14,7 @@
     import { get } from 'svelte/store';
     import { isRecordType, InsertFormType } from 'src/api/forms/base';
     import RemoveRelationButton from "./RemoveRelationButton.svelte";
+import TextField from "../forms/fields/TextField.svelte";
     $: form = $draftForm[$page.params.uuid]?.form;
     let fromType: string = "[Error]";
     let fromName: string = "[Error]";
@@ -168,7 +169,14 @@
         <br/>
         <div class="d-inline-flex flex-wrap p-2 align-items-center">
             <div class = "rightSpace">From years</div>
-            <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={value.year_start}></div>
+            <div class = "rightSpace">
+                <TextField
+                    type="number"
+                    field={[value.id, "year_start"]}
+                    name=""
+                    bind:value={value.year_start}
+                />
+            </div>
             <div class = "rightSpace">-</div>
             <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={endYear} disabled={ongoing}></div>
             <div class = "rightSpace"> <input class="form-check-input" type="checkbox" id="ongoingCheckbox" bind:checked={ongoing}>

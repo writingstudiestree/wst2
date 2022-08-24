@@ -58,7 +58,7 @@ export const relationSchema: zod.ZodSchema<Relations> = zod.object({
 	subtype: zod.string(),
 	link_from: zod.number(),
 	link_to: zod.number(),
-	year_start: zod.number(),
+	year_start: zod.number().int({ message: "Invalid year" }).positive({ message: "Invalid year" }),
 	year_end: zod.number().optional(),
 	content: zod.object({
 		description: zod.string().optional(),

@@ -8,7 +8,7 @@
 	export let name: string;
 	export let placeholder: string = "";
 	export let required: boolean = false;
-	export let value: string;
+	export let value: any;
 
 	function setType(node: HTMLInputElement) {
 		node.type = type;
