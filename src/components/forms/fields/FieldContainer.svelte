@@ -5,7 +5,7 @@
 	export let field: [number, string];
 
 	// hide errors until user has interacted with the input
-	let displayErrors = false;
+	export let displayErrors = false;
 
 	function handleFocus() {
 		displayErrors = true;
@@ -18,7 +18,7 @@
 <div on:focusin={handleFocus}>
 	<slot
 		isValid={!(fieldErrors.length)}
-		errors={errors}
+		errors={$errors}
 	/>
 
 	<div class="invalid-feedback d-block mb-2">
