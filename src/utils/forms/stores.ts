@@ -4,9 +4,14 @@ import debounce from 'lodash/debounce';
 import type { InsertForm, InsertFormError } from 'src/api/forms/base';
 import { validateForm } from 'src/api/forms/validate';
 
+type DraftFormState = {
+	displayErrors: boolean,
+};
+
 type DraftForm = {
 	form: Writable<InsertForm>,
 	errors: Readable<InsertFormError[]>,
+	state: Writable<DraftFormState>,
 };
 
 type DraftForms = Record<string, DraftForm>;
@@ -28,6 +33,9 @@ function createDraftFormStore() : DraftFormStore {
 	function createForm(uuid: string, template: InsertForm) {
 		const form = writable(template);
 		const errors: Writable<InsertFormError[]> = writable([]);
+		const state: Writable<DraftFormState> = writable({
+			displayErrors: false,
+		});
 
 		form.subscribe(($form) => {
 			handleValidate($form, ($errors) => errors.set($errors));
@@ -35,7 +43,7 @@ function createDraftFormStore() : DraftFormStore {
 
 		draftForms.set({
 			...get(draftForms),
-			[uuid]: { form, errors },
+			[uuid]: { form, errors, state },
 		});
 	}
 

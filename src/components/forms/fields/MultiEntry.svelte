@@ -1,4 +1,6 @@
 <script lang="ts">
+import { endsWith } from "lodash";
+
 	import FieldContainer from "./FieldContainer.svelte";
 	export let field: [number, string];
 
@@ -27,15 +29,20 @@
 </label>
 
 <FieldContainer {field} let:errors>
+	<span id={field[1]} /> <!-- For obtaining the position to scroll to on an error -->
+
 	{#each entriesAsList as entry, i}
 	<div class="input-group">
 		<input
+			id={`${field[1]}.${i}`}
 			type="text"
-			class={"form-control " + (errors.some(e => e.field?.endsWith(`.${i}`)) ? "is-invalid" : "")}
+			class={"form-control " + (errors.some(e => e.field?.endsWith(`.${i}`) || e.field?.endsWith(field[1])) ? "is-invalid" : "")}
 			placeholder={i === 0 ? firstPlaceholder : nextPlaceholder}
 			bind:value={entriesAsList[i]}
 		>
-		<button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>
+		{#if i !== 0}
+			<button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>
+		{/if}
 	</div>
 	{/each}
 

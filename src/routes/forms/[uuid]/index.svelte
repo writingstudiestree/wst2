@@ -15,102 +15,92 @@
 	import RelationMaker from "src/components/relationIntakeComponents/RelationMaker.svelte";
 	import RelationButtons from "src/components/relationIntakeComponents/RelationButtons.svelte";
 	import Preview from "src/components/viewingComponents/NodePreview.svelte";
-	import ContentValidationButton from "src/components/relationIntakeComponents/ContentValidationButton.svelte";
-	
-	export let next = false;
-
-	const back = () => {
-		if (!next)
-		{
-			goto(`/forms`);
-		}
-		else
-		{
-			next = false;
-		}
-	};
 
 	$: form = $draftForm[$page.params.uuid]?.form;
 	$: errors = $draftForm[$page.params.uuid]?.errors;
-	$: if (browser && !$form) {
+	$: if (browser && !$form.length) {
 		// If the draft is missing/empty, return to the forms page
 		goto("/forms");
 	}
 
+	let next = false;
 
-	async function handleSubmit() {
-		if ($errors.length == 0) {
-			// submit form to the API route
-			const res = await fetch("/api/forms/insert", {
-				method: "POST",
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify($form),
-			}).then(r => r.json()).catch(e => e);
+	function handleBack() {
+		if (!next) goto(`/forms`);
+		else next = false;
+	};
 
-			if (res.message || res.errors)
-				alert("Could not submit the form. Please check your submission for errors.");
+	// invokes callback() only if no errors are found - otherwise, displays the erroneous field
+	function checkValidation() : boolean {
+		// update the form state to display any errors
+		$draftForm[$page.params.uuid]?.state.update(s => (s.displayErrors = true, s));
 
-			if (res.url)
-				goto(res.url);
-		} else {
+		if ($errors)
 			console.log("Errors found in handleSubmit", $errors);
 
-			for (const err of $errors) {
-				// look for a field with the id referenced in the error obj
-				const field = err.field && document.getElementById(err.field);
-				if (field) {
-					// if a field is found with the erroring id, focus on it & scroll the page
-					field.focus();
-					field.scrollIntoView({
-						behavior: "smooth",
-						block: "center"
-					});
-					break;
-				}
+		for (const err of $errors) {
+			// look for a field with the id referenced in the error obj
+			const field = err.field && document.getElementById(err.field);
+			if (field) {
+				// if a field is found with the erroring id, focus on it & scroll the page
+				field.focus();
+				field.scrollIntoView({
+					behavior: "smooth",
+					block: "center"
+				});
+				break;
 			}
 		}
+
+		return $errors.length == 0;
+	}
+
+	async function handleNext() {
+		if (checkValidation())
+			next = true;
+	};
+
+	async function handleSubmit() {
+		if (!checkValidation())
+			return;
+
+		// submit form to the API route
+		const res = await fetch("/api/forms/insert", {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify($form),
+		}).then(r => r.json()).catch(e => e);
+
+		if (res.message || res.errors)
+			alert("Could not submit the form. Please check your submission for errors.");
+
+		if (res.url)
+			goto(res.url);
 	}
 </script>
-<button on:click = {back} class = "btn btn-secondary">Back to previous step</button>
+
+<button on:click={handleBack} class="btn btn-secondary">Back to previous step</button>
 
 {#if form}
 	{#each $form as entry (entry.value.id)}
 		{#if isRecordType(entry, InsertFormType.CONTENT)}
-			{#if entry.value.type === "person"}
-				{#if !next}
-				<Person bind:value={entry.value} />
-				{:else}
-				<Preview bind:value={entry.value}/>
-				<RelationButtons bind:entry={entry.value}/>
-				{/if}
-			{:else if entry.value.type === "school"}
-				{#if !next}
-				<School bind:value={entry.value} />
-				{:else}
-				<Preview bind:value={entry.value}/>
-				<RelationButtons bind:entry={entry.value}/>
-				{/if}
-			{:else if entry.value.type === "institution"}
-				{#if !next}
-				<Institution bind:value={entry.value} />
-				{:else}
-				<Preview bind:value={entry.value}/>
-				<RelationButtons bind:entry={entry.value}/>
-				{/if}
-			{/if}
 			{#if !next}
-			<ContentValidationButton bind:nextFlag={next}/>
+				{#if entry.value.type === "person"}
+					<Person bind:value={entry.value} />
+				{:else if entry.value.type === "school"}
+					<School bind:value={entry.value} />
+				{:else if entry.value.type === "institution"}
+					<Institution bind:value={entry.value} />
+				{/if}
+			{:else}
+				<Preview bind:value={entry.value}/>
+				<RelationButtons bind:entry={entry.value}/>
 			{/if}
 		{/if}
 	{/each}
 
-<button class="btn btn-primary indent" on:click={handleSubmit}>Continue</button>
-
-{/if}
-
-{#if form}
 	{#each $form as entry (entry.value.id)}
 		{#if isRecordType(entry, InsertFormType.RELATION)}
 			{#if next}
@@ -118,4 +108,15 @@
 			{/if}
 		{/if}
 	{/each}
+
+	{#if !next}
+	<button class="btn btn-primary w-100" on:click={handleNext}>Next</button>
+	{/if}
+
+	{#if next}
+		<div class="d-grid gap-2" style="grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column;">
+			<button class="btn btn-secondary" on:click={handleBack}>Back to previous step</button>
+			<button class="btn btn-primary" on:click={handleSubmit}>Save</button>
+		</div>
+	{/if}
 {/if}
