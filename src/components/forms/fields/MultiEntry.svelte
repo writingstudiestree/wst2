@@ -38,7 +38,7 @@
 			placeholder={i === 0 ? firstPlaceholder : nextPlaceholder}
 			bind:value={entriesAsList[i]}
 		>
-		{#if i !== 0}
+		{#if !required || i !== 0}
 			<button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>
 		{/if}
 	</div>

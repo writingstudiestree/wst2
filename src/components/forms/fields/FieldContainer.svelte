@@ -16,7 +16,6 @@
 	$: state = draftForm.getForm($page.params.uuid)?.state;
 	$: fieldErrors = (displayErrors && $errors?.filter(e => e.key === field[0] && e.field?.startsWith(field[1]))) || [];
 </script>
-<div class = "containerStyle">
 <div on:focusin={handleFocus}>
 	<slot
 		isValid={!(fieldErrors.length)}
@@ -32,10 +31,3 @@
 		&nbsp;
 	</div>
 </div>
-</div>
-<style>
-	.containerStyle
-	{
-		width: auto;
-	}
-</style>

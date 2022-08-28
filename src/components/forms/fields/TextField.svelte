@@ -8,7 +8,11 @@
 	export let name: string;
 	export let placeholder: string = "";
 	export let required: boolean = false;
+	export let transform = (s: string) => s;
 	export let value: string;
+	$: value = transform(rawValue);
+
+	let rawValue = value || "";
 
 	function setType(node: HTMLInputElement) {
 		node.type = type;
@@ -24,7 +28,7 @@
 		use:setType
 		id={field[1]}
 		class={"form-control " + (!isValid ? "is-invalid" : "")}
-		bind:value={value}
+		bind:value={rawValue}
 		{placeholder}
 		aria-describedby={"tip" in $$slots ? (field[1] + "-tip") : null}
 	>

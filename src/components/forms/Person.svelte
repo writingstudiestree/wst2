@@ -4,10 +4,22 @@
 	import TextField from './fields/TextField.svelte';
 	import MultiEntry from './fields/MultiEntry.svelte';
 	import Tags from './fields/Tags.svelte';
+	import FieldContainer from './fields/FieldContainer.svelte';
 
 	export let value: Content & {
     content: any,
 	};
+
+	// Removes a URL prefix, such as "https://orcid.org/...", from a string
+	function transformRemovePrefix(s: string) {
+		return s.split('/').slice(-1)[0] || "";
+	}
+
+	function transformIntoURL(s: string) {
+		if (s && !s.startsWith("http"))
+			return `https://${s}`;
+		return s;
+	}
 </script>
 
 <h1 class="textCenter">New Person</h1>
@@ -20,16 +32,18 @@
 
 		<MultiEntry
 			field={[value.id, "name"]}
-			label = "Full name"
-			firstPlaceholder = "Preferred name (first and last if applicable)"
-			nextPlaceholder = "Additional name"
-			addMessage = "+ Also known as"
+			label="Full name"
+			firstPlaceholder="Preferred name (first and last if applicable)"
+			nextPlaceholder="Additional name"
+			addMessage="+ Also known as"
 			bind:entriesAsString={value.name}
 		/>
 
 		<TextField
 			field={[value.id, "content.orcId"]}
 			name="ORCiD"
+			placeholder="0000-0001-2345-6789"
+			transform={transformRemovePrefix}
 			bind:value={value.content.orcId}
 		>
 			<span slot="tip">
@@ -41,6 +55,7 @@
 			field={[value.id, "content.pronounceLink"]}
 			name="Pronunciation Link"
 			type="url"
+			transform={transformIntoURL}
 			bind:value={value.content.pronounceLink}
 		>
 			<span slot="tip">
@@ -55,12 +70,12 @@
 	<div class="form-group">
 		<MultiEntry
 			field={[value.id, "content.websites"]}
-			label = "Websites"
-			firstPlaceholder = "Link to an online profile, academic website, blog, etc. One at a time, please!"
-			nextPlaceholder = "Additional site"
-			addMessage = "+ Add another site"
-			required = {false}
-			bind:entriesAsList = {value.content.websites}
+			label="Websites"
+			firstPlaceholder="Link to an online profile, academic website, blog, etc. One at a time, please!"
+			nextPlaceholder="Additional site"
+			addMessage="+ Add another site"
+			required={false}
+			bind:entriesAsList={value.content.websites}
 		/>
 	</div>
 </div>
@@ -69,7 +84,8 @@
 	<p>What areas of interest or focus does this person have?</p>
 	<div class="form-group">
 		<Tags
-			bind:enteredTags = {value.content.tags}
+			field={[value.id, "content.tags"]}
+			bind:enteredTags={value.content.tags}
 		/>
 	</div>
 </div>
@@ -79,16 +95,17 @@
 	<p>We recognize that asking you to name identity categories is fraught: some databases have the potential for abuse or surveillance, for example, and many people occupy different identity categories that can change over time. Nevertheless, we also know that what goes uncounted can be discounted; that it is currently hard for graduate students to find institutions where their experience of race, ethnicity, gender, disability, or religion will be familiar and welcomed; and that scholars often want to make claims about equity or the lack thereof, but data is hard to come by. We hope you will be able to share what you know first-hand or can verify from this person's writing, and we're happy to <a href="mailto:admin@writingstudiestree.org">discuss this further</a> if you have questions or suggestions!</p>
 	<div class="form-group">
 		<Tags
-			bind:enteredTags = {value.content.identity}
+			field={[value.id, "content.identity"]}
+			bind:enteredTags={value.content.identity}
 		/>
 	</div>
 </div>
 <div class="card card-body mb-3">
 	<h2>5. Additional Description</h2>
-	<div class="form-group">
+	<FieldContainer field={[value.id, "content.description"]}>
 		<div class="form-group">
-			<textarea class="form-control" bind:value = {value.content.description} id="additionalDescription" rows="3"></textarea>
-			<span class = "smallText">Keep in mind: You'll be forming relationships with other entries in the next step!</span>
+			<textarea class="form-control" bind:value={value.content.description} id="content.description" rows="3"></textarea>
+			<small class="text-muted">Keep in mind: You'll be forming relationships with other entries in the next step!</small>
 		</div>
-	</div>
+	</FieldContainer>
 </div>
