@@ -81,9 +81,13 @@
 	}
 </script>
 
-<button on:click={handleBack} class="btn btn-secondary">Back to previous step</button>
-
 {#if form}
+<div class="form-content">
+	<button on:click={handleBack} class="btn btn-secondary d-flex align-items-center">
+		<i class="material-icons me-2">arrow_back</i>
+		Back to previous step
+	</button>
+
 	{#each $form as entry (entry.value.id)}
 		{#if isRecordType(entry, InsertFormType.CONTENT)}
 			{#if !next}
@@ -109,14 +113,20 @@
 		{/if}
 	{/each}
 
-	{#if !next}
-	<button class="btn btn-primary w-100" on:click={handleNext}>Next</button>
-	{/if}
-
-	{#if next}
-		<div class="d-grid gap-2" style="grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column;">
-			<button class="btn btn-secondary" on:click={handleBack}>Back to previous step</button>
-			<button class="btn btn-primary" on:click={handleSubmit}>Save</button>
-		</div>
-	{/if}
+	<div class="d-grid gap-2" style="grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column;">
+		<button class="btn btn-secondary" on:click={handleBack}>Back to previous step</button>
+		{#if !next}
+		<button class="btn btn-primary" on:click={handleNext}>Next</button>
+		{:else}
+		<button class="btn btn-primary" on:click={handleSubmit}>Save</button>
+		{/if}
+	</div>
+</div>
 {/if}
+
+<style>
+	.form-content {
+		max-width: 960px;
+		margin: 0 auto;
+	}
+</style>
