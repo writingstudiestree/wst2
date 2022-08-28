@@ -2,9 +2,9 @@
     export let description: string = "";
 </script>
 
-<div class = "inside">
+<div class = "card card-body mb-3">
     <h2>4. Additional Description</h2>
-    <p>Is there any more information you would like to add?</p>   
+    <p>Is there any more information you would like to add?</p>
     <div class="form-group">
         <textarea class="form-control" bind:value = {description} id="additionalDescription" rows="3"></textarea>
         <span class = "smallText">Keep in mind: You'll be forming relationships with other entries in the next step!</span>

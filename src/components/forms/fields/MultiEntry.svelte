@@ -1,6 +1,4 @@
 <script lang="ts">
-import { endsWith } from "lodash";
-
 	import FieldContainer from "./FieldContainer.svelte";
 	export let field: [number, string];
 
@@ -31,7 +29,7 @@ import { endsWith } from "lodash";
 <FieldContainer {field} let:errors>
 	<span id={field[1]} /> <!-- For obtaining the position to scroll to on an error -->
 
-	{#each entriesAsList as entry, i}
+	{#each entriesAsList as _, i}
 	<div class="input-group">
 		<input
 			id={`${field[1]}.${i}`}

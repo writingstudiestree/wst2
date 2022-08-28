@@ -12,7 +12,7 @@
 
 <h1 class="textCenter">New Person</h1>
 
-<div class="inside">
+<div class="card card-body mb-3">
 	<h2>1. Basic Information</h2>
 	<p>Enter some basic information about the person being added</p>
 	<div class="form-group">
@@ -26,7 +26,7 @@
 			addMessage = "+ Also known as"
 			bind:entriesAsString={value.name}
 		/>
-		<br/>
+
 		<TextField
 			field={[value.id, "content.orcId"]}
 			name="ORCiD"
@@ -49,7 +49,7 @@
 		</TextField>
 	</div>
 </div>
-<div class="inside">
+<div class="card card-body mb-3">
 	<h2>2. Websites</h2>
 	<p>Where can we find this person online?</p>
 	<div class="form-group">
@@ -64,7 +64,7 @@
 		/>
 	</div>
 </div>
-<div class="inside">
+<div class="card card-body mb-3">
 	<h2>3. Interests</h2>
 	<p>What areas of interest or focus does this person have?</p>
 	<div class="form-group">
@@ -73,7 +73,7 @@
 		/>
 	</div>
 </div>
-<div class="inside">
+<div class="card card-body mb-3">
 	<h2>4. Identity</h2>
 	<p>How does this person identify?</p>
 	<p>We recognize that asking you to name identity categories is fraught: some databases have the potential for abuse or surveillance, for example, and many people occupy different identity categories that can change over time. Nevertheless, we also know that what goes uncounted can be discounted; that it is currently hard for graduate students to find institutions where their experience of race, ethnicity, gender, disability, or religion will be familiar and welcomed; and that scholars often want to make claims about equity or the lack thereof, but data is hard to come by. We hope you will be able to share what you know first-hand or can verify from this person's writing, and we're happy to <a href="mailto:admin@writingstudiestree.org">discuss this further</a> if you have questions or suggestions!</p>
@@ -83,7 +83,7 @@
 		/>
 	</div>
 </div>
-<div class="inside">
+<div class="card card-body mb-3">
 	<h2>5. Additional Description</h2>
 	<div class="form-group">
 		<div class="form-group">

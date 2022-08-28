@@ -18,7 +18,7 @@
         }
 </script>
 
-<div class="inside">
+<div class="card card-body mb-3">
     <h2>2. Location</h2>
     <p>Where is your institution located?</p>
     <div class="form-check">
@@ -30,11 +30,11 @@
     {#if inUSA}
     <div class="row">
         <div class="col largerWidth">
-          <label for="inputCity">City<span class="red">*</span></label>
+          <label for="inputCity">City<span class="text-danger">*</span></label>
           <input type="text" bind:value={cityName} class="form-control" id="inputCity">
         </div>
         <div class="col">
-          <label for="inputState">State<span class="red">*</span></label>
+          <label for="inputState">State<span class="text-danger">*</span></label>
           <select id="inputState" class="form-control form-select" bind:value={stateAbbrev}>
             {#each stateAbbrevList as state}
                 <option value={state}>
@@ -51,11 +51,11 @@
     {:else}
     <div class="row">
         <div class="col largerWidth">
-          <label for="inputCity">City<span class="red">*</span></label>
+          <label for="inputCity">City<span class="text-danger">*</span></label>
           <input type="text" bind:value={cityName} class="form-control" id="inputCity">
         </div>
         <div class="col">
-          <label for="inputZip">Country<span class="red">*</span></label>
+          <label for="inputZip">Country<span class="text-danger">*</span></label>
           <input type="text" class="form-control" id="inputZip" bind:value={countryName}>
         </div>
     </div>
@@ -63,10 +63,6 @@
 </div>
 
 <style>
-    .red
-    {
-      color: red;
-    }
     .largerWidth
     {
         width:60%;
