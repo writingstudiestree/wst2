@@ -82,15 +82,15 @@
     
 
     let possSubtypes: String[] = [""];
-    $: if (relType === "Mentored"  || relType === "Was Mentored By")
+    $: if (relType === "mentored"  || relType === "was mentored by")
         possSubtypes = ["as dissertation chair", "as a non-chair member of the dissertation committee", "as a writing program administrator", "as a WAC/WID administrator", "as a Writing Project site administrator", "as a professor (graduate)", "as a professor (undergraduate)", "as a teacher (secondary school)", "as a consultant", "as a formal advisor of a type not indicated above"];
-    else if (relType === "Studied At"  || relType === "Counts Among its Students")
-        possSubtypes = ["toward a doctorate", "toward a master’s degree", "toward an undergraduate degree", "toward a secondary (high school) diploma", "in a non-degree or other program"];
-    else if (relType === "Worked At"  || relType === "Has Employed")
+    else if (relType === "studied at"  || relType === "counts among its students")
+        possSubtypes = ["toward a doctorate", "toward a master's degree", "toward an undergraduate degree", "toward a secondary (high school) diploma", "in a non-degree or other program"];
+    else if (relType === "worked at"  || relType === "has employed")
         possSubtypes = ["as a graduate student instructor", "as a professor (adjunct)", "as a professor (undergraduate)", "as a professor (graduate)", "as an administrator", "as other staff"];
-    else if (relType === "Worked Alongside")
+    else if (relType === "worked alongside")
         possSubtypes = ["as co-editors of a journal", "as co-editors of an anthology or collection", "as co-authors of an article", "as co-authors of a book", "as co-administrators of a writing program", "as co-administrators of a writing center", "as co-administrators of a WAC/WID program", "on the development of a digital project", "as formal collaborators of a type not indicated above"];
-    else if (relType === "Served On")
+    else if (relType === "served on")
         possSubtypes = ["as an editor", "as a founder", "as a committee chair", "as a committee member", "in a capacity not indicated above"];
 
     //Date range
