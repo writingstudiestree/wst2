@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { DATABASE_URL } from '../utils/constants';
-import type { Attributions, AttributionsWithDefaults, Citations, CitationsWithDefaults, Content, ContentWithDefaults, Relations, RelationsWithDefaults, Revisions, RevisionsWithDefaults } from './types';
+import type { Attributions, AttributionsWithDefaults, Citations, CitationsWithDefaults, Content, ContentWithDefaults, Relations, RelationsWithDefaults, RevisionsWithDefaults } from './types';
 
 const connection = await mysql.createConnection(DATABASE_URL);
 

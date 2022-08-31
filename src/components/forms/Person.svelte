@@ -4,7 +4,6 @@
 	import TextField from './fields/TextField.svelte';
 	import MultiEntry from './fields/MultiEntry.svelte';
 	import Tags from './fields/Tags.svelte';
-	import FieldContainer from './fields/FieldContainer.svelte';
 
 	export let value: Content & {
     content: any,
