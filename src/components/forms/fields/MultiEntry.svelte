@@ -3,22 +3,26 @@
 	export let field: [number, string];
 
 	export let entriesAsString: String = "";
-	$: entriesAsString = entriesAsList.map(s => s.trim()).filter(s => !!s).join("|");
+	export let entriesAsList: string[] = [];
 
-	export let entriesAsList: string[] = entriesAsString.split("|") || [""];
-	$: needsContent = entriesAsList[entriesAsList.length-1] === "";
+	let entries: string[] = entriesAsList.length ? entriesAsList : entriesAsString.split("|");
+	$: entriesAsString = entries.map(s => s.trim()).filter(s => !!s).map(transform).join("|");
+	$: entriesAsList = entries.map(s => s.trim()).filter(s => !!s).map(transform);
+
+	$: needsContent = entries[entries.length-1] === "";
 
 	export let label: string = "Section Label";
 	export let firstPlaceholder: string = "Enter the first entry here";
 	export let nextPlaceholder: string = "Enter a subsequent entry here";
 	export let addMessage: string = "+";
 	export let required: boolean = true;
+	export let transform = (s: string) => s;
 
 	const newField = () => {
-		entriesAsList = [...entriesAsList, ""];
+		entries = [...entries, ""];
 	};
 	const deleteField = (i: number) => {
-		entriesAsList = entriesAsList.slice(0, i).concat(entriesAsList.slice(i+1));
+		entries = entries.slice(0, i).concat(entries.slice(i+1));
 	};
 </script>
 
@@ -29,14 +33,14 @@
 <FieldContainer {field} let:errors>
 	<span id={field[1]} /> <!-- For obtaining the position to scroll to on an error -->
 
-	{#each entriesAsList as _, i}
+	{#each entries as _, i}
 	<div class="input-group">
 		<input
 			id={`${field[1]}.${i}`}
 			type="text"
 			class={"form-control " + (errors.some(e => e.field?.endsWith(`.${i}`) || e.field?.endsWith(field[1])) ? "is-invalid" : "")}
 			placeholder={i === 0 ? firstPlaceholder : nextPlaceholder}
-			bind:value={entriesAsList[i]}
+			bind:value={entries[i]}
 		>
 		{#if !required || i !== 0}
 			<button class="btn btn-outline-secondary" on:click={() => deleteField(i)} type="button">Delete this entry</button>

@@ -4,6 +4,7 @@
 	import MultiEntry from './fields/MultiEntry.svelte';
 	import TextField from './fields/TextField.svelte';
 	import Location from './fields/Location.svelte';
+	import { transformIntoURL } from './base';
 
 	/*export let value: Content & {
 		content: {
@@ -36,6 +37,7 @@
 		firstPlaceholder = "Enter this school's website, relevant department pages, etc. One at a time, please!"
 		nextPlaceholder = "Additional site"
 		addMessage = "+ Add another site"
+		transform={transformIntoURL}
 		required = {false}
 		bind:entriesAsList = {value.content.websites}
 	/>

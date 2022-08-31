@@ -5,6 +5,8 @@
 	import MultiEntry from './fields/MultiEntry.svelte';
 	import Tags from './fields/Tags.svelte';
 
+	import { transformIntoURL }  from './base';
+
 	export let value: Content & {
     content: any,
 	};
@@ -12,12 +14,6 @@
 	// Removes a URL prefix, such as "https://orcid.org/...", from a string
 	function transformRemovePrefix(s: string) {
 		return s.split('/').slice(-1)[0] || "";
-	}
-
-	function transformIntoURL(s: string) {
-		if (s && !s.startsWith("http"))
-			return `https://${s}`;
-		return s;
 	}
 </script>
 
@@ -73,6 +69,7 @@
 			firstPlaceholder="Link to an online profile, academic website, blog, etc. One at a time, please!"
 			nextPlaceholder="Additional site"
 			addMessage="+ Add another site"
+			transform={transformIntoURL}
 			required={false}
 			bind:entriesAsList={value.content.websites}
 		/>
