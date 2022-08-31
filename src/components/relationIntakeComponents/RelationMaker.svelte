@@ -25,7 +25,7 @@
             if (isRecordType(found, InsertFormType.CONTENT))
             {
                 fromType = found.value.type;
-                fromName = found.value.name;
+                fromName = found.value.name?.split("|")[0];
             }
         }
     }
