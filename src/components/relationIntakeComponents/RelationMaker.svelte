@@ -150,7 +150,7 @@
             <div class = "rightSpace">{fromName}</div>
             <div class = "rightSpace smallMinWidth"><select class="form-control form-select" bind:value={relType}>
                 {#each possRelationships as relationship}
-                    <option value = {relationship}>
+                    <option value = {relationship.toLowerCase()}>
                         {relationship}
                     </option>
                 {/each}
