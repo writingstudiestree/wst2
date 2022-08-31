@@ -78,3 +78,12 @@ body
 	background-color: white;
 	opacity: 0.95;
     }
+
+.form-group div.svelte-tags-input-layout.svelte-tags-input-layout {
+	@extend .form-control;
+	display: flex;
+
+	input, .svelte-tags-input-tag {
+		margin-top: 0;
+	}
+}
