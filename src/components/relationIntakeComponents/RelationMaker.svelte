@@ -121,7 +121,7 @@
     //Date range
     let ongoing: boolean = false;
     let endYear: number;
-    
+
     //Object fields
         //id is predefined
 				// TODO: "relType" should be limited to the types in the relations type column
@@ -139,7 +139,6 @@
             value.year_end = endYear; 
         }
         value.content.citationList = [];
-        value.content.department = "";
 
 
 </script>
