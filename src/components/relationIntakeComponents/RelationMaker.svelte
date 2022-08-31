@@ -158,7 +158,7 @@
             <div class = "rightSpace">{target.name}</div>
             <div class = "rightSpace largeMinWidth"><select class="form-control form-select" bind:value={subType}>
                 {#each possSubtypes as subtype}
-                    <option value = {subtype}>
+                    <option value = {subtype.toLowerCase()}>
                         {subtype}
                     </option>
                 {/each}
