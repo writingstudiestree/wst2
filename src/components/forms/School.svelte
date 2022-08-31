@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { Content } from 'src/api';
-	import SchoolDescription from '../schoolntakeComponents/SchoolDescription.svelte';
-	import SchoolLocation from '../schoolntakeComponents/SchoolLocation.svelte';
-	import SchoolTags from '../schoolntakeComponents/SchoolTags.svelte';
+	import Tags from './fields/Tags.svelte';
 	import MultiEntry from './fields/MultiEntry.svelte';
-	
+	import TextField from './fields/TextField.svelte';
+	import Location from './fields/Location.svelte';
+
 	/*export let value: Content & {
 		content: {
 			location: "",
@@ -41,14 +41,34 @@
 	/>
 </div>
 
-<SchoolLocation
-	bind:location={value.content.location}
-/>
+<div class="card card-body mb-3">
+	<h2>2. Location</h2>
+	<p>Where is your school located?</p>
+	<Location
+		field={[value.id, "content.location"]}
+		bind:location={value.content.location}
+	/>
+</div>
 
-<SchoolTags
-	bind:enteredTags={value.content.tags}
-/>
+<div class = "card card-body mb-3">
+	<h2>3. Areas of Interest or Identity</h2>
+	<p>What keywords would you use to describe this school?</p>
+	<div class="form-group">
+		<Tags
+			field={[value.id, "content.tags"]}
+			bind:enteredTags={value.content.tags}
+		/>
+	</div>
+</div>
 
-<SchoolDescription
-	bind:description={value.content.description}
-/>
+<div class = "card card-body mb-3">
+	<h2>4. Additional Description</h2>
+	<p>Is there any more information you would like to add?</p>
+	<TextField
+		field={[value.id, "content.description"]}
+		type="textarea"
+		bind:value={value.content.description}
+	>
+		<small class="text-muted">Keep in mind: You'll be forming relationships with other entries in the next step!</small>
+	</TextField>
+</div>

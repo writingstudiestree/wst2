@@ -100,12 +100,14 @@
 		/>
 	</div>
 </div>
-<div class="card card-body mb-3">
+<div class = "card card-body mb-3">
 	<h2>5. Additional Description</h2>
-	<FieldContainer field={[value.id, "content.description"]}>
-		<div class="form-group">
-			<textarea class="form-control" bind:value={value.content.description} id="content.description" rows="3"></textarea>
-			<small class="text-muted">Keep in mind: You'll be forming relationships with other entries in the next step!</small>
-		</div>
-	</FieldContainer>
+	<p>Is there any more information you would like to add?</p>
+	<TextField
+		field={[value.id, "content.description"]}
+		type="textarea"
+		bind:value={value.content.description}
+	>
+		<small class="text-muted">Keep in mind: You'll be forming relationships with other entries in the next step!</small>
+	</TextField>
 </div>
