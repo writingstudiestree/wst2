@@ -17,7 +17,7 @@
     $: form = $draftForm[$page.params.uuid]?.form;
     let fromType: string = "[Error]";
     let fromName: string = "[Error]";
-    $: for (let i = 0; i < (get(form)).length; i++)
+    for (let i = 0; i < (get(form)).length; i++) //NOTE: Removed unnescessary(?) reactive declaration from this line.
     {
         if(get(form)[i].value.id == value.link_from)
         {
@@ -68,31 +68,58 @@
     //available relationships
     let relType = "";
     let subType = "";
+    let requiresDept = false;
     let possRelationships: String[] = [""];
-    $: if (fromType === "person" && target.type === "person") 
+    $: if (fromType === "person" && target.type === "person")
+    {
         possRelationships = ["Mentored", "Worked Alongside", "Was Mentored By"];
-    else if (fromType === "person" && target.type === "school") 
-        possRelationships = ["Studied At", "Worked At"]
+        requiresDept = false;
+        value.content.department = ""; //clear field when not used
+    }
+    else if (fromType === "person" && target.type === "school")
+    {
+        possRelationships = ["Studied At", "Worked At"];
+        requiresDept = true;
+    }
     else if (fromType === "person" && target.type === "institution") 
-        possRelationships = ["Served On", "Worked At"]
+    {
+        possRelationships = ["Served On", "Worked At"];
+        requiresDept = false;
+        value.content.department = ""; //clear field when not used
+    }
     else if (fromType === "school" && target.type === "person") 
-        possRelationships = ["Counts Among its Students", "Has Employed"]
+    {
+        possRelationships = ["Counts Among its Students", "Has Employed"];
+        requiresDept = true;
+    }
     else if (fromType === "institution" && target.type === "person") 
+    {
         possRelationships = ["Has Employed"]
-    
+        requiresDept = false;
+        value.content.department = ""; //clear field when not used
+    }
 
     let possSubtypes: String[] = [""];
     $: if (relType === "mentored"  || relType === "was mentored by")
+    {
         possSubtypes = ["as dissertation chair", "as a non-chair member of the dissertation committee", "as a writing program administrator", "as a WAC/WID administrator", "as a Writing Project site administrator", "as a professor (graduate)", "as a professor (undergraduate)", "as a teacher (secondary school)", "as a consultant", "as a formal advisor of a type not indicated above"];
+    }
     else if (relType === "studied at"  || relType === "counts among its students")
+    {
         possSubtypes = ["toward a doctorate", "toward a master's degree", "toward an undergraduate degree", "toward a secondary (high school) diploma", "in a non-degree or other program"];
+    }
     else if (relType === "worked at"  || relType === "has employed")
+    {
         possSubtypes = ["as a graduate student instructor", "as a professor (adjunct)", "as a professor (undergraduate)", "as a professor (graduate)", "as an administrator", "as other staff"];
+    }
     else if (relType === "worked alongside")
+    {
         possSubtypes = ["as co-editors of a journal", "as co-editors of an anthology or collection", "as co-authors of an article", "as co-authors of a book", "as co-administrators of a writing program", "as co-administrators of a writing center", "as co-administrators of a WAC/WID program", "on the development of a digital project", "as formal collaborators of a type not indicated above"];
+    }
     else if (relType === "served on")
+    {
         possSubtypes = ["as an editor", "as a founder", "as a committee chair", "as a committee member", "in a capacity not indicated above"];
-
+    }
     //Date range
     let ongoing: boolean = false;
     let endYear: number;
@@ -114,6 +141,7 @@
             value.year_end = endYear; 
         }
         value.content.citationList = [];
+        value.content.department = "";
 
 
 </script>
