@@ -61,6 +61,7 @@ export const relationSchema: zod.ZodSchema<RelationsWithDefaults> = zod.object({
 	year_start: zod.number(),
 	year_end: zod.number().optional(),
 	content: zod.object({
+		department: zod.string().optional(),
 		description: zod.string().optional(),
 	}),
 });

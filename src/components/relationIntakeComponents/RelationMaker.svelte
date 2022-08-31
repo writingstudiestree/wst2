@@ -1,5 +1,6 @@
 <script type="ts">
     import AutoComplete from "simple-svelte-autocomplete";
+    import TextField from "../forms/fields/TextField.svelte";
 
     import type { Relations } from "src/api/types";
     import CitationAddButton from "./CitationAddButton.svelte";
@@ -17,7 +18,7 @@
     $: form = $draftForm[$page.params.uuid]?.form;
     let fromType: string = "[Error]";
     let fromName: string = "[Error]";
-    for (let i = 0; i < (get(form)).length; i++) //NOTE: Removed unnescessary(?) reactive declaration from this line.
+    $: for (let i = 0; i < (get(form)).length; i++)
     {
         if(get(form)[i].value.id == value.link_from)
         {
@@ -74,7 +75,6 @@
     {
         possRelationships = ["Mentored", "Worked Alongside", "Was Mentored By"];
         requiresDept = false;
-        value.content.department = ""; //clear field when not used
     }
     else if (fromType === "person" && target.type === "school")
     {
@@ -85,7 +85,6 @@
     {
         possRelationships = ["Served On", "Worked At"];
         requiresDept = false;
-        value.content.department = ""; //clear field when not used
     }
     else if (fromType === "school" && target.type === "person") 
     {
@@ -96,7 +95,6 @@
     {
         possRelationships = ["Has Employed"]
         requiresDept = false;
-        value.content.department = ""; //clear field when not used
     }
 
     let possSubtypes: String[] = [""];
@@ -202,6 +200,17 @@
                 <label class="form-check-label" for="ongoingCheckbox">This relationship is ongoing/in progress</label></div>
         </div>
         <hr/>
+        {#if requiresDept}
+        <TextField
+            field={[value.id, "content.department"]}
+			name="Department"
+			bind:value={value.content.department}
+            >
+			<span slot="tip">
+				Which school or university department was most involved in the relationship listed above?
+			</span>
+		</TextField>
+        {/if}
         <label for="additionalDescription">Additional description</label>
         <textarea class="form-control" bind:value = {value.content.description} id="additionalDescription" rows="3"></textarea>
         <hr/>
