@@ -1,3 +1,4 @@
+import { json as json$1 } from '@sveltejs/kit';
 import { validateForm, insertForm, InsertForm } from "src/api/forms";
 import type { RequestHandler } from "@sveltejs/kit";
 
@@ -9,29 +10,24 @@ export const POST: RequestHandler = async ({ request }) => {
 	// if there are errors in form validation, return them
 	const errors = await validateForm(form);
 	if (errors.length) {
-		return {
-			status: 400,
-			body: {
-				errors,
-			},
-		};
+		return json$1({
+			errors,
+		}, {
+			status: 400
+		});
 	}
 
 	// otherwise, insert the form data
 	const result = await insertForm(form);
 	if (!result) {
-		return {
-			status: 400,
-			body: {
-				errors: [],
-			}
-		};
+		return json$1({
+			errors: [],
+		}, {
+			status: 400
+		});
 	}
 
-	return {
-		status: 200,
-		body: {
-			url: `/${result.type}/${result.value.id}`,
-		},
-	};
+	return json$1({
+		url: `/${result.type}/${result.value.id}`,
+	});
 }
