@@ -89,7 +89,7 @@ def main():
 
     contentDF = pd.read_csv (name_of_content_csv)
     relationDF = pd.read_csv (name_of_relation_csv)
-    print(contentDF)
+    #print(contentDF)
 
     #validate the dataframes
     checkContentColumns(contentDF)
@@ -99,9 +99,13 @@ def main():
     ############ Begin generating database lines based on content CSV file ############
 
     #Find the largest ID in the current database so adding new IDs will not create conflicts
-    largestID = 400
-
-    lergestID = select(content_table).order_by(content_table.c.id)[0]
+    largestID = 0
+    connection = engine.connect()
+    stmt = select(content_table).order_by(content_table.c.id)
+    print(stmt)
+    with connection as conn:
+        result = conn.execute(stmt)
+        print(result)
 
     print(largestID)
 
@@ -139,13 +143,13 @@ def main():
 
     ############ As test, print the tables ############
 
-    connection = engine.connect()
-    stmt = select(content_table)
-    print(stmt)
-    with connection as conn:
-        result = conn.execute(stmt)
-        for row in result:
-            print(row)
+    #connection = engine.connect()
+    #stmt = select(content_table)
+    #print(stmt)
+    #with connection as conn:
+    #    result = conn.execute(stmt)
+    #    for row in result:
+    #        print(row)
 
     #connection = engine.connect()
     #stmt = select(relation_table)
