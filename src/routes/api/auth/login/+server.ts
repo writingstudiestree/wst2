@@ -1,7 +1,7 @@
 import { error, RequestHandler } from "@sveltejs/kit";
 import * as bcrypt from "bcrypt";
 import { USER_NAME, USER_PASS } from "src/utils/constants";
-import { createSession } from "src/utils/auth";
+import { createSession, createSessionCookie } from "src/utils/auth";
 
 const USER_NAME_HASH = await bcrypt.hash(USER_NAME, 10);
 const USER_PASS_HASH = await bcrypt.hash(USER_PASS, 10);
@@ -21,15 +21,15 @@ export const POST: RequestHandler = async ({ request }) => {
 	if (!a || !b) throw error(500, "Invalid credentials");
 
 	// create a session token
-	const sessionId = await createSession();
 	const maxAge = 3600 * 12; // 12 hours
+	const sessionId = await createSession(maxAge);
 
 	return new Response(null, {
 		status: 302,
 		headers: {
 			'Location': redirectUrl,
 			// store the session id in a "session" cookie
-			'Set-Cookie': `session=${sessionId}; Max-Age=${maxAge}; Path=/; Secure; HttpOnly; SameSite=Strict`,
+			'Set-Cookie': createSessionCookie(sessionId, maxAge),
 		}
 	});
 };
