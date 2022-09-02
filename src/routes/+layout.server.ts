@@ -1,7 +1,18 @@
-import { error } from '@sveltejs/kit';
+import type { LayoutServerLoad } from "./$types";
+import { checkSession } from "src/utils/auth";
 
-// TODO: check/validate session token
+export const load: LayoutServerLoad = async ({ request }) => {
+	const session = request.headers.get("cookie")?.match("session=([^;]+)");
 
-export const load = async () => {
+	let user = null;
+	if (session && session[1] && await checkSession(session[1])) {
+		user = {
+			displayName: 'Testing Account',
+			email: 'test@writingstudiestree.org',
+		};
+	}
 
+	return {
+		user,
+	};
 };

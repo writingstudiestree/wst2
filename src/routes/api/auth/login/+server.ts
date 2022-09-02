@@ -1,4 +1,4 @@
-import { error, redirect, RequestHandler } from "@sveltejs/kit";
+import { error, RequestHandler } from "@sveltejs/kit";
 import * as bcrypt from "bcrypt";
 import { USER_NAME, USER_PASS } from "src/utils/constants";
 import { createSession } from "src/utils/auth";
@@ -20,7 +20,16 @@ export const POST: RequestHandler = async ({ request }) => {
 	const b = await bcrypt.compare(password, USER_PASS_HASH);
 	if (!a || !b) throw error(500, "Invalid credentials");
 
-	// TODO: set cookie token
-	const sessionId = createSession();
-	throw redirect(302, redirectUrl);
+	// create a session token
+	const sessionId = await createSession();
+	const maxAge = 3600 * 12; // 12 hours
+
+	return new Response(null, {
+		status: 302,
+		headers: {
+			'Location': redirectUrl,
+			// store the session id in a "session" cookie
+			'Set-Cookie': `session=${sessionId}; Max-Age=${maxAge}; Path=/; Secure; HttpOnly; SameSite=Strict`,
+		}
+	});
 };
