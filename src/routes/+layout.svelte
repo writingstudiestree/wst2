@@ -53,16 +53,18 @@
 		() => goto('#')
 	}
 >
-	<form id="signIn">
+	<form id="signIn" method="post" action="/auth/login">
 		<div class="mb-3">
 			<label for="signInEmail" class="form-label">Email address</label>
-			<input type="email" class="form-control" id="signInEmail" placeholder="name@example.com">
+			<input type="email" class="form-control" id="signInEmail" name="email" placeholder="name@example.com">
 		</div>
 
 		<div class="mb-3">
 			<label for="signInPassword" class="form-label">Password</label>
-			<input type="password" class="form-control" id="signInPassword">
+			<input type="password" class="form-control" id="signInPassword" name="password">
 		</div>
+
+		<input hidden type="text" name="redirect" value={$page.url.toString()} />
 	</form>
 
 	<div slot="footer">
