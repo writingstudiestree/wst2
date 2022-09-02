@@ -99,7 +99,7 @@ def main():
     ############ Begin generating database lines based on content CSV file ############
 
     #Find the largest ID in the current database so adding new IDs will not create conflicts
-    largestID = 0
+    largestID = 600
     connection = engine.connect()
     stmt = select(content_table).order_by(content_table.c.id)
     print(stmt)
@@ -109,14 +109,14 @@ def main():
 
     print(largestID)
 
-    #for index, row in contentDF.iterrows():
-    #    connection = engine.connect()
-    #    contents = {}
-    #    stmt = insert(content_table).values(id=(row['id']+largestID), type=row['type'], name=row['name'], content=contents)
-    #    compiled = stmt.compile()
-    #
-    #    with connection as conn:
-    #        result = conn.execute(stmt)
+    for index, row in contentDF.iterrows():
+        connection = engine.connect()
+        contents = {}
+        stmt = insert(content_table).values(type=row['type'], name=row['name'], content=contents)
+        compiled = stmt.compile()
+    
+        with connection as conn:
+            result = conn.execute(stmt)
 
     # specify connection string
     #connection_str = f'mysql+pymysql://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}'
@@ -143,13 +143,13 @@ def main():
 
     ############ As test, print the tables ############
 
-    #connection = engine.connect()
-    #stmt = select(content_table)
-    #print(stmt)
-    #with connection as conn:
-    #    result = conn.execute(stmt)
-    #    for row in result:
-    #        print(row)
+    connection = engine.connect()
+    stmt = select(content_table)
+    print(stmt)
+    with connection as conn:
+        result = conn.execute(stmt)
+        for row in result:
+            print(row)
 
     #connection = engine.connect()
     #stmt = select(relation_table)
