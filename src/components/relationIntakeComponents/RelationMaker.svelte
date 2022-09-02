@@ -167,7 +167,6 @@
 
 
 </script>
-<button on:click={()=>(console.log($form))}>d</button>
 <div class = "inside minHeight">
     <div class="d-flex w-100 justify-content-end">
         <div class = "p-2 start-margin"><h3>New relationship</h3></div>
@@ -214,17 +213,8 @@
                 {/each}
             </select></div>
         </div>
-        <br/>
-        <div class="d-inline-flex flex-wrap p-2 align-items-center">
-            <div class = "rightSpace">From years</div>
-            <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={value.year_start}></div>
-            <div class = "rightSpace">-</div>
-            <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={endYear} disabled={ongoing}></div>
-            <div class = "rightSpace"> <input class="form-check-input" type="checkbox" id="ongoingCheckbox" bind:checked={ongoing}>
-                <label class="form-check-label" for="ongoingCheckbox">This relationship is ongoing/in progress</label></div>
-        </div>
-        <hr/>
         {#if requiresDept}
+        <div class="d-inline-flex flex-wrap p-2 align-items-center">
         <TextField
             field={[value.id, "content.department"]}
 			name="Department"
@@ -234,7 +224,17 @@
 				Which school or university department was most involved in the relationship listed above?
 			</span>
 		</TextField>
+    </div>
         {/if}
+        <div class="d-inline-flex flex-wrap p-2 align-items-center">
+            <div class = "rightSpace">From years</div>
+            <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={value.year_start}></div>
+            <div class = "rightSpace">-</div>
+            <div class = "rightSpace"><input type="number" class = "form-control numberWidth" bind:value={endYear} disabled={ongoing}></div>
+            <div class = "rightSpace"> <input class="form-check-input" type="checkbox" id="ongoingCheckbox" bind:checked={ongoing}>
+                <label class="form-check-label" for="ongoingCheckbox">This relationship is ongoing/in progress</label></div>
+        </div>
+        <hr/>
         <label for="additionalDescription">Additional description</label>
         <textarea class="form-control" bind:value = {value.content.description} id="additionalDescription" rows="3"></textarea>
         <hr/>
