@@ -8,7 +8,7 @@
 
 	import type { PageData } from "./$types";
 	export let data: PageData;
-	$: ({ content } = data);
+	$: ({ content, user } = data);
 
 	function handleEdit() {
 		// insert the content entry into a new draft
@@ -31,6 +31,7 @@
 
 <Content {content} />
 
+{#if user}
 <div class="mt-5">
 	<button class="btn btn-primary d-inline-flex me-3" on:click={handleEdit}>
 		<i class="material-icons me-2">edit</i>
@@ -42,6 +43,7 @@
 		Remove this entry
 	</button> -->
 </div>
+{/if}
 
 {#if showDelete}
 <DeleteModal

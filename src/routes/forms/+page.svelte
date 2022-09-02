@@ -25,10 +25,15 @@
 	{ type: "school", color: "success", icon: "school", desc: "Add a school or university to the network." },
 	{ type: "institution", color: "warning", icon: "domain", desc: "Add a non-school institution (e.g. an organization, conference, journal, etc) to the network." },
 	];
+
+	import type { PageData } from "./$types";
+	export let data: PageData;
+	$: ({ user } = data);
 </script>
 <div class="card mb-5">
 	<div class="card-body">
 		<h2 class="card-title">Add a new entry</h2>
+		{#if user}
 		<p class="card-subtitle text-muted mb-3">Please select the type of entry you would like to create:</p>
 
 		<div id="form-links" class="row gx-3 gy-3">
@@ -42,6 +47,11 @@
 			</div>
 			{/each}
 		</div>
+		{:else}
+		<p>
+			Please <a href="#signin">sign in</a> in order to contribute to the site.
+		</p>
+		{/if}
 	</div>
 </div>
 
