@@ -3,6 +3,22 @@ import type { SearchQuery, SearchResult } from "./base";
 
 const MAX_RESULTS = 100;
 
+// Transforms a url's query params into a search query object
+export async function querySearchParams(url: URL) : Promise<SearchResult[]> {
+	const query: SearchQuery = {
+		content_type: url.searchParams.get("content_type"),
+		content_name: url.searchParams.get("content_name"),
+		content_tag: url.searchParams.get("content_tag"),
+		relation_with: url.searchParams.has("relation_with") ? +(url.searchParams.has("relation_with")) : null,
+		relation_type: url.searchParams.get("relation_type"),
+		last_id: url.searchParams.has("last_id") ? +(url.searchParams.has("last_id")) : null,
+	};
+
+	return await querySearch(query);
+}
+
+
+// Performs a database search of the SearchQuery object
 export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> {
 	const sqlSelect = [
 		"content.id AS content_id",
@@ -66,7 +82,7 @@ export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> 
 			sqlParams.push("AND relations.type = ?");
 			sqlArgs.push(query.relation_type);
 		};
-	} else {
+	} else if (sqlWhere.length) {
 		// otherwise, use WHERE
 		sqlParams.push(`WHERE ${sqlWhere.join(",")}`)
 	}

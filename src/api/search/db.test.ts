@@ -29,6 +29,11 @@ const testPerson: Content = {
 };
 
 describe('db.ts', () => {
+	test('should return recent entries on an empty query', async () => {
+		await querySearch({});
+		// expected: query does not throw an error
+	});
+
 	test('should return a partial name search', async () => {
 		const id = await db.insertContent(testSchool);
 
