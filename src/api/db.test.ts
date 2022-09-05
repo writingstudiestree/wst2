@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import * as db from './db';
 import type { Citations, Content, Revisions } from './types';
 
-vi.mock("mysql2/promise");
+vi.mock("mysql2");
 
 const testContent: Content = {
 	id: -1,
