@@ -1,26 +1,27 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import type { SearchResult } from "src/api/search";
-	import { onMount } from "svelte";
+	import { contentIcons } from "src/utils/forms";
+	import { onDestroy } from "svelte";
 
 	export let result: SearchResult;
 
 	$: url = `/content/${result.content.id}`;
 	$: name = result.content.name?.split("|")[0];
 	$: nameExtra = result.content.name?.split("|").slice(1);
-
-	$: icon = ({
-		person: "person",
-		school: "school",
-		institution: "domain",
-	})[result.content.type];
+	$: description = (result.content.content as any)?.description;
 
 	$: tooltipText = result.content.type.charAt(0).toUpperCase() + result.content.type.slice(1);
 	let tooltipElement: any;
+	let tooltip: any;
 
-	$: if (tooltipElement) {
-		new (globalThis as any).bootstrap.Tooltip(tooltipElement);
+	$: if (tooltipElement && !tooltip) {
+		tooltip = new (globalThis as any).bootstrap.Tooltip(tooltipElement);
 	}
+
+	onDestroy(() => {
+		if (tooltip) tooltip.dispose();
+	});
 </script>
 
 <div class="card mb-3" on:click={() => goto(url)}>
@@ -32,11 +33,16 @@
 				data-bs-title={tooltipText}
 				bind:this={tooltipElement}
 			>
-				{icon}
+				{contentIcons[result.content.type]}
 			</i>
 			<a href={url}>
-				<h2 class="h5 m-0">{name}</h2>
+				<h2 class="h5 m-0 d-inline me-3">{name}</h2>
 			</a>
+			<h3 class="h5 m-0 text-secondary me-3 d-none d-sm-inline">{nameExtra.join(", ")}</h3>
+
+			<p class="text-secondary m-0 d-none d-lg-inline">
+				{description || ""}
+			</p>
 		</div>
 	</div>
 	<div class="card-footer">
@@ -47,5 +53,11 @@
 <style>
 	.card {
 		cursor: pointer;
+	}
+
+	.card-body h3, .card-body p {
+		overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 	}
 </style>

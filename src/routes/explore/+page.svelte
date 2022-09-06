@@ -4,15 +4,19 @@
 
 	import type { PageData } from "./$types";
 	export let data: PageData;
-	$: ({ results } = data);
+	$: ({ results, query } = data);
+
+	function handleSubmit() {
+		const params = new URLSearchParams(query as Record<string, string>).toString();
+		window.location.search = params;
+	}
 </script>
 
-<div class="container">
-	<SearchInput />
-</div>
+<SearchInput
+	bind:query={query}
+	on:submit={handleSubmit}
+/>
 
-<div class="container">
-	{#each results as result}
-	<SearchResult {result} />
-	{/each}
-</div>
+{#each results as result}
+<SearchResult {result} />
+{/each}

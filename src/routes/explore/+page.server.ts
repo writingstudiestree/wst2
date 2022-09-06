@@ -1,10 +1,12 @@
 import type { PageServerLoad } from "./$types";
-import { querySearchParams } from "src/api/search";
+import { getSearchQuery, querySearch } from "src/api/search";
 
 export const load: PageServerLoad = async ({ url }) => {
-	const results = await querySearchParams(url);
+	const query = getSearchQuery(url);
+	const results = await querySearch(query);
 
 	return {
+		query,
 		results,
 	};
 };
