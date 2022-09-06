@@ -97,8 +97,8 @@ export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> 
 
 	// order by "most recently added" (i.e. a descending id column)
 	sqlParams.push("ORDER BY content.id DESC");
-	// limit queries to MAX_RESULTS
-	sqlParams.push(`LIMIT ${MAX_RESULTS}`);
+	// TODO: limit queries to MAX_RESULTS and add pagination (using `query.last_id` parameter)
+	// sqlParams.push(`LIMIT ${MAX_RESULTS}`);
 
 	let sql = `SELECT ${sqlSelect.join(",")} FROM content ${sqlParams.join(" ")}`;
 	const results = await connection.execute(sql, sqlArgs) as [any[], any];
