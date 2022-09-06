@@ -127,37 +127,6 @@ export async function insertForm(form: InsertForm) : Promise<InsertFormRecord | 
 		}
 	}
 
-	contentIdMap.forEach((value) => {
-		db.insertRelation({
-			type: "studied at",
-			subtype: "Undergraduate",
-			link_from: value,
-			link_to: 2,
-			year_start: 2018,
-			year_end: 2022,
-			content: {},
-		});
-
-		db.insertRelation({
-			type: "worked alongside",
-			subtype: "Software Engineer",
-			link_from: value,
-			link_to: 1,
-			year_start: 2018,
-			year_end: 2022,
-			content: {},
-		});
-
-		db.insertRelation({
-			type: "worked at",
-			subtype: "Software Engineer",
-			link_from: value,
-			link_to: 2,
-			year_start: 2022,
-			content: {},
-		});
-	});
-
 	// get the first node's new database ID
 	if (form[0]) {
 		let id = form[0].value.id;

@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		relation_with: id,
 	});
 
-	let [name] = content?.name?.split(",") || [""];
+	let [name] = content?.name?.split("|") || [""];
 	name = name.trim().replaceAll(" ", "_");
 
 	if (name && !nameStr) {

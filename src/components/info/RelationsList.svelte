@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { SearchResult } from "src/api/search";
+	import Relation from "./relation/Relation.svelte";
 
 	export let relations: SearchResult[];
 
@@ -20,21 +21,7 @@
 <ul>
 	{#each results as { content, relation }}
 	<li>
-		<a href={`/content/${content.id}`}>
-			{content.name?.split("|")[0] || ""},
-		</a>
-		{#if relation}
-		<span class="text-muted">
-			{relation.subtype},
-			<time datetime={relation.year_start + ""}>{relation.year_start}</time>
-			-
-			{#if relation.year_end}
-			<time datetime={relation.year_end + ""}>{relation.year_end}</time>
-			{:else}
-			Current
-			{/if}
-		</span>
-		{/if}
+		<Relation {content} {relation} />
 	</li>
 	{/each}
 </ul>
