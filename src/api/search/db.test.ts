@@ -13,7 +13,7 @@ const testSchool: Content = {
 	date_modified: new Date(),
 	content: {
 		websites: ["https://pitt.edu"],
-		tags: ["Computer Science"],
+		tags: ["Computer Science", "CS"],
 	},
 };
 
@@ -32,6 +32,18 @@ describe('db.ts', () => {
 	test('should return recent entries on an empty query', async () => {
 		await querySearch({});
 		// expected: query does not throw an error
+	});
+
+	test('should be able to filter by tags', async () => {
+		const id = await db.insertContent(testSchool);
+
+		const result = await querySearch({
+			content_tags: "Computer Science,Electrical Engineering",
+		});
+
+		expect(
+			result.some(({ content }) => content.id === id)
+		).toBeTruthy();
 	});
 
 	test('should return a partial name search', async () => {

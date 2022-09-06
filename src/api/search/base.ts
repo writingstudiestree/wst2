@@ -5,8 +5,8 @@ export type SearchQuery = {
 	content_type?: string | null;
 	// (FULLTEXT) find name of content nodes
 	content_name?: string | null;
-	// (strict) interest tags of content node
-	content_tag?: string | null;
+	// (strict) comma-separated interest tags of content node
+	content_tags?: string | null;
 	// (bidirectional) filter content nodes by relation with another node
 	relation_with?: number | null;
 	// (strict) filter type of relations

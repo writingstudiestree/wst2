@@ -4,19 +4,26 @@ import type { SearchQuery, SearchResult } from "./base";
 const MAX_RESULTS = 100;
 
 // Transforms a url's query params into a search query object
-export async function querySearchParams(url: URL) : Promise<SearchResult[]> {
+export function getSearchQuery(url: URL) : SearchQuery {
 	const query: SearchQuery = {
 		content_type: url.searchParams.get("content_type"),
 		content_name: url.searchParams.get("content_name"),
-		content_tag: url.searchParams.get("content_tag"),
-		relation_with: url.searchParams.has("relation_with") ? +(url.searchParams.has("relation_with")) : null,
+		content_tags: url.searchParams.get("content_tags")?.replace(/[\"\\]/g, ""),
+		relation_with: url.searchParams.has("relation_with") ? +(url.searchParams.has("relation_with")) : undefined,
 		relation_type: url.searchParams.get("relation_type"),
-		last_id: url.searchParams.has("last_id") ? +(url.searchParams.has("last_id")) : null,
+		last_id: url.searchParams.has("last_id") ? +(url.searchParams.has("last_id")) : undefined,
 	};
 
-	return await querySearch(query);
+	for (const key in query) {
+		if (!(query as any)[key]) delete (query as any)[key];
+	}
+
+	return query;
 }
 
+export async function querySearchParams(url: URL) : Promise<SearchResult[]> {
+	return await querySearch(getSearchQuery(url));
+}
 
 // Performs a database search of the SearchQuery object
 export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> {
@@ -51,10 +58,10 @@ export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> 
 			: query.content_name + "*");
 	}
 
-	if (query.content_tag) {
+	if (query.content_tags) {
 		// perform JSON_CONTAINS to see if a particular tag exists
-		sqlWhere.push("JSON_CONTAINS(content, ?, '$.tags')");
-		sqlArgs.push(query.content_tag);
+		sqlWhere.push("JSON_OVERLAPS(JSON_EXTRACT(content.content, '$.tags'), ?)");
+		sqlArgs.push("[" + query.content_tags.split(",").map(tag => '"' + tag + '"').join(",") + "]");
 	}
 
 	if (query.relation_with) {
@@ -84,7 +91,7 @@ export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> 
 		};
 	} else if (sqlWhere.length) {
 		// otherwise, use WHERE
-		sqlParams.push(`WHERE ${sqlWhere.join(",")}`)
+		sqlParams.push(`WHERE ${sqlWhere.join(" AND ")}`)
 	}
 
 	// order by "most recently added" (i.e. a descending id column)
@@ -94,7 +101,6 @@ export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> 
 
 	let sql = `SELECT ${sqlSelect.join(",")} FROM content ${sqlParams.join(" ")}`;
 	const results = await connection.execute(sql, sqlArgs) as [any[], any];
-
 
 	return results[0].map(result => {
 		return {
