@@ -48,7 +48,7 @@
 		{#if json.tags && json.tags.length > 0}
 		<div class="mb-3">
 			{#each json.tags as tag}
-			<span class="badge rounded-pill bg-secondary me-2">{tag}</span>
+			<a class="badge rounded-pill bg-secondary me-2 text-light text-decoration-none" href={`/explore?content_tags=${tag}`}>{tag}</a>
 			{/each}
 		</div>
 		{/if}
