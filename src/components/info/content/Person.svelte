@@ -3,7 +3,7 @@
 	import orcid from "src/images/orcid.svg";
 
 	export let content: Content;
-	$: names = content.name.split(",");
+	$: names = content.name.split("|");
 	$: json = content.content as any;
 </script>
 

@@ -2,7 +2,7 @@
 	import type { Content } from "src/api/types";
 
 	export let content: Content;
-	$: names = content.name.split(",");
+	$: names = content.name.split("|");
 	$: json = content.content as any;
 </script>
 

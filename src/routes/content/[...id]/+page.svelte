@@ -8,7 +8,7 @@
 
 	import type { PageData } from "./$types";
 	export let data: PageData;
-	$: ({ content, user } = data);
+	$: ({ content, relations, user } = data);
 
 	function handleEdit() {
 		// insert the content entry into a new draft
@@ -29,7 +29,7 @@
 	}
 </script>
 
-<Content {content} />
+<Content {content} {relations} />
 
 {#if user}
 <div class="mt-5">
