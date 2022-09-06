@@ -11,14 +11,21 @@
 	let tags: string[] = query.content_tags?.split(",").filter(t => !!t.length) || [];
 	let autoComplete: string[] = [];
 
+	let isChanged = false;
+
 	function handleKey(event: KeyboardEvent) {
 		// when enter key pressed, submit the search
-		if (event.key === "Enter")
+		if (event.key === "Enter" && isChanged)
 			dispatch("submit");
 	}
 
+	function handleChange() {
+		isChanged = true;
+	}
+
 	function handleSubmit() {
-		dispatch("submit");
+		if (isChanged)
+			dispatch("submit");
 	}
 </script>
 
@@ -31,8 +38,9 @@
 			placeholder="Search by name..."
 			bind:value={query.content_name}
 			on:keyup={handleKey}
+			on:input={handleChange}
 		/>
-		<button class="btn btn-primary" on:click={handleSubmit}>Search</button>
+		<button class="btn btn-primary" on:click={handleSubmit} disabled={!isChanged}>Search</button>
 	</div>
 </div>
 
@@ -42,7 +50,7 @@
 </h1>
 
 <div id="filters" class="input-group mb-5">
-	<select class="form-select" bind:value={query.content_type}>
+	<select class="form-select" bind:value={query.content_type} on:change={handleChange}>
 		<option value="" selected>Node type...</option>
 		<option value="person">Person</option>
 		<option value="school">School</option>
@@ -51,6 +59,7 @@
 
 	<Tags
 		bind:tags={tags}
+		on:tags={handleChange}
 		addKeys={[13]}
 		maxTags={false}
 		allowPaste={true}
@@ -68,7 +77,8 @@
 		labelShow={false}
 	/>
 
-	<button class="btn btn-secondary">
+	<button class="btn btn-secondary d-flex align-items-center">
+		<i class="material-icons me-2">manage_search</i>
 		Relation...
 	</button>
 </div>
