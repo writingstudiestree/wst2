@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Tags from "svelte-tags-input";
-	import type { SearchQuery } from "src/api/search";
+	import type { SearchQuery, SearchResult } from "src/api/search";
 	import { createEventDispatcher } from 'svelte';
+	import SearchModal from "./SearchModal.svelte";
 
 	const dispatch = createEventDispatcher();
 
@@ -12,6 +13,24 @@
 	let autoComplete: string[] = [];
 
 	let isChanged = false;
+
+	export let showRelationFilter = true;
+	let showRelationModal = false;
+
+	function handleRelationModal() {
+		showRelationModal = true;
+	}
+
+	function handleRelationClick(result: SearchResult) {
+		query.relation_with = result.content.id;
+		isChanged = true;
+	}
+
+	function handleRelationRemove() {
+		delete query.relation_with;
+		delete query.relation_type;
+		isChanged = true;
+	}
 
 	function handleKey(event: KeyboardEvent) {
 		// when enter key pressed, submit the search
@@ -77,11 +96,25 @@
 		labelShow={false}
 	/>
 
-	<button class="btn btn-secondary d-flex align-items-center">
-		<i class="material-icons me-2">manage_search</i>
-		Relation...
+	{#if query.relation_with}
+	<button class="btn btn-primary d-flex align-items-center" on:click={handleRelationRemove}>
+		<i class="material-icons me-2">close</i>
+		Remove Relation Filter
 	</button>
+	{:else if showRelationFilter}
+	<button class="btn btn-secondary d-flex align-items-center" on:click={handleRelationModal}>
+		<i class="material-icons me-2">manage_search</i>
+		Filter by relation...
+	</button>
+	{/if}
 </div>
+
+{#if showRelationFilter}
+<SearchModal
+	bind:show={showRelationModal}
+	onClick={handleRelationClick}
+/>
+{/if}
 
 <style>
 .input-group-text, input.form-control {

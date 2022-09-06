@@ -5,6 +5,7 @@
 	import { onDestroy } from "svelte";
 
 	export let result: SearchResult;
+	export let onClick: ((result: SearchResult) => void) | null = null;
 
 	$: url = `/content/${result.content.id}`;
 	$: name = result.content.name?.split("|")[0];
@@ -22,9 +23,13 @@
 	onDestroy(() => {
 		if (tooltip) tooltip.dispose();
 	});
+
+	function handleClick() {
+		onClick ? onClick(result) : goto(url);
+	}
 </script>
 
-<div class="card mb-3" on:click={() => goto(url)}>
+<div class="card mb-3" on:click={handleClick}>
 	<div class="card-body">
 		<div class="card-title d-flex align-items-center">
 			<i
@@ -35,7 +40,7 @@
 			>
 				{contentIcons[result.content.type]}
 			</i>
-			<a href={url}>
+			<a href={url} on:click|preventDefault={handleClick}>
 				<h2 class="h5 m-0 d-inline me-3">{name}</h2>
 			</a>
 			<h3 class="h5 m-0 text-secondary me-3 d-none d-sm-inline">{nameExtra.join(", ")}</h3>
