@@ -1,3 +1,4 @@
+from tkinter import NS
 import sqlalchemy as db
 import pandas as pd
 from sqlalchemy import insert
@@ -20,6 +21,21 @@ from sqlalchemy import select
     #   -col7 must be 'year_end' and contain either an int or NaN (or 0, which will be interpreted as NaN)
     #   -subsequent columns can contain content groups, such as description or department
 
+def mergeNSI(contentDF):
+    NSIdf = pd.read_csv("massEntry/non-school-institutions--20220721--from-taxonomy-to-nodes.csv")
+    NSIdf['name'] = NSIdf['label_combined'].fillna(NSIdf['name'])
+    NSIdf['description'] = NSIdf['description'].fillna("")
+    typeArr = []
+    for index, row in NSIdf.iterrows():
+        typeArr.append('institution')
+    NSIdf = NSIdf.filter(['name', 'description'])
+    NSIdf['Address'] = typeArr
+
+    existingList = []
+    for index, row in NSIdf.iterrows():
+        existingList.append(row['name'].split("|"))
+    print(existingList)
+
 def checkContentColumns(contentDF):
     if 'id' not in contentDF.columns:
         raise Exception("id is a required column in the content table")
@@ -27,25 +43,6 @@ def checkContentColumns(contentDF):
         raise Exception("type is a required column in the content table")
     if 'name' not in contentDF.columns:
         raise Exception("name is a required column in the content table")
-
-def checkRelationColumns(relationDF):
-    if 'id' not in relationDF.columns:
-        raise Exception("id is a required column in the content table")
-    if 'type' not in relationDF.columns:
-        raise Exception("type is a required column in the content table")
-    if 'subtype' not in relationDF.columns:
-        raise Exception("subtype is a required column in the content table")
-    if 'link_from' not in relationDF.columns:
-        raise Exception("link_from is a required column in the content table")
-    if 'link_to' not in relationDF.columns:
-        raise Exception("link_to is a required column in the content table")
-    if 'year_start' not in relationDF.columns:
-        raise Exception("year_start is a required column in the content table")
-    if 'year_end' not in relationDF.columns:
-        raise Exception("year_end is a required column in the content table")
-
-def checkRelationValidity(contentDF, relationDF):
-    print("TODO")
 
 def main():
 
@@ -85,28 +82,20 @@ def main():
 
     #edit me
     name_of_content_csv = "massEntry/test4.csv"
-    name_of_relation_csv = "massEntry/testRelation.csv"
-
     contentDF = pd.read_csv (name_of_content_csv)
-    relationDF = pd.read_csv (name_of_relation_csv)
-    #print(contentDF)
 
-    #validate the dataframes
+    #Append NSI's and check contentDF for duplicates
+    mergeNSI(contentDF)
+
+
+    raise Exception("you are too cool")
+    #validate the dataframe
     checkContentColumns(contentDF)
-    checkRelationColumns(relationDF)
-    checkRelationValidity(contentDF, relationDF)
 
     ############ Begin generating database lines based on content CSV file ############
 
     #Find the largest ID in the current database so adding new IDs will not create conflicts
     largestID = 600
-    connection = engine.connect()
-    stmt = select(content_table).order_by(content_table.c.id)
-    print(stmt)
-    with connection as conn:
-        result = conn.execute(stmt)
-        print(result)
-
     print(largestID)
 
     for index, row in contentDF.iterrows():
@@ -118,30 +107,7 @@ def main():
         with connection as conn:
             result = conn.execute(stmt)
 
-    # specify connection string
-    #connection_str = f'mysql+pymysql://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}'
-    # connect to database
-    #engine2 = db.create_engine(connection_str)
-    #connection = engine2.connect()
-    # pull metadata of a table
-    #metadata = db.MetaData(relation_name)
-    #metadata.reflect(only=[relation_name])
-    #relation_table = metadata.tables[relation_name]
-
-    #for index, row in relationDF.iterrows():
-    #    connection = engine2.connect()
-    #    contents = {}
-    #    stmt = insert(content_table).values(id=(row['id']+largestID), type=row['type'], 
-    #    subtype=row['subtype'], link_from=row['link_from'], link_to=row['link_to'],
-    #    year_start=row['year_start'], year_end=['year_end'], content=contents
-    #    )
-    #    compiled = stmt.compile()
-    #
-    #   with connection as conn:
-    #       result = conn.execute(stmt)
-
-
-    ############ As test, print the tables ############
+    ############ As test, print the table ############
 
     connection = engine.connect()
     stmt = select(content_table)
@@ -151,13 +117,7 @@ def main():
         for row in result:
             print(row)
 
-    #connection = engine.connect()
-    #stmt = select(relation_table)
-    #print(stmt)
-    #with connection as conn:
-    #    result = conn.execute(stmt)
-    #    for row in result:
-    #        print(row)
+    # Now, execute appendRelationNodes.py
 
 if __name__ == "__main__":
     main()

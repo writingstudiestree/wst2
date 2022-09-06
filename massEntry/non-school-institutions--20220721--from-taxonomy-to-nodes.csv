@@ -1,0 +1,210 @@
+tid,vid,name,addName,label_combined,description,format,weight
+6,3,CCCC,Conference on College Composition and Communication,CCCC|Conference on College Composition and Communication,https://cccc.ncte.org/,filtered_html,4
+7,3,CWPA,Council of Writing Program Administrators,CWPA|Council of Writing Program Administrators,https://wpacouncil.org/,filtered_html,0
+8,3,NMA,Network for Media Action,NMA|Network for Media Action,filtered_html,1
+9,3,IWCA,International Writing Centers Association,IWCA|International Writing Centers Association,https://writingcenters.org/,filtered_html,5
+10,3,C&W,Computers and Writing,C&W|Computers and Writing,https://cccc.ncte.org/cccc/committees/7cs/candwcall,filtered_html,3
+11,3,ATTW,Association of Teachers of Technical Writing,ATTW|Association of Teachers of Technical Writing,https://attw.org/,filtered_html,7
+12,3,CBW,Conference on Basic Writing,CBW|Conference on Basic Writing,https://cbwblog.wordpress.com/,filtered_html,2
+13,3,NCTE,National Council of Teachers of English,NCTE|National Council of Teachers of English,https://ncte.org/,filtered_html,6
+14,3,AWP,Association of Writers and Writing Programs,AWP|Association of Writers and Writing Programs ,Formerly named the Associated Writing Programs. https://www.awpwriter.org/,filtered_html,0
+15,3,MLA,Modern Language Association,MLA|Modern Language Association,https://www.mla.org/,filtered_html,0
+23,3,NCA,National Communication Association,NCA|National Communication Association,https://www.natcom.org/,NULL,0
+24,3,ASHR,American Society for the History of Rhetoric,ASHR|American Society for the History of Rhetoric,https://ashr.org/,NULL,0
+25,3,RSA,Rhetoric Society of America,RSA|Rhetoric Society of America,https://rhetoricsociety.org/,NULL,0
+26,3,AFA,American Forensic Association,AFA|American Forensic Association,https://www.americanforensicsassoc.org/,NULL,0
+27,3,ILA,International Literacy Association,ILA|International Literacy Association,https://www.literacyworldwide.org/,NULL,0
+28,3,RNF,Research Network Forum,RNF|Research Network Forum at CCCC (Conference on College Composition and Communication),https://sites.google.com/site/researchnetworkforum/,NULL,0
+29,3,Metropolitan WPA (NYC area),New York Metropolitan Area Affiliate of the Council of Writing Program Administrators (CWPA),Metropolitan WPA (NYC area)|New York Metropolitan Area Affiliate of the Council of Writing Program Administrators (CWPA),https://groups.google.com/g/wpa-metro,NULL,0
+30,3,CRLA,College Reading & Learning Association,CRLA|College Reading & Learning Association,https://www.crla.net/,NULL,0
+31,3,National Writing Project,NULL,NWP|National Writing Project,https://www.nwp.org/,NULL,0
+32,3,SCWCA,South Central Writing Centers Association,SCWCA|South Central Writing Centers Association,https://scwca.net/,NULL,0
+33,3,LACC,Louisiana Association for College Composition,LACC|Louisiana Association for College Composition,NULL,0
+37,3,CWPA,Council of Writing Program Administrators,CWPA|Council of Writing Program Administrators,https://wpacouncil.org/,NULL,0
+39,3,EATAW,European Association for the Teaching of Writing,EATAW|European Association for the Teaching of Writing,https://www.eataw.eu/,NULL,0
+40,3,JCRC,Jesuit Conference on Rhetoric & Composition,JCRC|Jesuit Conference on Rhetoric and Composition,https://www.ajcunet.edu/jesuit-conference-on-rhetoric-composition,NULL,0
+41,3,TYCA,Two-Year College English Association,TYCA|Two-Year College English Association,https://ncte.org/groups/tyca/,NULL,0
+48,3,TESOL,TESOL International Association,TESOL|TESOL International Association,formerly Teachers of English to Speakers of Other Languages. https://www.tesol.org/,NULL,0
+54,3,AERA,American Educational Research Association,AERA|American Educational Research Association,https://www.aera.net/,NULL,0
+55,3,AAAL,American Association for Applied Linguistics,AAAL|American Association for Applied Linguistics,https://www.aaal.org/,NULL,0
+56,3,LRA,Literary Research Association,LRA|Literary Research Association,https://literacyresearchassociation.org/,NULL,0
+62,3,MAWCA,Mid-Atlantic Writing Centers Association,MAWCA|Mid-Atlantic Writing Centers Association,https://www.mawca.org/,NULL,0
+70,3,IPCC,"International Professional Communication
+Conference (ProComm)","IPCC|International Professional Communication
+Conference (ProComm)",https://ieeexplore.ieee.org/xpl/conhome/1000591/all-proceedings,NULL,0
+75,3,ASA,Appalachian Studies Association,ASA|Appalachian Studies Association,https://www.appalachianstudies.org/,filtered_html,0
+76,3,CFSHRC,Coalition of Feminist Scholars in the History of Rhetoric and Composition,CFSHRC|Coalition of Feminist Scholars in the History of Rhetoric and Composition,Formerly known as the Coalition of Women Scholars in the History of Rhetoric & Composition (CWSHRC). https://cfshrc.org/,NULL,0
+77,3,CCCC,Conference on College Composition and Communication,CCCC|Conference on College Composition and Communication,https://cccc.ncte.org/,NULL,0
+78,3,ISHR,International Society for the History of Rhetoric,ISHR|International Society for the History of Rhetoric,https://ishr-web.org/aws/ISHR/pt/sp/home_page,NULL,0
+79,3,ISHS,International Society of Humor Studies,ISHS|International Society of Humor Studies,https://www.humorstudies.org/,NULL,0
+80,3,RSA,Rhetoric Society of America,RSA|Rhetoric Society of America,https://rhetoricsociety.org/,NULL,0
+81,3,SFA,Society of Florida Archivists,SFA|Society of Florida Archivists,http://www.florida-archivists.org/,NULL,0
+82,3,CWPA,Council of Writing Program Administrators,CWPA|Council of Writing Program Administrators,https://wpacouncil.org/,NULL,0
+83,3,CFSHRC,Coalition of Feminist Scholars in the History of Rhetoric and Composition,CFSHRC|Coalition of Feminist Scholars in the History of Rhetoric and Composition,Formerly known as the Coalition of Women Scholars in the History of Rhetoric & Composition (CWSHRC). https://cfshrc.org/,NULL,0
+89,3,Department of Education,NULL,Department of Education,NULL,0
+110,3,AAA,American Anthropological Association,AAA|American Anthropological Association,American Anthropological Association,NULL,0
+112,3,Carolinas WPA,Carolinas affiliate of the Council of Writing Program Administrators,Carolinas WPA|Carolinas affiliate of the Council of Writing Program Administrators,https://www.carolinaswpa.org/,NULL,0
+118,3,CPTSC,Council for Programs in Technical and Scientific Communication,CPTSC|Council for Programs in Technical and Scientific Communication,https://cptsc.org/,NULL,0
+119,3,GPACW,Great Plains Alliance for Computers and Writing,GPACW|Great Plains Alliance for Computers and Writing,NULL,NULL,0
+162,3,NWP,National Writing Project,NWP|National Writing Project,https://www.nwp.org/,NULL,0
+169,3,ACH,Association for Computers and the Humanities,ACH|Association for Computers and the Humanities,https://ach.org/,NULL,0
+173,3,IEEE,The Institute of Electrical and Electronics Engineers,IEEE|The Institute of Electrical and Electronics Engineers,https://www.ieee.org/,NULL,0
+174,3,NSS,NULL,NSS,NULL,NULL,0
+175,3,AAUP,American Association of University Professors,AAUP|American Association of University Professors,https://www.aaup.org/,NULL,0
+177,3,CELJ,Council of Editors of Learned Journals,CELJ|Council of Editors of Learned Journals,http://www.celj.org/,NULL,0
+182,3,NJWA,New Jersey Writing Alliance,NJWA|New Jersey Writing Alliance,http://www.newjerseywritingalliance.org/,NULL,0
+183,3,WPA-GO,Writing Program Administrators--Graduate Organization,WPA-GO|Writing Program Administrators--Graduate Organization,https://wpacouncil.org/aws/CWPA/pt/sp/wpa-go,NULL,0
+187,3,STC,Society for Technical Communication,"STC|Society for Technical Communication
+",https://www.stc.org/,NULL,0
+188,3,CEA,College English Association,CEA|College English Association,https://cea-web.org/,NULL,0
+201,3,CWPA,Council of Writing Program Administrators,CWPA|Council of Writing Program Administrators,https://wpacouncil.org/,NULL,0
+202,3,IWCA,International Writing Centers Association,IWCA|International Writing Centers Association,https://writingcenters.org/,NULL,0
+211,3,MWCA,Midwest Writing Centers Association,MWCA|Midwest Writing Centers Association,http://www.midwestwritingcenters.org/,NULL,0
+219,3,CCC,College Composition and Communication,CCC|College Composition and Communication,https://cccc.ncte.org/cccc/ccc,NULL,0
+220,3,AEPL,Assembly for Expanded Perspectives on Learning,AEPL|Assembly for Expanded Perspectives on Learning,https://aepl.org,NULL,0
+221,3,AMEWS,Association for Middle East Women's Studies,AMEWS|Association for Middle East Women's Studies,https://amews.org/,NULL,0
+222,3,CFSHRC,Coalition of Feminist Scholars in the History of Rhetoric and Composition,CFSHRC|Coalition of Feminist Scholars in the History of Rhetoric and Composition,Formerly known as the Coalition of Women Scholars in the History of Rhetoric & Composition (CWSHRC). https://cfshrc.org/,NULL,0
+223,3,CCC,College Composition and Communication,CCC|College Composition and Communication,https://cccc.ncte.org/cccc/ccc,NULL,0
+224,3,Frontera Retórica,"Rhetoric Society of America (RSA) Student Chapter at University of Texas, El Paso (UTEP)",Frontera Retórica,"Rhetoric Society of America (RSA) Student Chapter at University of Texas, El Paso (UTEP)",NULL,0
+225,3,RSA,Rhetoric Society of America,RSA|Rhetoric Society of America,https://rhetoricsociety.org/,NULL,0
+226,3,ILA,International Literacy Association,ILA|International Literacy Association,"International Literacy Association (ILA), formerly the International Reading Association.  https://www.literacyworldwide.org/about-us",NULL,0
+227,3,NCTE,National Council of Teachers of English,NCTE|National Council of Teachers of English,https://ncte.org/,NULL,0
+228,3,TYCA,Two-Year College English Association,TYCA|Two-Year College English Association,https://ncte.org/groups/tyca/,NULL,0
+229,3,CEA,College English Association,CEA|College English Association,NULL,0
+237,3,ACM SIGDOC,ACM Special Interest Group for Design of Communication,ACM SIGDOC|Special Interest Group for Design of Communication of the Association for Computing Machinery,https://sigdoc.acm.org/,NULL,0
+257,3,NACADA,The Global Community for  Academic Advising,NACADA|The Global Community for  Academic Advising,Formerly the National Conference on Academic Advising. https://nacada.ksu.edu/,NULL,0
+260,3,HFMA,Healthcare Financial Management Association,HFMA|Healthcare Financial Management Association,https://nacada.ksu.edu/,NULL,0
+265,3,ATTW,Association of Teachers of Technical Writing,ATTW|Association of Teachers of Technical Writing,https://attw.org/,NULL,0
+266,3,CPTSC,Council for Programs in Technical and Scientific Communication,CPTSC|Council for Programs in Technical and Scientific Communication,https://cptsc.org/,NULL,0
+283,3,IECA,International Environmental Communication Association,IECA|International Environmental Communication Association,https://theieca.org/,NULL,0
+287,3,C&W,Computers and Writing,C&W|Computers and Writing,https://cccc.ncte.org/cccc/committees/7cs/candwcall,NULL,0
+288,3,SWCA,Southeastern Writing Center Association,SWCA|Southeastern Writing Center Association,https://southeasternwritingcenter.wildapricot.org/,NULL,0
+289,3,SAMLA,South Atlantic Modern Language Association,SAMLA|South Atlantic Modern Language Association,https://samla.memberclicks.net/,NULL,0
+302,3,IWCA,International Writing Centers Association,IWCA|International Writing Centers Association,https://writingcenters.org/,NULL,0
+303,3,NEWCA,Northeast Writing Centers Association,NEWCA|Northeast Writing Centers Association,https://newcaconference.org/,NULL,0
+312,3,ACM,Association for Computing Machinery,ACM|Association for Computing Machinery,https://www.acm.org/,NULL,0
+313,3,CCCC,Conference on College Composition and Communication,CCCC|Conference on College Composition and Communication,https://cccc.ncte.org/,NULL,0
+314,3,CFSHRC,Coalition of Feminist Scholars in the History of Rhetoric and Composition,CFSHRC|Coalition of Feminist Scholars in the History of Rhetoric and Composition,Formerly known as the Coalition of Women Scholars in the History of Rhetoric & Composition (CWSHRC). https://cfshrc.org/,NULL,0
+324,3,New Chaucer Society,NULL,New Chaucer Society,https://newchaucersociety.org/,NULL,0
+325,3,Tales after Tolkien Society,NULL,Tales after Tolkien Society,http://talesaftertolkien.blogspot.com/,NULL,0
+326,3,Medieval Academy of America,NULL,Medieval Academy of America,https://www.medievalacademy.org/,NULL,0
+327,3,SCMLA,South Central Modern Language Association,SCMLA|South Central Modern Language Association ,https://www.southcentralmla.org/,NULL,0
+345,3,Earli SIG Writing,"European Association for Research on Learning and Instruction, special interest group in Writing","Earli SIG Writing|European Association for Research on Learning and Instruction, special interest group in Writing",http://www.sig-writing.org/,NULL,0
+348,3,FCEA,Florida College English Association,FCEA|Florida College English Association,https://fcea.online/,NULL,0
+356,3,ISLS,International Society for Language Studies,ISLS|International Society for Language Studies,https://www.isls.co/,NULL,0
+359,3,ATTW,Association of Teachers of Technical Writing,ATTW|Association of Teachers of Technical Writing,https://attw.org/,NULL,0
+365,3,SUS,Society for Utopian Studies,SUS|Society for Utopian Studies,https://utopian-studies.org/,NULL,0
+371,3,SUS,Society for Utopian Studies,SUS|Society for Utopian Studies,https://utopian-studies.org/,NULL,0
+372,3,Utopian Studies Society (USS),NULL,Utopian Studies Society (USS),https://utopian-studies-europe.org/,NULL,0
+373,3,ADHO,Alliance of Digital Humanities Organizations ,ADHO|Alliance of Digital Humanities Organizations,https://adho.org/,NULL,0
+374,3,MLA,Modern Language Association,MLA|Modern Language Association,NULL,0
+375,3,CELJ,Council of Editors of Learned Journals,CELJ|Council of Editors of Learned Journals,NULL,0
+376,3,TechRhet,NULL,TechRhet discussion list,https://groups.google.com/g/techrhet/; https://twitter.com/techrhet,NULL,0
+380,3,LARA,LARA,NULL,0
+381,3,AAR,African Association for Rhetoric,AAR|African Association for Rhetoric,https://www.afrhet.org/,NULL,0
+384,3,AMWA,American Medical Writers Association,AMWA|American Medical Writers Association,https://www.amwa.org/,NULL,0
+387,3,ISAWR,International Society for the Advancement of Writing Research,ISAWR|International Society for the Advancement of Writing Research,https://www.isawr.org/,NULL,0
+388,3,GXB,Genre Across Borders,GXB|Genre Across Borders,https://genreacrossborders.org/,NULL,0
+394,3,Association for Business Communication,NULL,ABC|Association for Business Communication,https://www.businesscommunication.org/,NULL,0
+395,3,IVWS,International Virginia Woolf Society,IVWS|International Virginia Woolf Society,https://v-woolf-society.com/,NULL,0
+399,3,ATEG,The Assembly for the Teaching of English Grammar,ATEG|The Assembly for the Teaching of English Grammar,An assembly of the National Council of Teachers of English. https://ateg.weebly.com/,NULL,0
+400,3,WSRLC,Western States Rhetoric and Literacy Conference,WSRLC|Western States Rhetoric and Literacy Conference,https://www.public.asu.edu/~petergo/wsrl/wsrl.html,NULL,0
+403,3,NWSA,National Women's Studies Association,NWSA|National Women's Studies Association,https://www.nwsa.org/,NULL,0
+404,3,AAUW,American Association of University Women,AAUW|American Association of University Women,https://www.aauw.org/,NULL,0
+423,3,HETL,International Higher Education Teaching and Learning Association,HETL|International Higher Education Teaching and Learning Association,https://hetl.wildapricot.org/,NULL,0
+443,3,ABC,Association for Business Communication,ABC|Association for Business Communication,https://www.businesscommunication.org/,NULL,0
+444,3,WIDE,"Writing, Information, and Digital Experience: WIDE Research Center","WIDE|Writing, Information, and Digital Experience: WIDE Research Center",https://digitalhumanities.msu.edu/wide/,NULL,0
+445,3,Inkshed (CASLL),Canadian Association for the Study of Language and Learning,Inkshed (CASLL)|Canadian Association for the Study of Language and Learning,https://casdw-acr.ca/resources/casllinkshed-archives/,NULL,0
+446,3,CASDW,Canadian Association for the Study of Discourse and Writing / Association Canadienne de Rédactologie,CASDW|Canadian Association for the Study of Discourse and Writing / Association Canadienne de Rédactologie,https://casdw-acr.ca/,NULL,0
+447,3,DHLSNA,D.H. Lawrence Society of North America,DHLSNA|D.H. Lawrence Society of North America,http://www.dhlsna.org/,NULL,0
+465,3,ATTW-L,Listserv of the Association of Teachers of Technical Writing,ATTW-L|Listserv of the Association of Teachers of Technical Writing,https://attw.org/about-attw/subscribe-to-mailing-list/,NULL,0
+466,3,CPTSC-diversity,Diversity Committee of the Council for Programs in Technical and Scientific Communication,CPTSC-diversity|Diversity Committee of the Council for Programs in Technical and Scientific Communication,https://cptsc.org/committees/diversity/,NULL,0
+469,3,PCA/ACA,Popular Culture Association / American Culture Association,PCA/ACA|Popular Culture Association / American Culture Association,https://pcaaca.org/,NULL,0
+470,3,Sigma Tau Delta,The International English Honor Society,Sigma Tau Delta|International English Honor Society,The International English Honor Society. https://www.english.org/,NULL,0
+471,3,Phi Kappa Phi,NULL,Phi Kappa Phi,https://www.phikappaphi.org/,NULL,0
+472,3,Lambda Pi Eta,NULL,Lambda Pi Eta,https://www.natcom.org/student-organizations/lambda-pi-eta,NULL,0
+473,3,Omicron-Psi,NULL,Omicron-Psi,NULL,0
+477,3,The Florida Bar,NULL,The Florida Bar,https://www.floridabar.org/,NULL,0
+483,3,JCRC,Jesuit Conference on Rhetoric and Composition,JCRC|Jesuit Conference on Rhetoric and Composition,https://www.ajcunet.edu/jesuit-conference-on-rhetoric-composition,NULL,0
+484,3,MASAL,Michigan Academy of Science Arts and Letters,MASAL|Michigan Academy of Science Arts and Letters,https://www.alma.edu/offices/michigan-academy/,NULL,0
+485,3,AAAL,American Association for Applied Linguistics,AAAL|American Association for Applied Linguistics,https://www.aaal.org/,NULL,0
+486,3,NEWACC,Northeast Writing Across the Curriculum Consortium,NEWACC|Northeast Writing Across the Curriculum Consortium,https://newacc.colostate.edu/,NULL,0
+517,3,University of North Carolina at Charlotte Writing Project,NULL,University of North Carolina at Charlotte Writing Project,A site of the National Writing Project. https://writingproject.charlotte.edu/,NULL,0
+525,3,MMLA,Midwest Modern Language Association,MMLA|Midwest Modern Language Association,https://www.luc.edu/mmla/,NULL,0
+527,3,Carolinas WPA,Carolinas affiliate of the Council of Writing Program Administrators,Carolinas WPA|Carolinas affiliate of the Council of Writing Program Administrators,https://www.carolinaswpa.org/,NULL,0
+528,3,IWAC,International Writing Across the Curriculum Conference,IWAC|International Writing Across the Curriculum Conference,https://wacassociation.org/iwac-conference/,NULL,0
+529,3,MPCA/ACA,Midwest Popular Culture Association / American Culture Association,MPCA/ACA|Midwest Popular Culture Association / American Culture Association,https://mpcaaca.org/,NULL,0
+530,3,NAVSA,North American Victorian Studies Association,NAVSA|North American Victorian Studies Association,https://navsa.org/,NULL,0
+534,3,NCA,National Communication Association,NCA|National Communication Association,https://www.natcom.org/,NULL,0
+535,3,ASA,American Studies Association,ASA|American Studies Association,https://www.theasa.net/,NULL,0
+536,3,United Steelworkers,NULL,United Steelworkers,https://www.usw.org/,NULL,0
+538,3,ACM SIGDOC,ACM Special Interest Group for Design of Communication,ACM SIGDOC|Special Interest Group for Design of Communication of the Association for Computing Machinery,https://sigdoc.acm.org/,NULL,0
+539,3,#WomenInTC,Women in Technical Communication,#WomenInTC|Women in Technical Communication,https://womenintechcomm.org/,NULL,0
+543,3,CUR,Council on Undergraduate Research,CUR|Council on Undergraduate Research,https://www.cur.org/,NULL,0
+547,3,AoIR,Association of Internet Researchers,AoIR|Association of Internet Researchers,https://aoir.org/,NULL,0
+548,3,Women in Technical Communication,NULL,#WomenInTC|Women in Technical Communication,NULL,0
+556,3,SSA,Semiotic Society of America,SSA|Semiotic Society of America,https://www.semioticsocietyofamerica.org/,NULL,0
+560,3,PCA/ACA,Popular Culture Association / American Culture Association,PCA/ACA|Popular Culture Association / American Culture Association,https://pcaaca.org/,NULL,0
+563,3,AAAS,AAAS|,NULL,0
+564,3,SSAW,SSAW,NULL,NULL,0
+569,3,CCTE,California Council on Teacher Education,CCTE|California Council on Teacher Education,https://www.ccte.org/,NULL,0
+570,3,TCEA,Texas Computer Education Association,TCEA|Texas Computer Education Association,https://tcea.org/,NULL,0
+573,3,ANS,American Name Society,ANS|American Name Society,http://www.americannamesociety.org/,NULL,0
+581,3,AHSIE,Alliance of Hispanic Serving Institution Educators,AHSIE|Alliance of Hispanic Serving Institution Educators,https://ahsie.org/,NULL,0
+588,3,ARSTM,"Association for the Rhetoric of Science, Technology, and Medicine","ARSTM|Association for the Rhetoric of Science, Technology, and Medicine",https://www.arstmonline.org/,NULL,0
+595,3,Omicron Delta Kappa,NULL,Omicron Delta Kappa,https://odk.org/,NULL,0
+597,3,Kappa Tau Alpha,NULL,Kappa Tau Alpha,https://www.kappataualpha.net/,NULL,0
+598,3,The Golden Key International Honour Society,NULL,The Golden Key International Honour Society,https://goldenkey.org/,NULL,0
+599,3,FemBot Collective,NULL,FemBot Collective,NULL,0
+600,3,CFSHRC,Coalition of Feminist Scholars in the History of Rhetoric and Composition,CFSHRC|Coalition of Feminist Scholars in the History of Rhetoric and Composition,Formerly known as the Coalition of Women Scholars in the History of Rhetoric & Composition (CWSHRC). https://cfshrc.org/,NULL,0
+614,3,FemRhet,Feminisms and Rhetorics Conference,FemRhet|Feminisms and Rhetorics Conference,https://cfshrc.org/femrhet-conference-call-for-hosts/,NULL,0
+615,3,SDS,Society for Disability Studies,SDS|Society for Disability Studies,https://disstudies.org/,NULL,0
+616,3,WPA Midsouth,MidSouth affiliate of the Council of Writing Program Administrators,WPA Midsouth|MidSouth affiliate of the Council of Writing Program Administrators,https://www.mswpa.org/,NULL,0
+618,3,NWSA,National Women's Studies Association,NWSA|National Women's Studies Association,https://www.nwsa.org/,NULL,0
+630,3,Cultural Rhetorics Consortium,NULL,Cultural Rhetorics Consortium,https://cultrhetconsortium.org/,NULL,0
+631,3,CSA,Cultural Studies Association,CSA|Cultural Studies Association,https://www.culturalstudiesassociation.org/,NULL,0
+635,3,MENAWCA,Middle East-North Africa Writing Centers Alliance,MENAWCA|Middle East-North Africa Writing Centers Alliance,http://menawca.org/,NULL,0
+636,3,EWCA,European Writing Centers Association,EWCA|European Writing Centers Association,https://europeanwritingcenters.eu/,NULL,0
+637,3,ECWCA,East Central Writing Centers Association,ECWCA|East Central Writing Centers Association,https://ecwca.wildapricot.org/,NULL,0
+639,3,MnWE,Minnesota Writing and English,MnWE|Minnesota Writing and English,https://www.mnweconference.com/,NULL,0
+640,3,CWSO,Creative Writing Studies Organization,CWSO|Creative Writing Studies Organization,https://creativewritingstudies.com/,NULL,0
+641,3,CFSHRC,Coalition of Feminist Scholars in the History of Rhetoric and Composition,CFSHRC|Coalition of Feminist Scholars in the History of Rhetoric and Composition,Formerly known as the Coalition of Women Scholars in the History of Rhetoric & Composition (CWSHRC). https://cfshrc.org/,NULL,0
+644,3,Latinx Caucus,NULL,Latinx Caucus of CCCC / NCTE,https://ncte.org/groups/caucuses/latinx-caucus/,NULL,0
+645,3,Kairos,A Journal of Rhetoric Technology and Pedagogy,Kairos: A Journal of Rhetoric Technology and Pedagogy,https://kairos.technorhetoric.net/,NULL,0
+652,3,ASLE,Association for the Study of Literature and Environment,ASLE|Association for the Study of Literature and Environment,https://www.asle.org/,NULL,0
+654,3,NAME,National Association of Multicultural Education,NAME|National Association of Multicultural Education,https://www.nameorg.org/,NULL,0
+667,3,Chevalier de l'Ordre des Palmes académiques,NULL,Chevalier de l'Ordre des Palmes académiques,NULL,0
+668,3,AAAS,American Academy of Arts and Sciences,AAAS|American Academy of Arts and Sciences,https://www.amacad.org/,NULL,0
+669,3,ITSE,The International Society for Technology in Education,ITSE|The International Society for Technology in Education,https://www.iste.org/,NULL,0
+673,3,HASTAC,"Humanities, Arts, Science, and Technology Alliance and Collaboratory","HASTAC|Humanities, Arts, Science, and Technology Alliance and Collaboratory",https://www.hastac.org/,NULL,0
+674,3,Virginia Woolf Society,NULL,Virginia Woolf Society,https://v-woolf-society.com/,NULL,0
+678,3,Rhetoric and Religion,NULL,Rhetoric and Religion,NULL,0
+688,3,ISHR,International Society for the History of Rhetoric,ISHR|International Society for the History of Rhetoric,https://ishr-web.org/aws/ISHR/pt/sp/home_page,NULL,0
+689,3,ABC,Association for Business Communication,ABC|Association for Business Communication,https://www.businesscommunication.org/,NULL,0
+692,3,CESA,Critical Ethnic Studies Association,CESA|Critical Ethnic Studies Association,https://www.criticalethnicstudies.org/,NULL,0
+693,3,AES,Association for Ethnic Studies,AES|National Association for Ethnic Studies,"Formerly the National Association for Ethnic Studies (NAES), among other names. See https://ethnicstudies.org/about/aes-herstory/.",NULL,0
+694,3,AMWA,American Medical Writers Association,AMWA|American Medical Writers Association,https://www.amwa.org/,NULL,0
+695,3,ARSTM,"Association for the Rhetoric of Science, Technology, and Medicine","ARSTM|Association for the Rhetoric of Science, Technology, and Medicine",https://www.arstmonline.org/,NULL,0
+697,3,PCA/ACA,Popular Culture Association / American Culture Association,PCA/ACA|Popular Culture Association / American Culture Association,https://pcaaca.org/,NULL,0
+699,3,TESOL International,TESOL International Association,TESOL|TESOL International Association,formerly Teachers of English to Speakers of Other Languages. https://www.tesol.org/,NULL,0
+703,3,ASHE,Association for the Study of Higher Education,ASHE|Association for the Study of Higher Education,https://www.ashe.ws/,NULL,0
+704,3,MITESOL,Michigan Teachers of English to Speakers of Other Languages,MITESOL|Michigan Teachers of English to Speakers of Other Languages,"A state affiliate of the professional association, TESOL International. https://www.mitesol.org/cpages/home",NULL,0
+705,3,LESLLA,"Literacy Education and Second Language Learning among Adults
+781,LESLLA|Literacy Education and Second Language Learning among Adults,https://www.leslla.org/,NULL,0
+706,3,CCCC American Indian Caucus,American Indian Caucus of the Conference on College Composition and Communication,American Indian Caucus of CCCC|Conference on College Composition and Communication,https://ncte.org/groups/caucuses/american-indian-caucus,NULL,0
+713,3,ACM Group 2020,ACM International Conference on Supporting Group Work,ACM Group 2020|International Conference on Supporting Group Work of the Association for Computing Machinery,https://group.acm.org/conferences/group20/,NULL,0
+720,3,CWSO,Creative Writing Studies Organization,CWSO|Creative Writing Studies Organization,https://creativewritingstudies.com/,NULL,0
+723,3,CGC,Consortium on Graduate Communication,CGC|Consortium on Graduate Communication,https://www.gradconsortium.org/,NULL,0
+732,3,GRN,The Graduate Research Network at Computers and Writing,GRN|The Graduate Research Network at Computers and Writing,https://www.gradresearchnetwork.org/,NULL,0
+736,3,PNWCA,Pacific Northwest Writing Centers Association,PNWCA|Pacific Northwest Writing Centers Association,https://www.pnwca.org/,NULL,0
+739,3,GPA,Grants Professional Association,GPA|Grants Professional Association,https://grantprofessionals.org/,NULL,0
+750,3,Green Ronin Publishing,NULL,Green Ronin Publishing,NULL,0
+751,3,OCTELA,Ohio Council of Teachers of English Language Arts,OCTELA|Ohio Council of Teachers of English Language Arts,https://www.octela.org/,NULL,0
+758,3,NCBS,National Council for Black Studies,NCBS|National Council for Black Studies,https://ncbsonline.org/,NULL,0
+759,3,ASALH,Association for the Study of African American Life and History,ASALH|Association for the Study of African American Life and History,https://asalh.org/,NULL,0
+763,3,Computers and Composition,NULL,Computers and Composition: An International Journal,https://www.sciencedirect.com/journal/computers-and-composition,NULL,0
+767,3,ALTA,American Literary Translators Association,ALTA|American Literary Translators Association,https://literarytranslators.org/,NULL,0
+768,3,ELTNA,Emerging Literary Translators’ Network in America ,ELTNA|Emerging Literary Translators’ Network in America ,https://emerginglittransnetworkamerica.wordpress.com/,NULL,0
+771,3,Kenneth Burke Society,NULL,Kenneth Burke Society,https://www.kbjournal.org/kbs,NULL,0
+778,3,Executive Council of the Conference on College Composition and Communication,NULL,Executive Council of CCCC|Conference on College Composition and Communication,NULL,0
+780,3,PWSA,Professional Writing Students’ Association,PWSA|Professional Writing Students’ Association,https://yorku.campuslabs.ca/engage/organization/pwsa,NULL,0
