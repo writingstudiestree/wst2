@@ -24,12 +24,14 @@
 	function handleRelationClick(result: SearchResult) {
 		query.relation_with = result.content.id;
 		isChanged = true;
+		handleSubmit();
 	}
 
 	function handleRelationRemove() {
 		delete query.relation_with;
 		delete query.relation_type;
 		isChanged = true;
+		handleSubmit();
 	}
 
 	function handleKey(event: KeyboardEvent) {

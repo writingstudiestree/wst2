@@ -9,7 +9,7 @@ export function getSearchQuery(url: URL) : SearchQuery {
 		content_type: url.searchParams.get("content_type"),
 		content_name: url.searchParams.get("content_name"),
 		content_tags: url.searchParams.get("content_tags")?.replace(/[\"\\]/g, ""),
-		relation_with: url.searchParams.has("relation_with") ? +(url.searchParams.has("relation_with")) : undefined,
+		relation_with: url.searchParams.has("relation_with") ? +(url.searchParams.get("relation_with") || 0) : undefined,
 		relation_type: url.searchParams.get("relation_type"),
 		last_id: url.searchParams.has("last_id") ? +(url.searchParams.has("last_id")) : undefined,
 	};
@@ -68,10 +68,11 @@ export async function querySearch(query: SearchQuery) : Promise<SearchResult[]> 
 		// join sql on relations in either direction (queryId -> contentId) || (contentId -> queryId)
 		sqlParams.push(
 			// if using JOIN, where conditions should be in the ON command
-			`INNER JOIN relations ON ${sqlWhere.map(c => c + " AND").join(" ")} ((relations.link_from = ? AND relations.link_to = content.id) OR (relations.link_from = content.id AND relations.link_to = ?))`
+			`INNER JOIN relations ON ${sqlWhere.map(c => c + " AND ")}((relations.link_from = ? AND relations.link_to = content.id) OR (relations.link_from = content.id AND relations.link_to = ?))`
 		);
 		sqlArgs.push(query.relation_with, query.relation_with);
 
+		// add relation node aliases
 		sqlSelect.push(
 			"relations.id AS relations_id",
 			"relations.type AS relations_type",

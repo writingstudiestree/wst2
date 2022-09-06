@@ -30,6 +30,12 @@
 </script>
 
 <div class="card mb-3" on:click={handleClick}>
+	{#if result.relation}
+	<div class="card-header d-flex align-items-center">
+		<i class="material-icons me-2 text-muted">info_outline</i>
+		{result.relation.type} {name} ({result.relation.subtype})
+	</div>
+	{/if}
 	<div class="card-body">
 		<div class="card-title d-flex align-items-center">
 			<i
@@ -58,6 +64,10 @@
 <style>
 	.card {
 		cursor: pointer;
+	}
+
+	.card-body h2 {
+		white-space: nowrap;
 	}
 
 	.card-body h3, .card-body p {
