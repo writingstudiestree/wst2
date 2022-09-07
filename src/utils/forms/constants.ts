@@ -1,12 +1,6 @@
 import { InsertForm, InsertFormType } from 'src/api/forms/base';
 
-export type FormType = "person"|"school"|"institution";
-
-export const contentIcons: Record<FormType, string> = {
-	person: "person",
-	school: "school",
-	institution: "diversity_3",
-};
+export type FormType = "person"|"school"|"institution"|"citation";
 
 export const defaultForms: Record<FormType, InsertForm> = {
 	person: [
@@ -59,6 +53,21 @@ export const defaultForms: Record<FormType, InsertForm> = {
 					location: "",
 					tags: [],
 					websites: [],
+					description: "",
+				},
+			}
+		},
+	],
+	citation: [
+		{
+			type: InsertFormType.CITATION,
+			value: {
+				id: -1,
+				name: "",
+				collection: "",
+				date_created: new Date(),
+				date_modified: new Date(),
+				content: {
 					description: "",
 				},
 			}

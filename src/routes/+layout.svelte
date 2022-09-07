@@ -24,7 +24,7 @@
 	},{
 		type: 'link',
 		name: 'Explore',
-		url: '/explore',
+		url: '/explore/',
 	}];
 </script>
 
