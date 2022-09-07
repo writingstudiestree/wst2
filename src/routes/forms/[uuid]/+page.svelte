@@ -9,7 +9,7 @@
 
 	//Form Modules
 	import { goto } from "$app/navigation";
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	//Relation components
 	import RelationMaker from "src/components/relationIntakeComponents/RelationMaker.svelte";

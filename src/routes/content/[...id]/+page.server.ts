@@ -1,7 +1,8 @@
-import type { RequestHandler } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
+import { redirect } from "@sveltejs/kit";
 import * as db from 'src/api/db';
 
-export const GET: RequestHandler = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
 	const [idStr, nameStr] = params.id.split("/");
 	const id: number = parseInt(idStr);
 	const content = await db.getContent(id).catch(console.error);
@@ -10,17 +11,10 @@ export const GET: RequestHandler = async ({ params }) => {
 	name = name.trim().replaceAll(" ", "_");
 
 	if (name && !nameStr) {
-		return {
-			status: 302,
-			headers: {
-				Location: `/content/${id}/${encodeURIComponent(name)}`,
-			},
-		};
+		throw redirect(302, `/content/${id}/${encodeURIComponent(name)}`);
 	}
 
 	return {
-		body: {
-			content: content as never,
-		},
+		content: content as never,
 	};
 };

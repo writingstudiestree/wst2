@@ -1,9 +1,13 @@
-<script>
+<script lang="ts">
 	import { page } from "$app/stores";
 	import { goto } from '$app/navigation';
 	import "../app.scss";
 
 	import Modal from "../components/Modal.svelte";
+
+	import type { LayoutData } from "./$types";
+	export let data: LayoutData;
+	$: ({ user } = data);
 
 	const links = [{
 		type: 'link',
@@ -41,28 +45,40 @@
 				{/each}
 			</ul>
 
+			{#if user}
+			<div class="d-flex align-items-center btn btn-dark" on:click={() => location.href = '/api/auth/logout'}>
+				<i class="material-icons me-3">person</i>
+				<div class="text-start">
+					<p class="m-0">{user.displayName}</p>
+					<small>{user.email}</small>
+				</div>
+			</div>
+			{:else}
 			<a href="#signin" class="btn btn-primary" role="button">Sign In</a>
+			{/if}
 		</div>
 	</div>
 </nav>
 
 <Modal
 	title="Sign In"
-	show={$page.url.hash === "#signin"}
+	show={!user && $page.url.hash === "#signin"}
 	on:close={
 		() => goto('#')
 	}
 >
-	<form id="signIn">
+	<form id="signIn" method="post" action="/api/auth/login">
 		<div class="mb-3">
 			<label for="signInEmail" class="form-label">Email address</label>
-			<input type="email" class="form-control" id="signInEmail" placeholder="name@example.com">
+			<input type="email" class="form-control" id="signInEmail" name="email" placeholder="name@example.com">
 		</div>
 
 		<div class="mb-3">
 			<label for="signInPassword" class="form-label">Password</label>
-			<input type="password" class="form-control" id="signInPassword">
+			<input type="password" class="form-control" id="signInPassword" name="password">
 		</div>
+
+		<input hidden type="text" name="redirect" value={$page.url.toString()} />
 	</form>
 
 	<div slot="footer">
