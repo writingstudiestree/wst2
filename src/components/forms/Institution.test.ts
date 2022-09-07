@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
 import Institution from './Institution.svelte';
 
-import type { InsertFormRecord, InsertFormType } from 'src/api/forms';
 import { defaultForms } from 'src/utils/forms';
 
 /**
@@ -11,7 +10,7 @@ import { defaultForms } from 'src/utils/forms';
 */
 describe('Institution', () => {
 	test('should render with default props', () => {
-		const form = Object.values(defaultForms.institution)[0] as InsertFormRecord<InsertFormType.CONTENT>;
+		const form = Object.values(defaultForms.institution)[0];
 
 		const { container } = render(Institution, {
 			value: form.value,

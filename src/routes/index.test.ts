@@ -4,7 +4,7 @@
 
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
-import Index from './+page.svelte';
+import Index from './index.svelte';
 
 /**
 * This is an example test that only checks if
