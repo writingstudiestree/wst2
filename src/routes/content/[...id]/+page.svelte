@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import type * as api from "src/api";
 	import { InsertFormType } from "src/api/forms/base";
 	import Content from "src/components/info/Content.svelte";
 	import DeleteModal from "src/components/info/DeleteModal.svelte";
 	import { draftForm } from "src/utils/forms/stores";
 	import { v4 as uuid } from "uuid";
 
-	export let content: api.Content;
+	import type { PageData } from "./$types";
+	export let data: PageData;
+	$: ({ content, user } = data);
 
 	function handleEdit() {
 		// insert the content entry into a new draft
@@ -30,6 +31,7 @@
 
 <Content {content} />
 
+{#if user}
 <div class="mt-5">
 	<button class="btn btn-primary d-inline-flex me-3" on:click={handleEdit}>
 		<i class="material-icons me-2">edit</i>
@@ -41,6 +43,7 @@
 		Remove this entry
 	</button> -->
 </div>
+{/if}
 
 {#if showDelete}
 <DeleteModal
