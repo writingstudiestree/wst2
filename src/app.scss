@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-$font-family-base: 'Source Sans Pro', sans-serif;
-$enable-shadows: true;
+$font-family-base: 'Source Sans Pro', sans-serif;;
 
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */ /* Import only what you need from Bootstrap */
 @import "bootstrap/scss/root";

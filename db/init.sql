@@ -4,8 +4,7 @@ CREATE TABLE content (
   name varchar(1000) NOT NULL,
   date_created DATETIME NOT NULL DEFAULT NOW(),
   date_modified DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-  content JSON NOT NULL,
-  FULLTEXT KEY (name)
+  content JSON NOT NULL
 );
 
 CREATE TABLE relations (
