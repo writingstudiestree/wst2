@@ -5,6 +5,7 @@
 
 	export let title: string = "";
 	export let show: boolean = false;
+	export let size: "sm"|"lg"|null = null;
 
 	function handleClose() {
 		dispatch("close");
@@ -14,7 +15,7 @@
 
 {#if show}
 <div class="modal show" tabindex="-1" aria-modal="true" role="dialog" on:click={(e) => e.target === e.currentTarget && handleClose()}>
-	<div class="modal-dialog">
+	<div class={"modal-dialog" + (size ? ` modal-${size}` : '')}>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">{title}</h5>

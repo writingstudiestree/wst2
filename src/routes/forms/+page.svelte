@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { v4 as uuid } from 'uuid';
-	import { FormType, defaultForms, draftForm } from 'src/utils/forms';
+	import { FormType, defaultForms, draftForm, contentIcons } from 'src/utils/forms';
 	import cloneDeep from 'lodash/cloneDeep';
 
 	const provideForm = (formType: FormType) => {
@@ -18,12 +18,11 @@
 	const links: {
 		type: FormType,
 		color: string,
-		icon: string,
 		desc: string,
 	}[] = [
-	{ type: "person", color: "primary", icon: "person", desc: "Add a new person to the network." },
-	{ type: "school", color: "success", icon: "school", desc: "Add a school or university to the network." },
-	{ type: "institution", color: "warning", icon: "domain", desc: "Add a non-school institution (e.g. an organization, conference, journal, etc) to the network." },
+	{ type: "person", color: "primary", desc: "Add a new person to the network." },
+	{ type: "school", color: "success", desc: "Add a school or university to the network." },
+	{ type: "institution", color: "warning", desc: "Add a non-school institution (e.g. an organization, conference, journal, etc) to the network." },
 	];
 
 	import type { PageData } from "./$types";
@@ -40,7 +39,7 @@
 			{#each links as link (link.type)}
 			<div class="col col-12 col-lg-12">
 				<button class={`btn btn-${link.color} w-100 h-100 p-2`} on:click={() => provideForm(link.type)}>
-					<i class="material-icons" aria-hidden="true">{link.icon}</i>
+					<i class="material-icons" aria-hidden="true">{contentIcons[link.type]}</i>
 					<h5>{link.type}</h5>
 					<p>{link.desc}</p>
 				</button>

@@ -1,8 +1,13 @@
-import mysql from 'mysql2/promise';
+import mysql from 'mysql2';
 import { DATABASE_URL } from '../utils/constants';
 import type { Attributions, AttributionsWithDefaults, Citations, CitationsWithDefaults, Content, ContentWithDefaults, Relations, RelationsWithDefaults, RevisionsWithDefaults } from './types';
 
-const connection = await mysql.createConnection(DATABASE_URL);
+export const connection = mysql.createPool({
+	uri: DATABASE_URL,
+	waitForConnections: true,
+	connectionLimit: 10,
+	queueLimit: 0,
+}).promise();
 
 export async function queryTest(): Promise<Content[]> {
 	const [rows] = await connection.execute("SELECT * FROM content") as [Content[], any];
