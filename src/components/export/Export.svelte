@@ -16,7 +16,7 @@
 	<label for="exportFormat">Export Format</label>
 	<select id="exportFormat" class="form-select mb-3" bind:value={format}>
 		<option value="gephi" selected>Gephi</option>
-		<option value="kumu" selected>Kumu</option>
+		<option value="kumu">Kumu</option>
 	</select>
 
 	<div>
