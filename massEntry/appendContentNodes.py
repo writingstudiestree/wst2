@@ -51,32 +51,32 @@ def main():
     ############ Connect to the database ############
 
     # specify database configurations
-    config = {
-        'host': 'localhost',
-        'port': 3306,
-        'user': 'root',
-        'password': 'abcdefg123',
-        'database': 'wst'
-    }
+    #config = {
+    #    'host': 'localhost',
+    #    'port': 3306,
+    #    'user': 'root',
+    #    'password': 'abcdefg123',
+    #    'database': 'wst'
+    #}
 
-    db_user = config.get('user')
-    db_pwd = config.get('password')
-    db_host = config.get('host')
-    db_port = config.get('port')
-    db_name = config.get('database')
+    #db_user = config.get('user')
+    #db_pwd = config.get('password')
+    #db_host = config.get('host')
+    #db_port = config.get('port')
+    #db_name = config.get('database')
 
     table_name = "content"
-    relation_name = "relations"
+    #relation_name = "relations"
 
     # specify connection string
-    connection_str = f'mysql+pymysql://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}'
+    #connection_str = f'mysql+pymysql://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}'
     # connect to database
-    engine = db.create_engine(connection_str)
-    connection = engine.connect()
+    #engine = db.create_engine(connection_str)
+    #connection = engine.connect()
     # pull metadata of a table
-    metadata = db.MetaData(bind=engine)
-    metadata.reflect(only=[table_name])
-    content_table = metadata.tables[table_name]
+    #metadata = db.MetaData(bind=engine)
+    #metadata.reflect(only=[table_name])
+    #content_table = metadata.tables[table_name]
 
     ############ Load CSV files as dataframe ############
 
@@ -88,7 +88,7 @@ def main():
     mergeNSI(contentDF)
 
 
-    raise Exception("you are too cool")
+    raise Exception("end of test")
     #validate the dataframe
     checkContentColumns(contentDF)
 
