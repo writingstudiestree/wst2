@@ -25,6 +25,10 @@
 		type: 'link',
 		name: 'Explore',
 		url: '/explore',
+	},{
+		type: 'link',
+		name: 'Export Data',
+		url: '/export',
 	}];
 </script>
 
