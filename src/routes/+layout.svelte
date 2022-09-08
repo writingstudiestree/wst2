@@ -30,7 +30,13 @@
 		name: 'Export Data',
 		url: '/export',
 	}];
+
+	$: pageTitle = links.find((link) => $page.url.pathname === link.url)?.name;
 </script>
+
+<svelte:head>
+	<title>{pageTitle ? pageTitle + " | " : ""}Writing Studies Tree</title>
+</svelte:head>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">

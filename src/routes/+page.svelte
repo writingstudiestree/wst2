@@ -1,9 +1,17 @@
+<script lang="ts">
+	import type { PageData } from "./$types";
+	export let data: PageData;
+	$: ({ user } = data);
+</script>
+
 <div class="card mb-5">
     <div class="card-body">
 		<h1 class="card-title centerHeader">Welcome to The Writing Studies Tree!</h1>
 		<p class="card-subtitle text-muted mb-3">
         <p>The WST is an online, crowdsourced database of academic genealogies within writing studies; in other words, it is an interactive archive for recording and mapping scholarly relationships in Composition and Rhetoric and adjacent disciplines.</p>
+				{#if !user}
         <p class = "xl"><a href="/#signin">Create an account to get started</a></p>
+				{/if}
     </div>
     <div class = "banner"></div>
     <div class="card-body">
