@@ -22,6 +22,7 @@ const tableColumns = {
 			link_from: "Source",
 			link_to: "Target",
 			direction: "Type",
+			type: "relation",
 		},
 		kumu: {
 			id: "ID",
