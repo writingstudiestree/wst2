@@ -46,7 +46,9 @@
   "type": "module",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.2",
+    "firebase": "^9.9.4",
+    "firebaseui": "^6.0.1",
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "svelte-tags-input": "^2.9.2",
