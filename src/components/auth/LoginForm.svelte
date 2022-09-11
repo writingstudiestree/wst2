@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
+	import { page } from '$app/stores';
 	import { app } from "src/utils/firebase";
 	import * as firebase from "firebase/auth";
-	import { onMount, onDestroy } from "svelte";
+	import { onMount } from "svelte";
 	import 'firebaseui/dist/firebaseui.css';
 
 	onMount(async () => {

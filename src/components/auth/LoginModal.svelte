@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from "$app/stores";
 	import Modal from "../Modal.svelte";
 	import LoginForm from "./LoginForm.svelte";
 

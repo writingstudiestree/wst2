@@ -16,9 +16,7 @@ export const auth = getAuth(app);
 
 export const user = readable<User|null>(null, (set) => {
 	if (browser) {
-		console.log("registered to onAuthStateChanged");
 		auth.onAuthStateChanged((user) => {
-			console.log(user);
 			set(user);
 		});
 	}
