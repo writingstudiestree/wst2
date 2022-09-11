@@ -97,6 +97,11 @@
         requiresDept = false;
     }
 
+    if (!requiresDept)
+    {
+        value.content.department = "";
+    }
+
     let isSwapped = false;
     const swapDestination = () =>
     {
