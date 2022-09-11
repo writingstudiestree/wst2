@@ -97,15 +97,12 @@
         requiresDept = false;
     }
 
+    let isSwapped = false;
     const swapDestination = () =>
     {
-        console.log("I am executing")
         const tempVar = value.link_from;
-        console.log("Tempvar is now" + tempVar)
         value.link_from = value.link_to;
-        console.log("FROM is now" + value.link_from)
         value.link_to = tempVar;
-        
     };
 
     let possSubtypes: String[] = [""];
@@ -114,7 +111,21 @@
         possSubtypes = ["as dissertation chair", "as a non-chair member of the dissertation committee", "as a writing program administrator", "as a WAC/WID administrator", "as a Writing Project site administrator", "as a professor (graduate)", "as a professor (undergraduate)", "as a teacher (secondary school)", "as a consultant", "as a formal advisor of a type not indicated above"];
         if (relType === "was mentored by")
         {
-            swapDestination();
+            if (!isSwapped)
+            {
+                swapDestination();
+                isSwapped = true;
+                value.link_from = target.id;
+            }
+        }
+        else
+        {
+            if (isSwapped)
+            {
+                swapDestination();
+                isSwapped = false;
+            }
+            value.link_to = target.id;
         }
         value.type = "mentored";
     }
@@ -123,16 +134,44 @@
         possSubtypes = ["toward a doctorate", "toward a master's degree", "toward an undergraduate degree", "toward a secondary (high school) diploma", "in a non-degree or other program"];
         if (relType === "counts among its students")
         {
-            swapDestination();
+            if (!isSwapped)
+            {
+                swapDestination();
+                isSwapped = true;
+                value.link_from = target.id;
+            }
         }
-        value.type = "studied at";
+        else
+        {
+            if (isSwapped)
+            {
+                swapDestination();
+                isSwapped = false;
+            }
+            value.link_to = target.id;
+        }
+        value.type = "studied at"
     }
     else if (relType === "worked at"  || relType === "has employed")
     {
         possSubtypes = ["as a graduate student instructor", "as a professor (adjunct)", "as a professor (undergraduate)", "as a professor (graduate)", "as an administrator", "as other staff"];
         if (relType === "has employed")
         {
-            swapDestination();
+            if (!isSwapped)
+            {
+                swapDestination();
+                isSwapped = true;
+                value.link_from = target.id;
+            }
+        }
+        else
+        {
+            if (isSwapped)
+            {
+                swapDestination();
+                isSwapped = false;
+            }
+            value.link_to = target.id;
         }
         value.type = "worked at";
     }
@@ -140,11 +179,23 @@
     {
         possSubtypes = ["as co-editors of a journal", "as co-editors of an anthology or collection", "as co-authors of an article", "as co-authors of a book", "as co-administrators of a writing program", "as co-administrators of a writing center", "as co-administrators of a WAC/WID program", "on the development of a digital project", "as formal collaborators of a type not indicated above"];
         value.type = "worked alongside";
+        if (isSwapped)
+        {
+            swapDestination();
+            isSwapped = false;
+        }
+        value.link_to = target.id;
     }
     else if (relType === "served on")
     {
         possSubtypes = ["as an editor", "as a founder", "as a committee chair", "as a committee member", "in a capacity not indicated above"];
         value.type = "served on";
+        if (isSwapped)
+        {
+            swapDestination();
+            isSwapped = false;
+        }
+        value.link_to = target.id;
     }
     //Date range
     let ongoing: boolean = false;
@@ -165,8 +216,8 @@
         }
         value.content.citationList = [];
 
-
 </script>
+
 <div class = "inside minHeight">
     <div class="d-flex w-100 justify-content-end">
         <div class = "p-2 start-margin"><h3>New relationship</h3></div>
