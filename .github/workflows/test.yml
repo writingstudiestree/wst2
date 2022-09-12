@@ -6,6 +6,9 @@ jobs:
   test:
     env:
       CI: true
+      PUBLIC_FIREBASE_KEY: ''
+      PUBLIC_FIREBASE_PROJECTID: ''
+      PUBLIC_FIREBASE_APPID: ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,6 +28,9 @@ jobs:
   check:
     env:
       CI: true
+      PUBLIC_FIREBASE_KEY: ''
+      PUBLIC_FIREBASE_PROJECTID: ''
+      PUBLIC_FIREBASE_APPID: ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
