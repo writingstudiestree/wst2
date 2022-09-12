@@ -3,12 +3,20 @@ import type { ContentWithDefaults, RelationsWithDefaults, CitationsWithDefaults,
 
 const UID = zod.number();
 
+const NAME = zod.string()
+	.min(1, "Name field must not be empty")
+	.max(1000)
+	// Ensures that names are delimited by "|", and each name is not empty
+	.regex(/^[^\|]+(\|[^\|]+)*$/, "Name field must not be empty");
+
 export const personSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(["person"]),
-	name: zod.string().min(1).max(1000),
+	name: NAME,
 	content: zod.object({
-		orcId: zod.string().optional(),
+		// orcId is an ISO-27729 identifier; i.e. 16 numerical digits (with the possibility of the last digit being "X")
+		// https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier
+		orcId: zod.string().regex(/^$|^([0-9]{4}\-){3}[0-9X]{4}$/, "Must be in the OrcID format: '0000-0001-2345-6789'").optional(),
 		pronounceLink: zod.string().url().or(zod.literal("")).optional(),
 		tags: zod.array(
 			zod.string()
@@ -23,7 +31,7 @@ export const personSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 export const schoolSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(["school"]),
-	name: zod.string().min(1).max(1000),
+	name: NAME,
 	content: zod.object({
 		location: zod.string().regex(/(^.+, ["A-Z"]+, United States$)|(^.+, ["A-Za-z"]+$)/),
 		tags: zod.array(
@@ -39,7 +47,7 @@ export const schoolSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 export const institutionSchema: zod.ZodSchema<ContentWithDefaults> = zod.object({
 	id: UID,
 	type: zod.enum(["institution"]),
-	name: zod.string().min(1).max(1000),
+	name: NAME,
 	content: zod.object({
 		location: zod.string().regex(/(^.+, ["A-Z"]+, United States$)|(^.+, ["A-Za-z"]+$)/),
 		tags: zod.array(
@@ -58,8 +66,8 @@ export const relationSchema: zod.ZodSchema<RelationsWithDefaults> = zod.object({
 	subtype: zod.string().max(255),
 	link_from: zod.number(),
 	link_to: zod.number(),
-	year_start: zod.number(),
-	year_end: zod.number().optional(),
+	year_start: zod.number().int("Invalid year").positive("Invalid year"),
+	year_end: zod.number().int("Invalid year").positive("Invalid year").optional(),
 	content: zod.object({
 		department: zod.string().optional(),
 		description: zod.string().optional(),

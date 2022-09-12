@@ -5,20 +5,21 @@
 	export let field: [number, string];
 
 	// hide errors until user has interacted with the input
-	let displayErrors = false;
+	export let displayErrors = false;
+	$: displayErrors = displayErrors || !!($state?.displayErrors);
 
 	function handleFocus() {
 		displayErrors = true;
 	}
 
 	$: errors = draftForm.getForm($page.params.uuid)?.errors;
+	$: state = draftForm.getForm($page.params.uuid)?.state;
 	$: fieldErrors = (displayErrors && $errors?.filter(e => e.key === field[0] && e.field?.startsWith(field[1]))) || [];
 </script>
-<div class = "containerStyle">
 <div on:focusin={handleFocus}>
 	<slot
 		isValid={!(fieldErrors.length)}
-		errors={errors}
+		errors={fieldErrors}
 	/>
 
 	<div class="invalid-feedback d-block mb-2">
@@ -30,10 +31,3 @@
 		&nbsp;
 	</div>
 </div>
-</div>
-<style>
-	.containerStyle
-	{
-		width: auto;
-	}
-</style>

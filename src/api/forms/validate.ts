@@ -2,7 +2,7 @@ import { ZodError, ZodType } from 'zod';
 import type { Content, Relations } from '../types';
 import { InsertForm, InsertFormRecord, InsertFormType, InsertFormTypes, InsertFormError, isRecordType } from './base';
 import * as schemata from './schemata';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 
 /**
  * Validate a Zod schema, mapping any caught errors into the `InsertFormError` type.
