@@ -69,6 +69,7 @@ export const relationSchema: zod.ZodSchema<RelationsWithDefaults> = zod.object({
 	year_start: zod.number().int("Invalid year").positive("Invalid year"),
 	year_end: zod.number().int("Invalid year").positive("Invalid year").optional(),
 	content: zod.object({
+		department: zod.string().optional(),
 		description: zod.string().optional(),
 	}),
 });
