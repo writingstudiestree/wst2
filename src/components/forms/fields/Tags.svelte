@@ -6,7 +6,7 @@
 	export let enteredTags: string[] = [];
 
 	export let autoComplete: string[] = [];
-	export let placeholder: string = "Press enter to add an entry. Add multiple!";
+	export let placeholder: string = "Not sure what to put here? Start typing and see which tags other users have used before!";
 
 	function addInterest(event: any) {
 		enteredTags = event.detail.tags;
@@ -33,5 +33,5 @@
 		onlyAutocomplete={false}
 		labelShow={false}
 	/>
-	<small class="text-muted">Not sure what to put here? Start typing and see which tags other users have used before!</small>
+	<small class="text-muted">Press enter to add an entry. Add multiple!</small>
 </FieldContainer>
