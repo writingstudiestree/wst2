@@ -1,4 +1,13 @@
-## Prerequisites
+## Systems and platforms
+
+WST2 uses [SvelteKit](https://kit.svelte.dev), a front-end framework that runs on [Node.js](https://nodejs.org/). Node, and its package manager NPM, are tools for building interactive JavaScript applications. We chose Svelte because it constructs JavaScript from source files at build time, rather than at run time, to balance fast performance for users with abstracted (and thus reusable) components for developers.
+
+For an introduction to SvelteKit, we recommend this tutorial: [https://svelte.dev/tutorial/](https://svelte.dev/tutorial/).
+
+
+## Developing locally
+
+### Prerequisites
 
 - A development environment, such as [Visual Studio Code](https://code.visualstudio.com)
 - [Node.JS 16+](https://nodejs.org/)
@@ -12,8 +21,7 @@ Docker allows us to "containerize" and run our application as if it were being h
 
 > **Note**: On most systems, it is recommended to install [Docker Desktop](https://www.docker.com/products/docker-desktop/), which includes both "Docker" and "Docker Compose".
 
-## Developing
-
+### Local setup
 1. First, [clone the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) from GitHub, and open the root folder:
 
 	```bash
