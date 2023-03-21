@@ -12,7 +12,7 @@ import Index from './+page.svelte';
 */
 describe('Index', () => {
 	test('should render the component', () => {
-		const { container } = render(Index);
+		const { container } = render(Index, { data: { user: null }});
 
 		expect(container).toBeInTheDocument();
 	});

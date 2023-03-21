@@ -9,8 +9,14 @@ export const connection = mysql.createPool({
 	queueLimit: 0,
 }).promise();
 
-export async function queryTest(): Promise<Content[]> {
+export async function getAllContent(): Promise<Content[]> {
 	const [rows] = await connection.execute("SELECT * FROM content") as [Content[], any];
+
+	return rows;
+}
+
+export async function getAllRelations(): Promise<Relations[]> {
+	const [rows] = await connection.execute("SELECT * FROM relations") as [Relations[], any];
 
 	return rows;
 }
